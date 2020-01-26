@@ -80,7 +80,7 @@
           <version>2.2</version>
           <configuration>
             <port>8088</port>
-            <path>/</path>
+            <path>/VF</path>
           </configuration>
         </plugin>
         <plugin>
