@@ -28,7 +28,6 @@ public class CommandUtility {
             return true;
         }
         loggedUsers.add(userName);
-        LOGGER.info(loggedUsers);
         setLoggedUsersToContext(request, loggedUsers);
         return false;
     }
@@ -39,11 +38,11 @@ public class CommandUtility {
         loggedUsers.remove(email);
         request.getServletContext().removeAttribute("email");
         setLoggedUsersToContext(request, loggedUsers);
-        session.removeAttribute("email");
+        session.removeAttribute("role");
         session.invalidate();
     }
 
-    private static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {
+    static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {
         return (HashSet<String>) request.getSession().getServletContext().getAttribute("loggedUsers");
     }
 

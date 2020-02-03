@@ -36,6 +36,7 @@ public class LoginCommand implements Command {
         }
 
         UserRole role = user.get().getRole();
+        LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
         LOGGER.info("User role: '" + role + "'");
         if (role.equals(UserRole.ROLE_ADMIN)) {
             CommandUtility.setUserRole(request, role, email);
