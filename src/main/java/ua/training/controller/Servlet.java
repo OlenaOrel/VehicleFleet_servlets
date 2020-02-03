@@ -1,8 +1,8 @@
 package ua.training.controller;
 
-import ua.training.controller.command.Command;
-import ua.training.controller.command.LoginCommand;
-import ua.training.model.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.training.controller.command.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,18 +15,16 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class Servlet extends HttpServlet {
-    //TODO
-    private UserService userService = new UserService();
+    private static final Logger LOGGER = LogManager.getLogger(Servlet.class);
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig) {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("login",
-                new LoginCommand());
-//        commands.put("add-student" , new AddStudent());
-//        commands.put("teacher-login",
-//                new LoginTeacherCommand(new TeacherService()));
+        commands.put("admin", new AdminCommand());
+        commands.put("login", new LoginCommand());
+        commands.put("logout", new LogOutCommand());
+        commands.put("driver", new DriverCommand());
 //        commands.put("exception" , new ExceptionCommand());
     }
 
@@ -43,12 +41,14 @@ public class Servlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        System.out.println(path);
+        LOGGER.info("Path: {}", path);
         path = path.replace("/VF/", "");
-        System.out.println(path);
-        Command command = commands.getOrDefault(path, (request1) -> "index.jsp");
-        System.out.println(command.getClass().getName());
+        Command command = commands.getOrDefault(path, (requestDefault) -> "index.jsp");
         String page = command.execute(request);
+        if (page.contains("redirect")) {
+            response.sendRedirect(page.replace("redirect:", ""));
+            return;
+        }
         request.getRequestDispatcher(page).forward(request, response);
     }
 }

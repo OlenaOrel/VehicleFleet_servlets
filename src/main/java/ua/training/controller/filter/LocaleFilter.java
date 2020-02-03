@@ -1,4 +1,4 @@
-package ua.training.filter;
+package ua.training.controller.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

@@ -4,7 +4,6 @@
 
 <fmt:requestEncoding value="UTF-8"/>
 <fmt:setLocale value="${sessionScope.get('lang')}"/>
-<%--<fmt:setLocale value="${param.lang}"/>--%>
 <fmt:setBundle basename="messages"/>
 
 <!DOCTYPE html>
@@ -27,7 +26,7 @@
                 <fmt:message key="login.page.header"/>
             </h2>
             <div>
-                <form action="/login" method="post">
+                <form action="${pageContext.request.contextPath}/login" method="post">
                     <fieldset>
                         <%--                        <div th:if="${param.error}" class="alert alert-error" th:text="#{invalid.email.password}"--%>
                         <%--                             style="margin-top:20px" th:bgcolor="red"></div>--%>
@@ -42,7 +41,7 @@
                         <label for="password">
                             <fmt:message key="password"/>
                         </label>
-                        <input type="password" id="password" name="password" placeholder='<fmt:message key="password"/>'
+                        <input type="password" id="password" name="pass" placeholder='<fmt:message key="password"/>'
                                class="form-control"
                                placeholder="Password"/>
                         <div class="form-actions">
