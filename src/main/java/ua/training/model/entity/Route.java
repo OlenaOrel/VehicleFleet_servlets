@@ -1,11 +1,10 @@
 package ua.training.model.entity;
 
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 public class Route {
-    private Long id;
+    private int id;
     private Integer numberOfRoute;
     private String departureFromCityEn;
     private String arrivalToCityEn;
@@ -13,15 +12,16 @@ public class Route {
     private String arrivalToCityUk;
     private LocalDate date;
     private Boolean finished;
+    private RouteStatus status;
 
-    private Set<User> drivers;
-    private Set<Bus> busList;
+    private List<User> drivers;
+    private List<Bus> busList;
 
     public Route() {
     }
 
     public Route(
-            Long id,
+            int id,
             Integer numberOfRoute,
             String departureFromCityEn,
             String arrivalToCityEn,
@@ -29,8 +29,9 @@ public class Route {
             String arrivalToCityUk,
             LocalDate date,
             Boolean finished,
-            Set<User> drivers,
-            Set<Bus> busList) {
+            RouteStatus status,
+            List<User> drivers,
+            List<Bus> busList) {
         this.id = id;
         this.numberOfRoute = numberOfRoute;
         this.departureFromCityEn = departureFromCityEn;
@@ -39,15 +40,16 @@ public class Route {
         this.arrivalToCityUk = arrivalToCityUk;
         this.date = date;
         this.finished = finished;
+        this.status = status;
         this.drivers = drivers;
         this.busList = busList;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -107,41 +109,31 @@ public class Route {
         this.finished = finished;
     }
 
-    public Set<User> getDrivers() {
+    public RouteStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RouteStatus status) {
+        this.status = status;
+    }
+
+    public List<User> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(Set<User> drivers) {
+    public void setDrivers(List<User> drivers) {
         this.drivers = drivers;
     }
 
-    public Set<Bus> getBusList() {
+    public List<Bus> getBusList() {
         return busList;
     }
 
-    public void setBusList(Set<Bus> busList) {
+    public void setBusList(List<Bus> busList) {
         this.busList = busList;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Route route = (Route) o;
-        return Objects.equals(id, route.id) &&
-                Objects.equals(numberOfRoute, route.numberOfRoute) &&
-                Objects.equals(departureFromCityEn, route.departureFromCityEn) &&
-                Objects.equals(arrivalToCityEn, route.arrivalToCityEn) &&
-                Objects.equals(departureFromCityUk, route.departureFromCityUk) &&
-                Objects.equals(arrivalToCityUk, route.arrivalToCityUk) &&
-                Objects.equals(date, route.date) &&
-                Objects.equals(finished, route.finished);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, numberOfRoute, departureFromCityEn, arrivalToCityEn, departureFromCityUk, arrivalToCityUk, date, finished);
-    }
 
     public static class Builder {
         private Route routeBuilder;
@@ -150,7 +142,7 @@ public class Route {
             routeBuilder = new Route();
         }
 
-        public Builder id(Long id) {
+        public Builder id(int id) {
             routeBuilder.id = id;
             return this;
         }
@@ -190,7 +182,12 @@ public class Route {
             return this;
         }
 
-        public Builder drivers(Set<User> drivers) {
+        public Builder finished(RouteStatus status) {
+            routeBuilder.status = status;
+            return this;
+        }
+
+        public Builder drivers(List<User> drivers) {
             routeBuilder.drivers = drivers;
             return this;
         }
@@ -200,7 +197,7 @@ public class Route {
             return this;
         }
 
-        public Builder busList(Set<Bus> busList) {
+        public Builder busList(List<Bus> busList) {
             routeBuilder.busList = busList;
             return this;
         }

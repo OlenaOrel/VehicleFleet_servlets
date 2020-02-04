@@ -1,27 +1,28 @@
 package ua.training.model.entity;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class Bus {
-    private Long id;
+    private int id;
     private String mark;
     private String licensePlate;
     private Boolean free;
 
-    private Set<User> drivers;
-    private Set<Route> routeList;
+    private List<User> drivers;
+    private List<Route> routeList;
 
     public Bus() {
     }
 
     public Bus(
-            Long id,
+            int id,
             String mark,
             String licensePlate,
             Boolean free,
-            Set<User> drivers,
-            Set<Route> routeList) {
+            List<User> drivers,
+            List<Route> routeList) {
         this.id = id;
         this.mark = mark;
         this.licensePlate = licensePlate;
@@ -30,11 +31,11 @@ public class Bus {
         this.routeList = routeList;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,19 +63,19 @@ public class Bus {
         this.free = free;
     }
 
-    public Set<User> getDrivers() {
+    public List<User> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(Set<User> drivers) {
+    public void setDrivers(List<User> drivers) {
         this.drivers = drivers;
     }
 
-    public Set<Route> getRouteList() {
+    public List<Route> getRouteList() {
         return routeList;
     }
 
-    public void setRouteList(Set<Route> routeList) {
+    public void setRouteList(List<Route> routeList) {
         this.routeList = routeList;
     }
 
@@ -109,7 +110,7 @@ public class Bus {
         private Set<User> drivers;
         private Set<Route> routeList;
 
-        public Builder id(Long id) {
+        public Builder id(int id) {
             busBuilder.id = id;
             return this;
         }
@@ -129,7 +130,7 @@ public class Bus {
             return this;
         }
 
-        public Builder drivers(Set<User> drivers) {
+        public Builder drivers(List<User> drivers) {
             busBuilder.drivers = drivers;
             return this;
         }
@@ -139,7 +140,7 @@ public class Bus {
             return this;
         }
 
-        public Builder routeList(Set<Route> routeList) {
+        public Builder routeList(List<Route> routeList) {
             busBuilder.routeList = routeList;
             return this;
         }

@@ -1,10 +1,10 @@
 package ua.training.model.entity;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class User {
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String originFirstName;
@@ -13,15 +13,16 @@ public class User {
     private String email;
     private String password;
     private UserRole role;
+    private boolean free;
 
-    private Set<Bus> busList;
-    private Set<Route> routeList;
+    private List<Bus> buses;
+    private List<Route> routes;
 
     public User() {
     }
 
     public User(
-            Long id,
+            int id,
             String firstName,
             String lastName,
             String originFirstName,
@@ -30,8 +31,8 @@ public class User {
             String email,
             String password,
             UserRole role,
-            Set<Bus> busList,
-            Set<Route> routeList) {
+            List<Bus> buses,
+            List<Route> routes) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,15 +42,15 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.busList = busList;
-        this.routeList = routeList;
+        this.buses = buses;
+        this.routes = routes;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -117,20 +118,28 @@ public class User {
         this.role = role;
     }
 
-    public Set<Bus> getBusList() {
-        return busList;
+    public boolean isFree() {
+        return free;
     }
 
-    public void setBusList(Set<Bus> busList) {
-        this.busList = busList;
+    public void setFree(boolean free) {
+        this.free = free;
     }
 
-    public Set<Route> getRouteList() {
-        return routeList;
+    public List<Bus> getBusList() {
+        return buses;
     }
 
-    public void setRouteList(Set<Route> routeList) {
-        this.routeList = routeList;
+    public void setBusList(List<Bus> buses) {
+        this.buses = buses;
+    }
+
+    public List<Route> getRouteList() {
+        return routes;
+    }
+
+    public void setRouteList(List<Route> routes) {
+        this.routes = routes;
     }
 
     @Override
@@ -138,7 +147,8 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return id == user.id &&
+                free == user.free &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(originFirstName, user.originFirstName) &&
@@ -152,8 +162,8 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName,
-                originFirstName, originLastName, login,
-                email, password, role);
+                originFirstName, originLastName,
+                login, email, password, role, free);
     }
 
     public static class Builder {
@@ -163,7 +173,7 @@ public class User {
             userBuilder = new User();
         }
 
-        public Builder id (Long id) {
+        public Builder id(int id) {
             userBuilder.id = id;
             return this;
         }
@@ -203,28 +213,34 @@ public class User {
             return this;
         }
 
+        public Builder free(boolean free) {
+            userBuilder.free = free;
+            return this;
+        }
+
+
         public Builder role(UserRole role) {
             userBuilder.role = role;
             return this;
         }
 
-        public Builder busList(Set<Bus> buses) {
-            userBuilder.busList = buses;
+        public Builder busList(List<Bus> buses) {
+            userBuilder.buses = buses;
             return this;
         }
 
         public Builder bus(Bus bus) {
-            userBuilder.busList.add(bus);
+            userBuilder.buses.add(bus);
             return this;
         }
 
-        public Builder routeList(Set<Route> routeList) {
-            userBuilder.routeList = routeList;
+        public Builder routeList(List<Route> routes) {
+            userBuilder.routes = routes;
             return this;
         }
 
         public Builder route(Route route) {
-            userBuilder.routeList.add(route);
+            userBuilder.routes.add(route);
             return this;
         }
 
