@@ -2,7 +2,7 @@ package ua.training.controller.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.model.dto.UserDto;
+import ua.training.model.entity.User;
 import ua.training.model.entity.UserRole;
 import ua.training.model.service.UserService;
 
@@ -25,45 +25,33 @@ public class LoginCommand implements Command {
             return "/login.jsp";
         }
 
-        //TODO work with DAO
-        Optional<UserDto> user = userService.getUserByEmailAndPassword(email, pass);
-        if (CommandUtility.checkUserIsLogged(request, email)) {
+        Optional<User> loginUser = userService.getUserByEmailAndPassword(email, pass);
+
+        if (CommandUtility.checkUserIsLogged(request, email)
+                || !loginUser.isPresent()) {
             return "/WEB-INF/error.jsp";
         }
 
-        if (!user.isPresent()) {
-            return "/WEB-INF/error.jsp";
-        }
-
-        UserRole role = user.get().getRole();
         LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
-        LOGGER.info("User role: '" + role + "'");
-        if (role.equals(UserRole.ROLE_ADMIN)) {
-            CommandUtility.setUserRole(request, role, email);
-            return "redirect:/VF/admin";
-        }
-        if (role.equals(UserRole.ROLE_DRIVER)) {
-            CommandUtility.setUserRole(request, role, email);
-            return "redirect:/VF/driver";
+
+        User user = loginUser.get();
+        if (userService.isPassCorrect(pass, user.getPassword())) {
+            UserRole role = user.getRole();
+            LOGGER.info("User role: '" + role + "'");
+
+            if (role.equals(UserRole.ROLE_ADMIN)) {
+                CommandUtility.setUserRole(request, role, email);
+                return "redirect:/VF/admin";
+            }
+            if (role.equals(UserRole.ROLE_DRIVER)) {
+                CommandUtility.setUserRole(request, role, email);
+                return "redirect:/VF/driver";
+            }
+
         } else {
             CommandUtility.setUserRole(request, UserRole.GUEST, email);
-            return "/login";
+            return "/login?error=true";
         }
-
-
-//        Optional<User> user = userService.login(name);
-//        if( user.isPresent() && user.get().getPassHash()
-//                == pass.hashCode()){
-//            request.getSession().setAttribute("teacher" , teacher.get());
-//            logger.info("Teacher "+ name+" logged successfully.");
-//            return "/WEB-INF/studentlist.jsp";
-//
-//        }
-
+        return "/login.jsp";
     }
-
-
-//    private String encodePassword( String password ) {
-//        return new BCryptPasswordEncoder().encode( password );
-//    }
 }

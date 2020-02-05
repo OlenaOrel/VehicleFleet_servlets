@@ -120,7 +120,7 @@ public class Bus {
             return this;
         }
 
-        public Builder id(String licensePlate) {
+        public Builder licensePlate(String licensePlate) {
             busBuilder.licensePlate = licensePlate;
             return this;
         }

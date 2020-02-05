@@ -182,7 +182,7 @@ public class Route {
             return this;
         }
 
-        public Builder finished(RouteStatus status) {
+        public Builder status(RouteStatus status) {
             routeBuilder.status = status;
             return this;
         }

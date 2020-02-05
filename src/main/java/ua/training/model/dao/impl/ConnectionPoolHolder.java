@@ -3,18 +3,26 @@ package ua.training.model.dao.impl;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.util.ResourceBundle;
 
 public class ConnectionPoolHolder {
-    private static volatile DataSource dataSource;
-    public static DataSource getDataSource(){
+    private static ResourceBundle bundle = ResourceBundle.getBundle("database");
+    private static final String URL = bundle.getString("db.url");
+    private static final String USERNAME = bundle.getString("db.username");
+    private static final String PASSWORD = bundle.getString("db.password");
 
-        if (dataSource == null){
+    private static volatile DataSource dataSource;
+
+
+    public static DataSource getDataSource() {
+
+        if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setUrl("jdbc:mysql://localhost:3306/training?serverTimezone=UTC");
-                    ds.setUsername("root");
-                    ds.setPassword("123qwerty");
+                    ds.setUrl(URL);
+                    ds.setUsername(USERNAME);
+                    ds.setPassword(PASSWORD);
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);
