@@ -1,4 +1,4 @@
-package ua.training.controller.filter;
+package ua.training.web.filter;
 
 import javax.servlet.*;
 import java.io.IOException;

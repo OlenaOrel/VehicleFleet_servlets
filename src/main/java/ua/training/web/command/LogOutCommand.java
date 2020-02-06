@@ -1,8 +1,7 @@
-package ua.training.controller.command;
+package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,10 +9,9 @@ public class LogOutCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LogOutCommand.class);
     @Override
     public String execute(HttpServletRequest request) {
-        String email = (String) request.getSession().getServletContext().getAttribute("email");
-        CommandUtility.logOutUser(request, email);
-        CommandUtility.setUserRole(request, UserRole.GUEST, "Guest");
-        LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
+        CommandUtility.logOutUser(request);
+        LOGGER.info("Logged users: {}", CommandUtility.getLoggedUsersFromContext(request));
+        LOGGER.info("Role: {}", request.getSession().getAttribute("role"));
         return "/index.jsp";
     }
 }

@@ -1,4 +1,4 @@
-package ua.training.controller.command;
+package ua.training.web.command;
 
 import javax.servlet.http.HttpServletRequest;
 

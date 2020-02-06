@@ -1,4 +1,4 @@
-package ua.training.controller.command;
+package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

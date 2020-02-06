@@ -1,4 +1,4 @@
-package ua.training.controller.command;
+package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,14 +32,16 @@ public class CommandUtility {
         return false;
     }
 
-    static void logOutUser(HttpServletRequest request, String email) {
+    static void logOutUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        String email = (String) request.getSession().getServletContext().getAttribute("email");
         Set<String> loggedUsers = getLoggedUsersFromContext(request);
         loggedUsers.remove(email);
-        request.getServletContext().removeAttribute("email");
+        request.getServletContext().removeAttribute("message.email");
         setLoggedUsersToContext(request, loggedUsers);
         session.removeAttribute("role");
         session.invalidate();
+        CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, "Guest");
     }
 
     static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {
