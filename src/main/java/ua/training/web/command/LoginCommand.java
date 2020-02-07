@@ -25,7 +25,7 @@ public class LoginCommand implements Command {
             return "/login.jsp";
         }
 
-        Optional<User> loginUser = userService.getUserByEmailAndPassword(email, pass);
+        Optional<User> loginUser = userService.getUserByEmail(email);
 
         if (CommandUtility.checkUserIsLogged(request, email)
                 || !loginUser.isPresent()) {

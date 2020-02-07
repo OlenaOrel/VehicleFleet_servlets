@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static ua.training.constants.DBColumnLabels.*;
-
 public class BusMapper implements ObjectMapper<Bus> {
+    private static final String BUS_ID = "buses.id";
+    private static final String BUS_LICENCE_PLATE = "number_plate";
+    private static final String BUS_MARK = "mark";
+    private static final String BUS_FREE = "buses.free";
+
     @Override
     public Bus extractFromResultSet(ResultSet rs) throws SQLException {
         return new Bus.Builder()

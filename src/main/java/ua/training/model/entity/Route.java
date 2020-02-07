@@ -2,6 +2,7 @@ package ua.training.model.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Route {
     private int id;
@@ -133,7 +134,42 @@ public class Route {
         this.busList = busList;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return id == route.id &&
+                Objects.equals(numberOfRoute, route.numberOfRoute) &&
+                Objects.equals(departureFromCityEn, route.departureFromCityEn) &&
+                Objects.equals(arrivalToCityEn, route.arrivalToCityEn) &&
+                Objects.equals(departureFromCityUk, route.departureFromCityUk) &&
+                Objects.equals(arrivalToCityUk, route.arrivalToCityUk) &&
+                Objects.equals(date, route.date) &&
+                Objects.equals(finished, route.finished) &&
+                status == route.status;
+    }
 
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", numberOfRoute=" + numberOfRoute +
+                ", departureFromCityEn='" + departureFromCityEn + '\'' +
+                ", arrivalToCityEn='" + arrivalToCityEn + '\'' +
+                ", departureFromCityUk='" + departureFromCityUk + '\'' +
+                ", arrivalToCityUk='" + arrivalToCityUk + '\'' +
+                ", date=" + date +
+                ", finished=" + finished +
+                ", status=" + status +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numberOfRoute, departureFromCityEn, arrivalToCityEn,
+                departureFromCityUk, arrivalToCityUk, date, finished, status);
+    }
 
     public static class Builder {
         private Route routeBuilder;

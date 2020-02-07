@@ -41,7 +41,7 @@
                                class="form-control"
                                placeholder="Password"/>
                         <div class="form-actions">
-                            <input type="submit" value='<fmt:message key="message.sign.in"/>' class="btn btn-default"
+                            <input type="submit" class="btn btn-default"
                                    style="margin-top:20px">
                         </div>
                     </fieldset>
