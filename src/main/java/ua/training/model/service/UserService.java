@@ -11,7 +11,7 @@ public class UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public Optional<User> getUserByEmailAndPassword(String email, String password) {
+    public Optional<User> getUserByEmail(String email) {
         Optional<User> result = Optional.empty();
         try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.findByEmail(email);

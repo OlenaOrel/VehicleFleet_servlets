@@ -1,8 +1,8 @@
-package ua.training.controller;
+package ua.training.web;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.controller.command.*;
+import ua.training.web.command.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class Servlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(Servlet.class);
+public class MainServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(MainServlet.class);
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig) {
@@ -25,6 +25,8 @@ public class Servlet extends HttpServlet {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogOutCommand());
         commands.put("driver", new DriverCommand());
+        commands.put("denied", new AccessDeniedCommand());
+        commands.put("error", new ErrorCommand());
 //        commands.put("exception" , new ExceptionCommand());
     }
 
@@ -43,7 +45,7 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         LOGGER.info("Path: {}", path);
         path = path.replace("/VF/", "");
-        Command command = commands.getOrDefault(path, (requestDefault) -> "index.jsp");
+        Command command = commands.getOrDefault(path, (requestDefault) -> "/index.jsp");
         String page = command.execute(request);
         if (page.contains("redirect")) {
             response.sendRedirect(page.replace("redirect:", ""));

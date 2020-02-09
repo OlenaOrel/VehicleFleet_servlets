@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="app.name"/>
+        <fmt:message key="message.app.name"/>
     </title>
     <div class="col-md-12 col-md-offset-10" align="right">
         <div class="locale">
@@ -18,16 +18,23 @@
 </head>
 <body>
 <h2>
-    <fmt:message key="app.welcome"/>
+    <fmt:message key="message.app.welcome"/>
 </h2>
-
+<div class="alert alert-error" style="margin-top:20px" bgcolor="red">
+    <c:if test="${error == true}">
+        <fmt:message key="message.invalid.email.password"/>
+    </c:if>
+    <c:if test="${logout}">
+        <fmt:message key="message.invalid.email.password"/>
+    </c:if>
+</div>
 <br/>
 <a href="${pageContext.request.contextPath}/login">
-    <fmt:message key="login"/>
+    <fmt:message key="message.login"/>
 </a>
 <br>
 <a href="${pageContext.request.contextPath}/register">
-    <fmt:message key="sign.up"/>
+    <fmt:message key="message.sign.up"/>
 </a>
 <br>
 </body>

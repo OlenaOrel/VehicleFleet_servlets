@@ -1,4 +1,4 @@
-package ua.training.controller.filter;
+package ua.training.web.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,30 +27,40 @@ public class AuthFilter implements Filter {
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
         String path = request.getRequestURI();
+        String mainPath = request.getContextPath() + "/";
         UserRole role = (UserRole) session.getAttribute("role");
 
         LOGGER.info("Path: {}", path);
         LOGGER.info("Role: {}", role);
 
-        if ((isInputParameterNotPresent(email, pass) && role == null)
-                || path.contains("logout")) {
+        boolean isGuestPath = path.equals(mainPath) || path.contains("login")
+                || path.contains("register") || path.contains("denied");
+
+        if (isInputParameterNotPresent(email, pass) && isUserGuest(role)) {
+            if (isGuestPath) {
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            response.sendRedirect(mainPath);
+            return;
+        }
+
+        if (path.contains("login") && isUserGuest(role)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if (role.equals(UserRole.GUEST) && !path.contains("login")) {
-            response.sendRedirect("login");
-            return;
-        }
-
-        if (isUserLogged(session)) {
-            if ((isPathCorrectForUser(role, path))) {
-                filterChain.doFilter(servletRequest, servletResponse);
+        if (isUserLogged(session, role)) {
+            if (isPathAccessDenied(role, path)) {
+                response.sendRedirect("denied");
                 return;
-            } else {
+            }
+            if (isGuestPath) {
                 response.sendRedirect("logout");
                 return;
             }
+
+
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
@@ -61,15 +71,19 @@ public class AuthFilter implements Filter {
                 || pass == null || pass.equals("");
     }
 
-    private boolean isUserLogged(HttpSession session) {
-        return session != null
-                && session.getAttribute("role") != null
-                && !session.getAttribute("role").equals(UserRole.GUEST);
+    private boolean isUserGuest(UserRole role) {
+        return role == null || role.equals(UserRole.ROLE_GUEST);
     }
 
-    private boolean isPathCorrectForUser(UserRole role, String path) {
-        return (role.equals(UserRole.ROLE_DRIVER) && path.contains("driver"))
-                || (role.equals(UserRole.ROLE_ADMIN) && path.contains("admin"));
+
+    private boolean isUserLogged(HttpSession session, UserRole role) {
+        return session != null
+                && !isUserGuest(role);
+    }
+
+    private boolean isPathAccessDenied(UserRole role, String path) {
+        return (role.equals(UserRole.ROLE_DRIVER) && path.contains("admin"))
+                || (role.equals(UserRole.ROLE_ADMIN) && path.contains("driver"));
     }
 
 

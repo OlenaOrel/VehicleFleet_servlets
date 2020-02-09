@@ -1,4 +1,4 @@
-package ua.training.controller.command;
+package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,10 +25,11 @@ public class LoginCommand implements Command {
             return "/login.jsp";
         }
 
-        Optional<User> loginUser = userService.getUserByEmailAndPassword(email, pass);
+        Optional<User> loginUser = userService.getUserByEmail(email);
 
         if (CommandUtility.checkUserIsLogged(request, email)
                 || !loginUser.isPresent()) {
+            LOGGER.info("User: {} has already logged in", email);
             return "/WEB-INF/error.jsp";
         }
 
@@ -49,8 +50,8 @@ public class LoginCommand implements Command {
             }
 
         } else {
-            CommandUtility.setUserRole(request, UserRole.GUEST, email);
-            return "/login?error=true";
+            CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, email);
+            return "/login.jsp";
         }
         return "/login.jsp";
     }

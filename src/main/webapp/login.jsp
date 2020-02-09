@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="app.name"/>
+        <fmt:message key="message.app.name"/>
     </title>
     <div class="col-md-12 col-md-offset-10" align="right">
         <div class="locale">
@@ -23,29 +23,25 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-2">
             <h2 class="page-header" style="color: forestgreen">
-                <fmt:message key="login.page.header"/>
+                <fmt:message key="message.login.page.header"/>
             </h2>
             <div>
                 <form action="${pageContext.request.contextPath}/login" method="post">
                     <fieldset>
-                        <%--                        <div th:if="${param.error}" class="alert alert-error" th:text="#{invalid.email.password}"--%>
-                        <%--                             style="margin-top:20px" th:bgcolor="red"></div>--%>
-                        <%--                        <div th:if="${param.logout}" class="alert alert-success">--%>
-                        <%--                            You have been logged out.--%>
-                        <%--                        </div>--%>
                         <label for="email">
-                            <fmt:message key="email"/>
+                            <fmt:message key="message.email"/>
                         </label>
-                        <input type="text" id="email" name="email" placeholder='<fmt:message key="email"/>'
+                        <input type="text" id="email" name="email" placeholder='<fmt:message key="message.email"/>'
                                class="form-control"/>
                         <label for="password">
-                            <fmt:message key="password"/>
+                            <fmt:message key="message.password"/>
                         </label>
-                        <input type="password" id="password" name="pass" placeholder='<fmt:message key="password"/>'
+                        <input type="password" id="password" name="pass"
+                               placeholder='<fmt:message key="message.password"/>'
                                class="form-control"
                                placeholder="Password"/>
                         <div class="form-actions">
-                            <input type="submit" value='<fmt:message key="sign.in"/>' class="btn btn-default"
+                            <input type="submit" class="btn btn-default"
                                    style="margin-top:20px">
                         </div>
                     </fieldset>

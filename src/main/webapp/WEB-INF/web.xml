@@ -2,7 +2,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>Servlet</servlet-name>
-    <servlet-class>ua.training.controller.Servlet</servlet-class>
+    <servlet-class>ua.training.web.MainServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -12,7 +12,7 @@
 
   <filter>
     <filter-name>EncodingFilter</filter-name>
-    <filter-class>ua.training.controller.filter.EncodingFilter</filter-class>
+    <filter-class>ua.training.web.filter.EncodingFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -22,7 +22,7 @@
 
   <filter>
     <filter-name>LocaleFilter</filter-name>
-    <filter-class>ua.training.controller.filter.LocaleFilter</filter-class>
+    <filter-class>ua.training.web.filter.LocaleFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -32,7 +32,7 @@
 
   <filter>
     <filter-name>AuthFilter</filter-name>
-    <filter-class>ua.training.controller.filter.AuthFilter</filter-class>
+    <filter-class>ua.training.web.filter.AuthFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -44,11 +44,15 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
-  <error-page>
-    <exception-type>ua.training.model.exceptions.IncorrectInputException</exception-type>
-    <location>/WEB-INF/error.jsp</location>
-  </error-page>
+  <!--  <error-page>-->
+  <!--    <exception-type>ua.training.exception.IncorrectInputException</exception-type>-->
+  <!--    <location>/WEB-INF/error.jsp</location>-->
+  <!--  </error-page>-->
 
+  <error-page>
+    <exception-type>403</exception-type>
+    <location>/WEB-INF/access_denied.jsp</location>
+  </error-page>
 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
