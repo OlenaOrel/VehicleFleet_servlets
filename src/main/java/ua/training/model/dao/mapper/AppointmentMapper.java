@@ -17,7 +17,6 @@ public class AppointmentMapper implements ObjectMapper<Appointment> {
     private static final String APPOINTMENT_STATUS = "status";
 
 
-
     @Override
     public Appointment extractFromResultSet(ResultSet rs) throws SQLException {
         Appointment result = new Appointment();
