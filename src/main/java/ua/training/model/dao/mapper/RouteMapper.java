@@ -1,7 +1,6 @@
 package ua.training.model.dao.mapper;
 
 import ua.training.model.entity.Route;
-import ua.training.model.entity.RouteStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,9 +26,6 @@ public class RouteMapper implements ObjectMapper<Route> {
                 .arrivalToCityEn(rs.getString(ROUTE_ARRIVAL_TO_CITY))
                 .departureFromCityUk(rs.getString(ROUTE_DEPARTURE_FROM_CITY_UK))
                 .arrivalToCityUk(rs.getString(ROUTE_ARRIVAL_TO_CITY_UK))
-                .date(rs.getDate(ROUTE_DATE).toLocalDate())
-                .finished(rs.getBoolean(ROUTE_FINISHED))
-                .status(RouteStatus.valueOf(rs.getString(ROUTE_STATUS)))
                 .build();
     }
 

@@ -9,14 +9,11 @@ public class User {
     private String lastName;
     private String originFirstName;
     private String originLastName;
-    private String login;
     private String email;
     private String password;
     private UserRole role;
-    private boolean free;
 
     private List<Bus> buses;
-    private List<Route> routes;
 
     public User() {
     }
@@ -27,23 +24,19 @@ public class User {
             String lastName,
             String originFirstName,
             String originLastName,
-            String login,
             String email,
             String password,
             UserRole role,
-            List<Bus> buses,
-            List<Route> routes) {
+            List<Bus> buses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.originFirstName = originFirstName;
         this.originLastName = originLastName;
-        this.login = login;
         this.email = email;
         this.password = password;
         this.role = role;
         this.buses = buses;
-        this.routes = routes;
     }
 
     public int getId() {
@@ -86,14 +79,6 @@ public class User {
         this.originLastName = originLastName;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -118,14 +103,6 @@ public class User {
         this.role = role;
     }
 
-    public boolean isFree() {
-        return free;
-    }
-
-    public void setFree(boolean free) {
-        this.free = free;
-    }
-
     public List<Bus> getBusList() {
         return buses;
     }
@@ -134,26 +111,16 @@ public class User {
         this.buses = buses;
     }
 
-    public List<Route> getRouteList() {
-        return routes;
-    }
-
-    public void setRouteList(List<Route> routes) {
-        this.routes = routes;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                free == user.free &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(originFirstName, user.originFirstName) &&
                 Objects.equals(originLastName, user.originLastName) &&
-                Objects.equals(login, user.login) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 role == user.role;
@@ -163,7 +130,7 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName,
                 originFirstName, originLastName,
-                login, email, password, role, free);
+                email, password, role);
     }
 
     public static class Builder {
@@ -198,11 +165,6 @@ public class User {
             return this;
         }
 
-        public Builder login(String login) {
-            userBuilder.login = login;
-            return this;
-        }
-
         public Builder email(String email) {
             userBuilder.email = email;
             return this;
@@ -212,12 +174,6 @@ public class User {
             userBuilder.password = password;
             return this;
         }
-
-        public Builder free(boolean free) {
-            userBuilder.free = free;
-            return this;
-        }
-
 
         public Builder role(UserRole role) {
             userBuilder.role = role;
@@ -231,16 +187,6 @@ public class User {
 
         public Builder bus(Bus bus) {
             userBuilder.buses.add(bus);
-            return this;
-        }
-
-        public Builder routeList(List<Route> routes) {
-            userBuilder.routes = routes;
-            return this;
-        }
-
-        public Builder route(Route route) {
-            userBuilder.routes.add(route);
             return this;
         }
 

@@ -18,7 +18,6 @@ public class BusMapper implements ObjectMapper<Bus> {
                 .id(rs.getInt(BUS_ID))
                 .mark(rs.getString(BUS_MARK))
                 .licensePlate(rs.getString(BUS_LICENCE_PLATE))
-                .free(rs.getBoolean(BUS_FREE))
                 .build();
     }
 

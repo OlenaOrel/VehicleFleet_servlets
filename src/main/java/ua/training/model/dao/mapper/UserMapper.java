@@ -28,10 +28,8 @@ public class UserMapper implements ObjectMapper<User> {
                 .lastName(rs.getString(USER_LAST_NAME))
                 .originFirstName(rs.getString(USER_ORIGIN_FIRST_NAME))
                 .originLastName(rs.getString(USER_ORIGIN_LAST_NAME))
-                .login(rs.getString(USER_LOGIN))
                 .email(rs.getString(USER_EMAIL))
                 .password(rs.getString(USER_PASSWORD))
-                .free(rs.getBoolean(USER_FREE))
                 .role(UserRole.valueOf(rs.getString(USER_ROLE)))
                 .build();
     }

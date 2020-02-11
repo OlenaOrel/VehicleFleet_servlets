@@ -1,22 +1,14 @@
 package ua.training.model.entity;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class Route {
     private int id;
-    private Integer numberOfRoute;
+    private Integer number;
     private String departureFromCityEn;
     private String arrivalToCityEn;
     private String departureFromCityUk;
     private String arrivalToCityUk;
-    private LocalDate date;
-    private Boolean finished;
-    private RouteStatus status;
-
-    private List<User> drivers;
-    private List<Bus> busList;
 
     public Route() {
     }
@@ -27,23 +19,13 @@ public class Route {
             String departureFromCityEn,
             String arrivalToCityEn,
             String departureFromCityUk,
-            String arrivalToCityUk,
-            LocalDate date,
-            Boolean finished,
-            RouteStatus status,
-            List<User> drivers,
-            List<Bus> busList) {
+            String arrivalToCityUk) {
         this.id = id;
-        this.numberOfRoute = numberOfRoute;
+        this.number = numberOfRoute;
         this.departureFromCityEn = departureFromCityEn;
         this.arrivalToCityEn = arrivalToCityEn;
         this.departureFromCityUk = departureFromCityUk;
         this.arrivalToCityUk = arrivalToCityUk;
-        this.date = date;
-        this.finished = finished;
-        this.status = status;
-        this.drivers = drivers;
-        this.busList = busList;
     }
 
     public int getId() {
@@ -54,12 +36,12 @@ public class Route {
         this.id = id;
     }
 
-    public Integer getNumberOfRoute() {
-        return numberOfRoute;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setNumberOfRoute(Integer numberOfRoute) {
-        this.numberOfRoute = numberOfRoute;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getDepartureFromCityEn() {
@@ -94,81 +76,35 @@ public class Route {
         this.arrivalToCityUk = arrivalToCityUk;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Boolean getFinished() {
-        return finished;
-    }
-
-    public void setFinished(Boolean finished) {
-        this.finished = finished;
-    }
-
-    public RouteStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(RouteStatus status) {
-        this.status = status;
-    }
-
-    public List<User> getDrivers() {
-        return drivers;
-    }
-
-    public void setDrivers(List<User> drivers) {
-        this.drivers = drivers;
-    }
-
-    public List<Bus> getBusList() {
-        return busList;
-    }
-
-    public void setBusList(List<Bus> busList) {
-        this.busList = busList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Route route = (Route) o;
         return id == route.id &&
-                Objects.equals(numberOfRoute, route.numberOfRoute) &&
+                Objects.equals(number, route.number) &&
                 Objects.equals(departureFromCityEn, route.departureFromCityEn) &&
                 Objects.equals(arrivalToCityEn, route.arrivalToCityEn) &&
                 Objects.equals(departureFromCityUk, route.departureFromCityUk) &&
-                Objects.equals(arrivalToCityUk, route.arrivalToCityUk) &&
-                Objects.equals(date, route.date) &&
-                Objects.equals(finished, route.finished) &&
-                status == route.status;
+                Objects.equals(arrivalToCityUk, route.arrivalToCityUk);
     }
 
     @Override
     public String toString() {
         return "Route{" +
                 "id=" + id +
-                ", numberOfRoute=" + numberOfRoute +
+                ", number=" + number +
                 ", departureFromCityEn='" + departureFromCityEn + '\'' +
                 ", arrivalToCityEn='" + arrivalToCityEn + '\'' +
                 ", departureFromCityUk='" + departureFromCityUk + '\'' +
                 ", arrivalToCityUk='" + arrivalToCityUk + '\'' +
-                ", date=" + date +
-                ", finished=" + finished +
-                ", status=" + status +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfRoute, departureFromCityEn, arrivalToCityEn,
-                departureFromCityUk, arrivalToCityUk, date, finished, status);
+        return Objects.hash(id, number, departureFromCityEn, arrivalToCityEn,
+                departureFromCityUk, arrivalToCityUk);
     }
 
     public static class Builder {
@@ -184,7 +120,7 @@ public class Route {
         }
 
         public Builder numberOfRoute(Integer numberOfRoute) {
-            routeBuilder.numberOfRoute = numberOfRoute;
+            routeBuilder.number = numberOfRoute;
             return this;
         }
 
@@ -205,41 +141,6 @@ public class Route {
 
         public Builder arrivalToCityUk(String arrivalToCityUk) {
             routeBuilder.arrivalToCityUk = arrivalToCityUk;
-            return this;
-        }
-
-        public Builder date(LocalDate date) {
-            routeBuilder.date = date;
-            return this;
-        }
-
-        public Builder finished(Boolean finished) {
-            routeBuilder.finished = finished;
-            return this;
-        }
-
-        public Builder status(RouteStatus status) {
-            routeBuilder.status = status;
-            return this;
-        }
-
-        public Builder drivers(List<User> drivers) {
-            routeBuilder.drivers = drivers;
-            return this;
-        }
-
-        public Builder driver(User driver) {
-            routeBuilder.drivers.add(driver);
-            return this;
-        }
-
-        public Builder busList(List<Bus> busList) {
-            routeBuilder.busList = busList;
-            return this;
-        }
-
-        public Builder bus(Bus bus) {
-            routeBuilder.busList.add(bus);
             return this;
         }
 
