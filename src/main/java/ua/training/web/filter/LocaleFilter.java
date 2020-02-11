@@ -17,7 +17,13 @@ public class LocaleFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String locale = servletRequest.getParameter("lang");
-        if (locale != null) {
+        String currentLocale = (String) request.getSession().getAttribute("lang");
+        if (currentLocale == null) {
+            request.getSession().setAttribute("lang", "en");
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (locale != null && !locale.equals(currentLocale)) {
             request.getSession().setAttribute("lang", locale);
         }
         filterChain.doFilter(request, response);
