@@ -1,15 +1,20 @@
 package ua.training.dao.impl;
 
 import ua.training.dao.BusDao;
+import ua.training.dao.mapper.BusMapper;
 import ua.training.entity.Bus;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCBusDao implements BusDao {
     private Connection connection;
+    private BusMapper mapper = new BusMapper();
 
     public JDBCBusDao(Connection connection) {
         this.connection = connection;
@@ -27,7 +32,20 @@ public class JDBCBusDao implements BusDao {
 
     @Override
     public List<Bus> findAll() {
-        return null;
+        List<Bus> result = new ArrayList<>();
+        final String query = "SELECT * FROM bus";
+        try(Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                result.add(mapper.extractFromResultSet(resultSet));
+            }
+//            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override

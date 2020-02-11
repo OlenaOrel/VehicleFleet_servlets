@@ -21,7 +21,7 @@ public class AddRouteCommand implements Command {
         if (routeId != null) {
             LOGGER.info("RouteId: {}", routeId);
             session.setAttribute("routeId", routeId);
-            return "redirect:admin/appoint/bus";
+            return "redirect:/VF/admin/appoint/bus";
         }
         List<Route> routes = routeService.getAllRouts();
         LOGGER.info("Count of route: {}", routes.size());

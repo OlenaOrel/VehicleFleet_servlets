@@ -3,6 +3,7 @@ package ua.training.web;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.web.command.*;
+import ua.training.web.command.appoint.AddBusCommand;
 import ua.training.web.command.appoint.AddRouteCommand;
 
 import javax.servlet.ServletConfig;
@@ -28,6 +29,7 @@ public class MainServlet extends HttpServlet {
         commands.put("/denied", new AccessDeniedCommand());
         commands.put("/admin", new AdminCommand());
         commands.put("/admin/appoint/route", new AddRouteCommand());
+        commands.put("/admin/appoint/bus", new AddBusCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
