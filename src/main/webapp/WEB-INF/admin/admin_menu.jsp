@@ -7,6 +7,9 @@
 <br/>
 <a href="${pageContext.request.contextPath}/logout">Log out</a>
 <br>
+<br/>
+<a href="${pageContext.request.contextPath}/admin/appoint/route">Appoint route</a>
+<br>
 <br>
 </body>
 </html>
