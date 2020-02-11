@@ -1,7 +1,7 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.RouteDao;
-import ua.training.model.entity.Route;
+import ua.training.dao.RouteDao;
+import ua.training.entity.Route;
 
 import java.sql.Connection;
 import java.sql.SQLException;

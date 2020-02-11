@@ -1,7 +1,7 @@
-package ua.training.model.dao.mapper;
+package ua.training.dao.mapper;
 
-import ua.training.model.entity.Appointment;
-import ua.training.model.entity.AppointmentStatus;
+import ua.training.entity.Appointment;
+import ua.training.entity.AppointmentStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

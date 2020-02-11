@@ -1,8 +1,8 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.UserDao;
-import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.User;
+import ua.training.dao.UserDao;
+import ua.training.dao.mapper.UserMapper;
+import ua.training.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.BusDao;
-import ua.training.model.entity.Bus;
+import ua.training.dao.BusDao;
+import ua.training.entity.Bus;
 
 import java.sql.Connection;
 import java.sql.SQLException;

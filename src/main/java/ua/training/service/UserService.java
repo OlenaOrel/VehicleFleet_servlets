@@ -1,9 +1,9 @@
-package ua.training.model.service;
+package ua.training.service;
 
 import org.mindrot.jbcrypt.BCrypt;
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.UserDao;
-import ua.training.model.entity.User;
+import ua.training.dao.DaoFactory;
+import ua.training.dao.UserDao;
+import ua.training.entity.User;
 
 import java.util.Optional;
 

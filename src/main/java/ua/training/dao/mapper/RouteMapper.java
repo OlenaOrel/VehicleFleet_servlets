@@ -1,6 +1,6 @@
-package ua.training.model.dao.mapper;
+package ua.training.dao.mapper;
 
-import ua.training.model.entity.Route;
+import ua.training.entity.Route;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

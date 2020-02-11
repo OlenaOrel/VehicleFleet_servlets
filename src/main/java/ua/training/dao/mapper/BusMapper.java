@@ -1,6 +1,6 @@
-package ua.training.model.dao.mapper;
+package ua.training.dao.mapper;
 
-import ua.training.model.entity.Bus;
+import ua.training.entity.Bus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
