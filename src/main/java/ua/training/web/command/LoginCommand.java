@@ -33,12 +33,12 @@ public class LoginCommand implements Command {
             return "/WEB-INF/error.jsp";
         }
 
-        LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
-
         User user = loginUser.get();
         if (userService.isPassCorrect(pass, user.getPassword())) {
+            CommandUtility.addUserToLoggedUsers(request, user.getEmail());
             UserRole role = user.getRole();
             LOGGER.info("User role: '" + role + "'");
+            LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
 
             if (role.equals(UserRole.ROLE_ADMIN)) {
                 CommandUtility.setUserRole(request, role, email);
@@ -50,9 +50,10 @@ public class LoginCommand implements Command {
             }
 
         } else {
-            CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, email);
+            CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, "guest");
             return "/login.jsp";
         }
+        LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
         return "/login.jsp";
     }
 }
