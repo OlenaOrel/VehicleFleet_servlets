@@ -51,7 +51,7 @@ public class AuthFilter implements Filter {
         }
 
         if (isUserLogged(session, role)) {
-            if (isPathAccessDenied(role, path)) {
+            if (isPathAccessDenied(role, path, mainPath)) {
                 response.sendRedirect("denied");
                 return;
             }
@@ -59,10 +59,7 @@ public class AuthFilter implements Filter {
                 response.sendRedirect("logout");
                 return;
             }
-
-
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
@@ -81,9 +78,10 @@ public class AuthFilter implements Filter {
                 && !isUserGuest(role);
     }
 
-    private boolean isPathAccessDenied(UserRole role, String path) {
+    private boolean isPathAccessDenied(UserRole role, String path, String mainPath) {
+        path = path.replace(mainPath, "");
         return (role.equals(UserRole.ROLE_DRIVER) && path.contains("admin"))
-                || (role.equals(UserRole.ROLE_ADMIN) && path.contains("driver"));
+                || (role.equals(UserRole.ROLE_ADMIN) && path.startsWith("driver"));
     }
 
 
