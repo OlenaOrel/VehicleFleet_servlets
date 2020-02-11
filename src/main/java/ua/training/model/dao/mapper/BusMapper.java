@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class BusMapper implements ObjectMapper<Bus> {
-    private static final String BUS_ID = "buses.id";
+    private static final String BUS_ID = "bus.id";
     private static final String BUS_LICENCE_PLATE = "number_plate";
     private static final String BUS_MARK = "mark";
-    private static final String BUS_FREE = "buses.free";
 
     @Override
     public Bus extractFromResultSet(ResultSet rs) throws SQLException {

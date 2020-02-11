@@ -6,6 +6,7 @@ import ua.training.model.entity.Bus;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCBusDao implements BusDao {
     private Connection connection;
@@ -20,7 +21,7 @@ public class JDBCBusDao implements BusDao {
     }
 
     @Override
-    public Bus findById(int id) {
+    public Optional<Bus> findById(int id) {
         return null;
     }
 

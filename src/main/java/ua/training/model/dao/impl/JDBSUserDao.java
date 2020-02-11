@@ -20,7 +20,7 @@ public class JDBSUserDao implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        final String query = "SELECT * FROM users WHERE email = ?";
+        final String query = "SELECT * FROM user WHERE email = ?";
         Optional<User> result = Optional.empty();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
@@ -45,7 +45,7 @@ public class JDBSUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         return null;
     }
 

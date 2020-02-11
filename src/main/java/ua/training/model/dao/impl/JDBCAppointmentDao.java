@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCAppointmentDao implements AppointmentDao {
+
     @Override
     public Appointment save(Appointment entity) {
         return null;
