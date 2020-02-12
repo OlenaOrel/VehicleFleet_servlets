@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class RouteMapper implements ObjectMapper<Route> {
-    private static final String ROUTE_ID = "routes.id";
+    private static final String ROUTE_ID = "route.id";
     private static final String ROUTE_NUMBER = "number";
     private static final String ROUTE_DEPARTURE_FROM_CITY = "departure_from_city";
     private static final String ROUTE_DEPARTURE_FROM_CITY_UK = "departure_from_city_uk";

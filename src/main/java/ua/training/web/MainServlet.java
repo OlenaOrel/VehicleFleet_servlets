@@ -3,6 +3,10 @@ package ua.training.web;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.web.command.*;
+import ua.training.web.command.appoint.AddBusCommand;
+import ua.training.web.command.appoint.AddDriverCommand;
+import ua.training.web.command.appoint.AddRouteCommand;
+import ua.training.web.command.appoint.ConfirmAppointCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,11 +25,15 @@ public class MainServlet extends HttpServlet {
     public void init(ServletConfig servletConfig) {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("admin", new AdminCommand());
-        commands.put("login", new LoginCommand());
-        commands.put("logout", new LogOutCommand());
-        commands.put("driver", new DriverCommand());
-        commands.put("denied", new AccessDeniedCommand());
+        commands.put("/login", new LoginCommand());
+        commands.put("/logout", new LogOutCommand());
+        commands.put("/driver", new DriverCommand());
+        commands.put("/denied", new AccessDeniedCommand());
+        commands.put("/admin", new AdminCommand());
+        commands.put("/admin/appoint/route", new AddRouteCommand());
+        commands.put("/admin/appoint/bus", new AddBusCommand());
+        commands.put("/admin/appoint/driver", new AddDriverCommand());
+        commands.put("/admin/appoint/confirm", new ConfirmAppointCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,11 +49,12 @@ public class MainServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        String contextPath = request.getContextPath();
         LOGGER.info("Path: {}", path);
-        path = path.replace("/VF/", "");
+        path = path.replace(contextPath, "");
         Command command = commands.getOrDefault(path, (requestDefault) -> "/index.jsp");
         String page = command.execute(request);
-        if (page.contains("redirect")) {
+        if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", ""));
             return;
         }

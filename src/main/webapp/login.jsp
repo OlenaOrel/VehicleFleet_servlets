@@ -29,15 +29,15 @@
                 <form action="${pageContext.request.contextPath}/login" method="post">
                     <fieldset>
                         <label for="email">
-                            <fmt:message key="message.email"/>
+                            <fmt:message key="message.user.email"/>
                         </label>
-                        <input type="text" id="email" name="email" placeholder='<fmt:message key="message.email"/>'
+                        <input type="text" id="email" name="email" placeholder='<fmt:message key="message.user.email"/>'
                                class="form-control"/>
                         <label for="password">
-                            <fmt:message key="message.password"/>
+                            <fmt:message key="message.user.password"/>
                         </label>
                         <input type="password" id="password" name="pass"
-                               placeholder='<fmt:message key="message.password"/>'
+                               placeholder='<fmt:message key="message.user.password"/>'
                                class="form-control"
                                placeholder="Password"/>
                         <div class="form-actions">

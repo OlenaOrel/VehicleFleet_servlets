@@ -11,6 +11,8 @@ public abstract class DaoFactory {
 
     public abstract BusDao createBusDao();
 
+    public abstract AppointmentDao createAppointmentDao();
+
     public static DaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {

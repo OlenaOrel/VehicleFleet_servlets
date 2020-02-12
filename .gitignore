@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
 /VehicleFleet_servlets.iml
+/.idea/
