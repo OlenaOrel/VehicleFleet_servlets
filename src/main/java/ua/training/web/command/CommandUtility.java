@@ -10,15 +10,18 @@ import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.Set;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class CommandUtility {
     private static Logger LOGGER = LogManager.getLogger(CommandUtility.class);
+    private static String GUEST = "guest";
 
     static void setUserRole(HttpServletRequest request,
                             UserRole role, String email) {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
-        context.setAttribute("email", email);
-        session.setAttribute("role", role);
+        context.setAttribute(EMAIL_ATTRIBUTE, email);
+        session.setAttribute(ROLE_ATTRIBUTE, role);
     }
 
     static boolean checkUserIsLogged(HttpServletRequest request, String email) {
@@ -37,24 +40,24 @@ public class CommandUtility {
 
     static void logOutUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String email = (String) request.getSession().getServletContext().getAttribute("email");
+        String email = (String) request.getSession().getServletContext().getAttribute(EMAIL_ATTRIBUTE);
         Set<String> loggedUsers = getLoggedUsersFromContext(request);
         loggedUsers.remove(email);
-        request.getServletContext().removeAttribute("email");
+        request.getServletContext().removeAttribute(EMAIL_ATTRIBUTE);
         setLoggedUsersToContext(request, loggedUsers);
-        session.removeAttribute("role");
+        session.removeAttribute(ROLE_ATTRIBUTE);
         session.invalidate();
-        CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, "Guest");
+        CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, GUEST);
     }
 
     static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {
         return (HashSet<String>) request.getSession()
-                .getServletContext().getAttribute("loggedUsers");
+                .getServletContext().getAttribute(LOGGED_USERS_ATTRIBUTE);
     }
 
     private static void setLoggedUsersToContext(HttpServletRequest request,
                                                 Set<String> loggedUsers) {
         request.getSession().getServletContext()
-                .setAttribute("loggedUsers", loggedUsers);
+                .setAttribute(LOGGED_USERS_ATTRIBUTE, loggedUsers);
     }
 }

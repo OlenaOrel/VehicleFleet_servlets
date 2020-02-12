@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(AuthFilter.class);
 
@@ -24,20 +26,21 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        String email = request.getParameter("email");
-        String pass = request.getParameter("password");
+        String email = request.getParameter(EMAIL_ATTRIBUTE);
+        String pass = request.getParameter(PASS_ATTRIBUTE);
         String path = request.getRequestURI();
-        String mainPath = request.getContextPath() + "/";
-        UserRole role = (UserRole) session.getAttribute("role");
+        String contextPath = request.getContextPath();
+        String mainPath = contextPath + "/";
+        UserRole role = (UserRole) session.getAttribute(ROLE_ATTRIBUTE);
 
         LOGGER.info("Path: {}", path);
         LOGGER.info("Role: {}", role);
 
-        boolean isGuestPath = path.equals(mainPath) || path.contains("login")
-                || path.contains("register") || path.contains("denied");
+        boolean isGuestPath = path.equals(mainPath) || path.contains(LOGIN_PATH)
+                || path.contains(REGISTRATION_PATH);
 
         if (isInputParameterNotPresent(email, pass) && isUserGuest(role)) {
-            if (isGuestPath) {
+            if (isGuestPath || path.contains(DENIED_PATH)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
@@ -45,18 +48,18 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if (path.contains("login") && isUserGuest(role)) {
+        if (path.contains(LOGIN_PATH) && isUserGuest(role)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
         if (isUserLogged(session, role)) {
-            if (isPathAccessDenied(role, path, mainPath)) {
-                response.sendRedirect("denied");
+            if (isPathAccessDenied(role, path, contextPath)) {
+                response.sendRedirect(contextPath + DENIED_PATH);
                 return;
             }
             if (isGuestPath) {
-                response.sendRedirect("logout");
+                response.sendRedirect(contextPath + LOGOUT_PATH);
                 return;
             }
         }
@@ -78,10 +81,10 @@ public class AuthFilter implements Filter {
                 && !isUserGuest(role);
     }
 
-    private boolean isPathAccessDenied(UserRole role, String path, String mainPath) {
-        path = path.replace(mainPath, "");
-        return (role.equals(UserRole.ROLE_DRIVER) && path.contains("admin"))
-                || (role.equals(UserRole.ROLE_ADMIN) && path.startsWith("driver"));
+    private boolean isPathAccessDenied(UserRole role, String path, String contextPath) {
+        path = path.replace(contextPath, "");
+        return (role.equals(UserRole.ROLE_DRIVER) && path.contains(ADMIN_PATH))
+                || (role.equals(UserRole.ROLE_ADMIN) && path.startsWith(DRIVER_PATH));
     }
 
 

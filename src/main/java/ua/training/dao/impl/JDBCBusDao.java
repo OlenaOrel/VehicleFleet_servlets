@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCBusDao implements BusDao {
+
+    private static final String FIND_BUS_BY_ID_QUERY = "SELECT * FROM bus WHERE id =?";
+    private static final String FIND_ALL_BUSES_QUERY = "SELECT * FROM bus";
+
     private Connection connection;
     private BusMapper mapper = new BusMapper();
 
@@ -25,8 +29,7 @@ public class JDBCBusDao implements BusDao {
     @Override
     public Optional<Bus> findById(int id) {
         Optional<Bus> result = Optional.empty();
-        final String query = "SELECT * FROM bus WHERE id =?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BUS_BY_ID_QUERY)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -44,9 +47,8 @@ public class JDBCBusDao implements BusDao {
     @Override
     public List<Bus> findAll() {
         List<Bus> result = new ArrayList<>();
-        final String query = "SELECT * FROM bus";
-        try(Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(FIND_ALL_BUSES_QUERY);
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }

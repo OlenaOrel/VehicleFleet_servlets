@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCRouteDao implements RouteDao {
+
+    private static final String FIND_ROUTE_BY_ID_QUERY = "SELECT * FROM route WHERE id = ?";
+    private static final String FIND_ALL_ROUTES_QUERY = "SELECT * FROM route";
+
     private Connection connection;
     private RouteMapper mapper = new RouteMapper();
 
@@ -24,9 +28,8 @@ public class JDBCRouteDao implements RouteDao {
 
     @Override
     public Optional<Route> findById(int id) {
-        final String query = "SELECT * FROM route WHERE id = ?";
         Optional<Route> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROUTE_BY_ID_QUERY)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -44,9 +47,8 @@ public class JDBCRouteDao implements RouteDao {
     @Override
     public List<Route> findAll() {
         List<Route> result = new ArrayList<>();
-        final String query = "SELECT * FROM route";
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(FIND_ALL_ROUTES_QUERY);
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }

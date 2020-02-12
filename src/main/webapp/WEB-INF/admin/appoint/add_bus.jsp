@@ -49,7 +49,7 @@
                             </th>
                         </tr>
 
-                        <c:forEach items="${buses}" var="bus">
+                        <c:forEach items="${busList}" var="bus">
                             <tr>
                                 <td>${bus.licensePlate}</td>
                                 <td>${bus.mark}</td>

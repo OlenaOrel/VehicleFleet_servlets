@@ -53,7 +53,7 @@
                             <fmt:message key="message.route.appoint"/>
                         </th>
                     </tr>
-                    <c:forEach items="${routes}" var="route">
+                    <c:forEach items="${routeList}" var="route">
                         <tr>
                             <td>${route.number}</td>
                             <c:if test="${lang.equals('en')}">

@@ -17,7 +17,7 @@ public class RouteService {
 
     public List<Route> getAllRouts() {
         List<Route> result = new ArrayList<>();
-        try(RouteDao routeDao = daoFactory.createRouteDao()) {
+        try (RouteDao routeDao = daoFactory.createRouteDao()) {
             result = routeDao.findAll();
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,7 +27,7 @@ public class RouteService {
 
     public Optional<Route> getRouteById(int routeId) {
         Optional<Route> result = Optional.empty();
-        try(RouteDao routeDao = daoFactory.createRouteDao()) {
+        try (RouteDao routeDao = daoFactory.createRouteDao()) {
             result = routeDao.findById(routeId);
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,7 +14,7 @@ public class BusService {
 
     public List<Bus> getAllBuses() {
         List<Bus> result = new ArrayList<>();
-        try(BusDao busDao = daoFactory.createBusDao()) {
+        try (BusDao busDao = daoFactory.createBusDao()) {
             result = busDao.findAll();
         } catch (Exception e) {
             e.printStackTrace();
@@ -24,7 +24,7 @@ public class BusService {
 
     public Optional<Bus> getBusById(int busId) {
         Optional<Bus> result = Optional.empty();
-        try(BusDao busDao = daoFactory.createBusDao()) {
+        try (BusDao busDao = daoFactory.createBusDao()) {
             result = busDao.findById(busId);
         } catch (Exception e) {
             e.printStackTrace();

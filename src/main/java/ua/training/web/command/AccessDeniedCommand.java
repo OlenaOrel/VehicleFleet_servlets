@@ -2,6 +2,7 @@ package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.web.conctant.WebConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,10 +11,10 @@ public class AccessDeniedCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String email = request.getParameter("email");
-        LOGGER.warn("User with email: '" + email + "'try to go to forbidden page");
+        String email = request.getParameter(WebConstants.EMAIL_ATTRIBUTE);
+        LOGGER.warn("User tried to go to forbidden page");
         CommandUtility.logOutUser(request);
-        LOGGER.info("Role: {}", request.getSession().getAttribute("role"));
-        return "/access_denied.jsp";
+        LOGGER.info("Role: {}", request.getSession().getAttribute(WebConstants.ROLE_ATTRIBUTE));
+        return WebConstants.DENIED_PAGE;
     }
 }
