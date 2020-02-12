@@ -36,4 +36,14 @@ public class UserService {
         }
         return result;
     }
+
+    public Optional<User> getUserById(int driverId) {
+        Optional<User> result = Optional.empty();
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            result = userDao.findById(driverId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

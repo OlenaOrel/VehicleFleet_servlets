@@ -1,9 +1,6 @@
 package ua.training.dao.impl;
 
-import ua.training.dao.BusDao;
-import ua.training.dao.DaoFactory;
-import ua.training.dao.RouteDao;
-import ua.training.dao.UserDao;
+import ua.training.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,6 +24,12 @@ public class JDBCDaoFactory extends DaoFactory {
     public BusDao createBusDao() {
         return new JDBCBusDao(getConnection());
     }
+
+    @Override
+    public AppointmentDao createAppointmentDao() {
+        return new JDBCAppointmentDao(getConnection());
+    }
+
 
     private Connection getConnection() {
         try {

@@ -6,6 +6,7 @@ import ua.training.web.command.*;
 import ua.training.web.command.appoint.AddBusCommand;
 import ua.training.web.command.appoint.AddDriverCommand;
 import ua.training.web.command.appoint.AddRouteCommand;
+import ua.training.web.command.appoint.ConfirmAppointCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,6 +33,7 @@ public class MainServlet extends HttpServlet {
         commands.put("/admin/appoint/route", new AddRouteCommand());
         commands.put("/admin/appoint/bus", new AddBusCommand());
         commands.put("/admin/appoint/driver", new AddDriverCommand());
+        commands.put("/admin/appoint/confirm", new ConfirmAppointCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

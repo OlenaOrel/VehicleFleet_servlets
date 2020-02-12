@@ -8,6 +8,7 @@ import ua.training.entity.Route;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RouteService {
 
@@ -18,6 +19,16 @@ public class RouteService {
         List<Route> result = new ArrayList<>();
         try(RouteDao routeDao = daoFactory.createRouteDao()) {
             result = routeDao.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Optional<Route> getRouteById(int routeId) {
+        Optional<Route> result = Optional.empty();
+        try(RouteDao routeDao = daoFactory.createRouteDao()) {
+            result = routeDao.findById(routeId);
         } catch (Exception e) {
             e.printStackTrace();
         }

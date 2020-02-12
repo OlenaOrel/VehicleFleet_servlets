@@ -6,6 +6,7 @@ import ua.training.entity.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BusService {
 
@@ -15,6 +16,16 @@ public class BusService {
         List<Bus> result = new ArrayList<>();
         try(BusDao busDao = daoFactory.createBusDao()) {
             result = busDao.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Optional<Bus> getBusById(int busId) {
+        Optional<Bus> result = Optional.empty();
+        try(BusDao busDao = daoFactory.createBusDao()) {
+            result = busDao.findById(busId);
         } catch (Exception e) {
             e.printStackTrace();
         }
