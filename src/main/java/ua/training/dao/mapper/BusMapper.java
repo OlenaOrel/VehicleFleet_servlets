@@ -1,16 +1,15 @@
-package ua.training.model.dao.mapper;
+package ua.training.dao.mapper;
 
-import ua.training.model.entity.Bus;
+import ua.training.entity.Bus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
 public class BusMapper implements ObjectMapper<Bus> {
-    private static final String BUS_ID = "buses.id";
+    private static final String BUS_ID = "bus.id";
     private static final String BUS_LICENCE_PLATE = "number_plate";
     private static final String BUS_MARK = "mark";
-    private static final String BUS_FREE = "buses.free";
 
     @Override
     public Bus extractFromResultSet(ResultSet rs) throws SQLException {

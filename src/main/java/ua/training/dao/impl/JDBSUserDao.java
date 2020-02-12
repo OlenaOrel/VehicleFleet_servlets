@@ -1,8 +1,8 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.UserDao;
-import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.User;
+import ua.training.dao.UserDao;
+import ua.training.dao.mapper.UserMapper;
+import ua.training.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class JDBSUserDao implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        final String query = "SELECT * FROM users WHERE email = ?";
+        final String query = "SELECT * FROM user WHERE email = ?";
         Optional<User> result = Optional.empty();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
@@ -45,7 +45,7 @@ public class JDBSUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         return null;
     }
 

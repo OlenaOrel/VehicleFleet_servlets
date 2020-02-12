@@ -2,7 +2,7 @@ package ua.training.web.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.UserRole;
+import ua.training.entity.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

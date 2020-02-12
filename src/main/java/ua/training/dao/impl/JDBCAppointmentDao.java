@@ -1,12 +1,13 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.AppointmentDao;
-import ua.training.model.entity.Appointment;
+import ua.training.dao.AppointmentDao;
+import ua.training.entity.Appointment;
 
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCAppointmentDao implements AppointmentDao {
+
     @Override
     public Appointment save(Appointment entity) {
         return null;

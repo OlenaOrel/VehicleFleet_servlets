@@ -2,9 +2,9 @@ package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.User;
-import ua.training.model.entity.UserRole;
-import ua.training.model.service.UserService;
+import ua.training.entity.User;
+import ua.training.entity.UserRole;
+import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;

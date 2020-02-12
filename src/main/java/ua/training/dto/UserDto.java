@@ -1,6 +1,6 @@
-package ua.training.model.dto;
+package ua.training.dto;
 
-import ua.training.model.entity.UserRole;
+import ua.training.entity.UserRole;
 
 public class UserDto {
     private String email;

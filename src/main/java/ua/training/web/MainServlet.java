@@ -26,8 +26,6 @@ public class MainServlet extends HttpServlet {
         commands.put("logout", new LogOutCommand());
         commands.put("driver", new DriverCommand());
         commands.put("denied", new AccessDeniedCommand());
-        commands.put("error", new ErrorCommand());
-//        commands.put("exception" , new ExceptionCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

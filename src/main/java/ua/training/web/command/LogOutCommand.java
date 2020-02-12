@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LogOutCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LogOutCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {
         CommandUtility.logOutUser(request);

@@ -1,4 +1,4 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
 

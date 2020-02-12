@@ -1,11 +1,12 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.RouteDao;
-import ua.training.model.entity.Route;
+import ua.training.dao.RouteDao;
+import ua.training.entity.Route;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCRouteDao implements RouteDao {
     private Connection connection;
@@ -20,7 +21,7 @@ public class JDBCRouteDao implements RouteDao {
     }
 
     @Override
-    public Route findById(int id) {
+    public Optional<Route> findById(int id) {
         return null;
     }
 

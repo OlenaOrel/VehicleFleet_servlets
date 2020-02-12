@@ -1,6 +1,6 @@
-package ua.training.model.dao.mapper;
+package ua.training.dao.mapper;
 
-import ua.training.model.entity.Route;
+import ua.training.entity.Route;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,14 +8,11 @@ import java.util.Map;
 
 public class RouteMapper implements ObjectMapper<Route> {
     private static final String ROUTE_ID = "routes.id";
-    private static final String ROUTE_NUMBER = "number_of_route";
+    private static final String ROUTE_NUMBER = "number";
     private static final String ROUTE_DEPARTURE_FROM_CITY = "departure_from_city";
     private static final String ROUTE_DEPARTURE_FROM_CITY_UK = "departure_from_city_uk";
     private static final String ROUTE_ARRIVAL_TO_CITY = "arrival_to_city";
     private static final String ROUTE_ARRIVAL_TO_CITY_UK = "arrival_to_city_uk";
-    private static final String ROUTE_DATE = "date";
-    private static final String ROUTE_STATUS = "status";
-    private static final String ROUTE_FINISHED = "finished";
 
     @Override
     public Route extractFromResultSet(ResultSet rs) throws SQLException {

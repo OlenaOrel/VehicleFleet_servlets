@@ -1,9 +1,9 @@
-package ua.training.model.dao.impl;
+package ua.training.dao.impl;
 
-import ua.training.model.dao.BusDao;
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.RouteDao;
-import ua.training.model.dao.UserDao;
+import ua.training.dao.BusDao;
+import ua.training.dao.DaoFactory;
+import ua.training.dao.RouteDao;
+import ua.training.dao.UserDao;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
