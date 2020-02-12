@@ -14,6 +14,22 @@
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <div class="container" style="margin-top: 60px">
+        <div class="col-md-10 col-md-offset-4">
+            <h1 style="color: cornflowerblue">
+                <fmt:message key="message.app.name"/>
+            </h1>
+            <div class="col-md-10 col-md-offset-9" align="right">
+                <div class="locale">
+                    <a href="?lang=en">EN</a>|<a href="?lang=uk">UA</a>
+                </div>
+                <form action="${pageContext.request.contextPath}/logout" method="GET">
+                    <input type="submit" value='<fmt:message key="message.logout"/>'
+                           class="btn btn-default" style="margin-top:10px">
+                </form>
+            </div>
+        </div>
+    </div>
 </head>
 <body>
 <div class="container" style="margin-top: 50px">
@@ -40,8 +56,8 @@
                                     <td>${driver.lastName}</td>
                                 </c:if>
                                 <c:if test="${lang == 'uk'}">
-                                    <td>${driver.orignFirstName}</td>
-                                    <td>${driver.orignLastName}</td>
+                                    <td>${driver.originFirstName}</td>
+                                    <td>${driver.originLastName}</td>
                                 </c:if>
                                 <td>
                                     <form action="${pageContext.request.contextPath}/admin/appoint/driver"
