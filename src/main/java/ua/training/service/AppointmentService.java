@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dao.AppointmentDao;
 import ua.training.dao.DaoFactory;
-import ua.training.dao.impl.JDBCAppointmentDao;
 import ua.training.entity.Appointment;
 import ua.training.entity.AppointmentStatus;
 

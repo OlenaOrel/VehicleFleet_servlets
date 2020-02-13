@@ -2,6 +2,7 @@ package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.web.conctant.WebConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,6 @@ public class AdminCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        return "/WEB-INF/admin/admin_menu.jsp";
+        return WebConstants.MAIN_ADMIN_PAGE;
     }
 }

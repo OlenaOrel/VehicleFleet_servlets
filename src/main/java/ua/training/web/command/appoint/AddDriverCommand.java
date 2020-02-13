@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class AddDriverCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(AddDriverCommand.class);
@@ -18,12 +20,12 @@ public class AddDriverCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String busId = (String) session.getAttribute("busId");
-        String driverId = request.getParameter("driverId");
+        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
+        String driverId = request.getParameter(DRIVER_ID_ATTRIBUTE);
         if (driverId != null) {
             LOGGER.info("DriverId: {}", driverId);
-            session.setAttribute("driverId", driverId);
-            return "redirect:/VF/admin/appoint/confirm";
+            session.setAttribute(DRIVER_ID_ATTRIBUTE, driverId);
+            return REDIRECT + ROOT_PATH + CONFIRM_APPOINT_PATH;
         }
         int idBus = Integer.parseInt(busId);
         List<User> drivers = userService.getAllByBusId(idBus);
@@ -31,7 +33,7 @@ public class AddDriverCommand implements Command {
         if (drivers.isEmpty()) {
             //TODO handle
         }
-        session.setAttribute("driverList", drivers);
-        return "/WEB-INF/admin/appoint/add_driver.jsp";
+        session.setAttribute(DRIVER_LIST_ATTRIBUTE, drivers);
+        return APPOINT_DRIVER_PAGE;
     }
 }

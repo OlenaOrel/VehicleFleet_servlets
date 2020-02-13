@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class AddRouteCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(AddRouteCommand.class);
     RouteService routeService = new RouteService();
@@ -17,15 +19,15 @@ public class AddRouteCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String routeId = request.getParameter("routeId");
+        String routeId = request.getParameter(ROUTE_ID_ATTRIBUTE);
         if (routeId != null) {
             LOGGER.info("RouteId: {}", routeId);
-            session.setAttribute("routeId", routeId);
-            return "redirect:/VF/admin/appoint/bus";
+            session.setAttribute(ROUTE_ID_ATTRIBUTE, routeId);
+            return REDIRECT + ROOT_PATH + APPOINT_BUS_PATH;
         }
-        List<Route> routes = routeService.getAllRouts();
-        LOGGER.info("Count of route: {}", routes.size());
-        session.setAttribute("routes", routes);
-        return "/WEB-INF/admin/appoint/add_route.jsp";
+        List<Route> routeList = routeService.getAllRouts();
+        LOGGER.info("Count of route: {}", routeList.size());
+        session.setAttribute(ROUTE_LIST_ATTRIBUTE, routeList);
+        return APPOINT_ROUTE_PAGE;
     }
 }

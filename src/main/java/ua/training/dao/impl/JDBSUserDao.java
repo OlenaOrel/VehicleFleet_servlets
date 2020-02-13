@@ -13,6 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBSUserDao implements UserDao {
+
+    private static final String FIND_USER_BY_EMAIL_QUERY = "SELECT * FROM user WHERE email = ?";
+    private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM user WHERE id = ?";
+    private static final String FIND_USER_BY_BUS_ID_QUERY = "SELECT * FROM user " +
+            "LEFT JOIN bus_driver bd " +
+            "ON user.id = bd.driver_id " +
+            " WHERE bd.bus_id = ?";
+
     private Connection connection;
     UserMapper mapper = new UserMapper();
 
@@ -22,9 +30,8 @@ public class JDBSUserDao implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        final String query = "SELECT * FROM user WHERE email = ?";
         Optional<User> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_QUERY)) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -46,9 +53,8 @@ public class JDBSUserDao implements UserDao {
 
     @Override
     public Optional<User> findById(int id) {
-        final String query = "SELECT * FROM user WHERE id = ?";
         Optional<User> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_QUERY)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -76,11 +82,7 @@ public class JDBSUserDao implements UserDao {
 
     public List<User> findByBuses_id(int busId) {
         List<User> result = new ArrayList<>();
-        String query = "SELECT * FROM user left" +
-                " join bus_driver bd" +
-                " on user.id = bd.driver_id " +
-                " where bd.bus_id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_BUS_ID_QUERY)) {
             preparedStatement.setInt(1, busId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

@@ -29,7 +29,7 @@ public class UserService {
 
     public List<User> getAllByBusId(int id) {
         List<User> result = new ArrayList<>();
-        try(UserDao userDao = daoFactory.createUserDao()) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.findByBuses_id(id);
         } catch (Exception e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class AppointDtoConverter {
             setRouteParameters(result, route);
             Bus bus = getBus(appointment);
             setBusParameters(result, bus);
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             LOGGER.error(e);
         }
         return result;
@@ -62,11 +62,11 @@ public class AppointDtoConverter {
     }
 
     private void setRouteParameters(AppointDto appointDto, Route route) {
-       appointDto.setRouteNumber(route.getNumber());
-       appointDto.setRouteDeparture(route.getDepartureFromCityEn());
-       appointDto.setRouteDepartureUk(route.getDepartureFromCityUk());
-       appointDto.setRouteArrival(route.getArrivalToCityEn());
-       appointDto.setRouteArrivalUk(route.getArrivalToCityUk());
+        appointDto.setRouteNumber(route.getNumber());
+        appointDto.setRouteDeparture(route.getDepartureFromCityEn());
+        appointDto.setRouteDepartureUk(route.getDepartureFromCityUk());
+        appointDto.setRouteArrival(route.getArrivalToCityEn());
+        appointDto.setRouteArrivalUk(route.getArrivalToCityUk());
     }
 
     private Bus getBus(Appointment appointment) throws EntityNotFoundException {

@@ -11,6 +11,8 @@ import ua.training.web.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class ConfirmAppointCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(ConfirmAppointCommand.class);
@@ -20,22 +22,22 @@ public class ConfirmAppointCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String routeId = (String) session.getAttribute("routeId");
-        String busId = (String) session.getAttribute("busId");
-        String driverId = (String) session.getAttribute("driverId");
-        String confirm = request.getParameter("confirm");
+        String routeId = (String) session.getAttribute(ROUTE_ID_ATTRIBUTE);
+        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
+        String driverId = (String) session.getAttribute(DRIVER_ID_ATTRIBUTE);
+        String confirm = request.getParameter(CONFIRM_ATTRIBUTE);
         LOGGER.info("Confirmed: {}", confirm);
         int idRoute = Integer.parseInt(routeId);
         int idBus = Integer.parseInt(busId);
         int idDriver = Integer.parseInt(driverId);
         Appointment appointment = appointmentService.createAppointment(idRoute, idBus, idDriver);
         AppointDto appointDto = converter.convert(appointment);
-        session.setAttribute("appointDto", appointDto);
+        session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointDto);
         if (confirm != null && Boolean.parseBoolean(confirm)) {
             LOGGER.info("Appointment confirmed {}", appointment);
             appointmentService.save(appointment);
-            return "redirect:/VF/admin";
+            return REDIRECT + ROOT_PATH + ADMIN_PATH;
         }
-        return "/WEB-INF/admin/appoint/confirm.jsp";
+        return CONFIRM_APPOINT_PAGE;
     }
 }

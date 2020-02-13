@@ -18,22 +18,24 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import static ua.training.web.conctant.WebConstants.*;
+
 public class MainServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(MainServlet.class);
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig) {
         servletConfig.getServletContext()
-                .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("/login", new LoginCommand());
-        commands.put("/logout", new LogOutCommand());
-        commands.put("/driver", new DriverCommand());
-        commands.put("/denied", new AccessDeniedCommand());
-        commands.put("/admin", new AdminCommand());
-        commands.put("/admin/appoint/route", new AddRouteCommand());
-        commands.put("/admin/appoint/bus", new AddBusCommand());
-        commands.put("/admin/appoint/driver", new AddDriverCommand());
-        commands.put("/admin/appoint/confirm", new ConfirmAppointCommand());
+                .setAttribute(LOGGED_USERS_ATTRIBUTE, new HashSet<String>());
+        commands.put(LOGIN_PATH, new LoginCommand());
+        commands.put(LOGOUT_PATH, new LogOutCommand());
+        commands.put(DRIVER_PATH, new DriverCommand());
+        commands.put(DENIED_PATH, new AccessDeniedCommand());
+        commands.put(ADMIN_PATH, new AdminCommand());
+        commands.put(APPOINT_ROUTE_PATH, new AddRouteCommand());
+        commands.put(APPOINT_BUS_PATH, new AddBusCommand());
+        commands.put(APPOINT_DRIVER_PATH, new AddDriverCommand());
+        commands.put(CONFIRM_APPOINT_PATH, new ConfirmAppointCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,10 +54,10 @@ public class MainServlet extends HttpServlet {
         String contextPath = request.getContextPath();
         LOGGER.info("Path: {}", path);
         path = path.replace(contextPath, "");
-        Command command = commands.getOrDefault(path, (requestDefault) -> "/index.jsp");
+        Command command = commands.getOrDefault(path, (requestDefault) -> MAIN_PAGE);
         String page = command.execute(request);
-        if (page.contains("redirect:")) {
-            response.sendRedirect(page.replace("redirect:", ""));
+        if (page.contains(REDIRECT)) {
+            response.sendRedirect(page.replace(REDIRECT, ""));
             return;
         }
         request.getRequestDispatcher(page).forward(request, response);
