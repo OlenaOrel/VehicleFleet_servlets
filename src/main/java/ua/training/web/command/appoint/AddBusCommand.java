@@ -19,17 +19,22 @@ public class AddBusCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        session.setAttribute(EMPTY_BUS_LIST_ATTRIBUTE, true);
         String busId = request.getParameter(BUS_ID_ATTRIBUTE);
-        Object buses = session.getAttribute(BUS_LIST_ATTRIBUTE);
+        boolean isBusListEmpty = (Boolean) session.getAttribute(EMPTY_BUS_LIST_ATTRIBUTE);
         if (busId != null) {
             LOGGER.info("BusId: {}", busId);
             session.setAttribute(BUS_ID_ATTRIBUTE, busId);
             return REDIRECT + ROOT_PATH + APPOINT_DRIVER_PATH;
         }
-        if (buses == null) {
+        if (isBusListEmpty) {
             List<Bus> busList = busService.getNotAppointBus();
             LOGGER.info("Count of buses: {}", busList.size());
-            session.setAttribute(BUS_LIST_ATTRIBUTE, busList);
+            if (!busList.isEmpty()) {
+                session.setAttribute(EMPTY_BUS_LIST_ATTRIBUTE, false);
+                session.setAttribute(BUS_LIST_ATTRIBUTE, busList);
+                return APPOINT_BUS_PAGE;
+            }
         }
         return APPOINT_BUS_PAGE;
     }

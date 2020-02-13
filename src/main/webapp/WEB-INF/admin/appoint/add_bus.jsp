@@ -36,7 +36,10 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <div id="add_bus">
-                <c:if test="${!buses.isEmpty()}">
+                <c:if test="${isBusListEmpty == true}">
+                    <h3><fmt:message key="message.empty.bus.list"/></h3>
+                </c:if>
+                <c:if test="${isBusListEmpty == false}">
                     <table class="table">
                         <tr>
                             <th>

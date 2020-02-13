@@ -10,10 +10,13 @@ public interface WebConstants {
 
     String ROUTE_ID_ATTRIBUTE = "routeId";
     String ROUTE_LIST_ATTRIBUTE = "routeList";
+    String EMPTY_ROUTE_LIST_ATTRIBUTE = "isRouteListEmpty";
     String BUS_ID_ATTRIBUTE = "busId";
     String BUS_LIST_ATTRIBUTE = "busList";
+    String EMPTY_BUS_LIST_ATTRIBUTE = "isBusListEmpty";
     String DRIVER_ID_ATTRIBUTE = "driverId";
     String DRIVER_LIST_ATTRIBUTE = "driverList";
+    String EMPTY_DRIVER_LIST_ATTRIBUTE = "isDriverListEmpty";
     String APPOINT_DTO_ATTRIBUTE = "appointDto";
     String CONFIRM_ATTRIBUTE = "confirm";
 

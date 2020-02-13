@@ -19,17 +19,21 @@ public class AddRouteCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        session.setAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE, true);
         String routeId = request.getParameter(ROUTE_ID_ATTRIBUTE);
-        Object routes = session.getAttribute(ROUTE_LIST_ATTRIBUTE);
+        boolean isRouteListEmpty = (Boolean) session.getAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE);
         if (routeId != null) {
             LOGGER.info("RouteId: {}", routeId);
             session.setAttribute(ROUTE_ID_ATTRIBUTE, routeId);
             return REDIRECT + ROOT_PATH + APPOINT_BUS_PATH;
         }
-        if (routes == null) {
+        if (isRouteListEmpty) {
             List<Route> routeList = routeService.getNetAppointRoute();
             LOGGER.info("Count of route: {}", routeList.size());
-            session.setAttribute(ROUTE_LIST_ATTRIBUTE, routeList);
+            if (!routeList.isEmpty()) {
+                session.setAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE, false);
+                session.setAttribute(ROUTE_LIST_ATTRIBUTE, routeList);
+            }
         }
         return APPOINT_ROUTE_PAGE;
     }

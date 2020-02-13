@@ -35,10 +35,10 @@
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
-            <c:if test="${rootes.isEmpty()}">
-                <h3>There is no route found</h3>
+            <c:if test="${isRouteListEmpty == true}">
+                <h3><fmt:message key="message.empty.route.list"/></h3>
             </c:if>
-            <c:if test="${!rootes.isEmpty()}">
+            <c:if test="${isRouteListEmpty == false}">
                 <table class="table">
                     <tr>
                         <th>

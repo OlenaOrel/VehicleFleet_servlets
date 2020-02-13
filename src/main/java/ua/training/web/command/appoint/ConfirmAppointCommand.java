@@ -27,7 +27,7 @@ public class ConfirmAppointCommand implements Command {
         Appointment appointment = create(session);
         AppointDto appointDto = converter.convert(appointment);
         session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointDto);
-        if (confirm != null && Boolean.parseBoolean(confirm)) {
+        if (Boolean.parseBoolean(confirm)) {
             LOGGER.info("Appointment confirmed {}", appointment);
             appointmentService.save(appointment);
             removeAttributeFromSession(session);
@@ -43,8 +43,7 @@ public class ConfirmAppointCommand implements Command {
         int idRoute = Integer.parseInt(routeId);
         int idBus = Integer.parseInt(busId);
         int idDriver = Integer.parseInt(driverId);
-        Appointment appointment = appointmentService.createAppointment(idRoute, idBus, idDriver);
-        return appointment;
+        return appointmentService.createAppointment(idRoute, idBus, idDriver);
     }
 
     private void removeAttributeFromSession(HttpSession session) {
@@ -56,5 +55,8 @@ public class ConfirmAppointCommand implements Command {
         session.removeAttribute(ROUTE_LIST_ATTRIBUTE);
         session.removeAttribute(BUS_LIST_ATTRIBUTE);
         session.removeAttribute(DRIVER_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_BUS_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_DRIVER_LIST_ATTRIBUTE);
     }
 }
