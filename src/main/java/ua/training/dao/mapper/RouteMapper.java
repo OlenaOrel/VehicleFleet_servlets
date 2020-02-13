@@ -4,7 +4,6 @@ import ua.training.entity.Route;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class RouteMapper implements ObjectMapper<Route> {
     private static final String ROUTE_ID = "route.id";
@@ -26,9 +25,4 @@ public class RouteMapper implements ObjectMapper<Route> {
                 .build();
     }
 
-    @Override
-    public Route makeUnique(Map<Integer, Route> cache, Route route) {
-        cache.putIfAbsent(route.getId(), route);
-        return cache.get(route.getId());
-    }
 }

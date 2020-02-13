@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BusDao extends GenericDao<Bus> {
 
-    public List<Bus> findNotAppointBus();
+    List<Bus> findNotAppointBus();
 }

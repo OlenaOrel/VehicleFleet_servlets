@@ -5,7 +5,6 @@ import ua.training.entity.AppointmentStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class AppointmentMapper implements ObjectMapper<Appointment> {
 
@@ -27,10 +26,5 @@ public class AppointmentMapper implements ObjectMapper<Appointment> {
         result.setDate(rs.getDate(APPOINTMENT_DATE).toLocalDate());
         result.setStatus(AppointmentStatus.valueOf(rs.getString(APPOINTMENT_STATUS)));
         return result;
-    }
-
-    @Override
-    public Appointment makeUnique(Map<Integer, Appointment> cache, Appointment teacher) {
-        return null;
     }
 }
