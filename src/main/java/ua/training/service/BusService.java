@@ -31,4 +31,14 @@ public class BusService {
         }
         return result;
     }
+
+    public List<Bus> getNotAppointBus() {
+        List<Bus> result = new ArrayList<>();
+        try (BusDao busDao = daoFactory.createBusDao()) {
+            result = busDao.findNotAppointBus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

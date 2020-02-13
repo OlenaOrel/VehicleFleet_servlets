@@ -46,4 +46,14 @@ public class UserService {
         }
         return result;
     }
+
+    public List<User> getNotAppointDriverForBus(int busId) {
+        List<User> result = new ArrayList<>();
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            result = userDao.findNotAppointDriverForBus(busId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

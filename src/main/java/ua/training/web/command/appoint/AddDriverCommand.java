@@ -20,20 +20,24 @@ public class AddDriverCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
+        session.setAttribute(EMPTY_DRIVER_LIST_ATTRIBUTE, true);
         String driverId = request.getParameter(DRIVER_ID_ATTRIBUTE);
+        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
+        boolean isDriverListEmpty = (Boolean) session.getAttribute(EMPTY_DRIVER_LIST_ATTRIBUTE);
         if (driverId != null) {
             LOGGER.info("DriverId: {}", driverId);
             session.setAttribute(DRIVER_ID_ATTRIBUTE, driverId);
             return REDIRECT + ROOT_PATH + CONFIRM_APPOINT_PATH;
         }
-        int idBus = Integer.parseInt(busId);
-        List<User> drivers = userService.getAllByBusId(idBus);
-        LOGGER.info("Count of drivers: {}", drivers.size());
-        if (drivers.isEmpty()) {
-            //TODO handle
+        if (isDriverListEmpty) {
+            int idBus = Integer.parseInt(busId);
+            List<User> driverList = userService.getNotAppointDriverForBus(idBus);
+            LOGGER.info("Count of drivers: {}", driverList.size());
+            if (!driverList.isEmpty()) {
+                session.setAttribute(EMPTY_DRIVER_LIST_ATTRIBUTE, false);
+                session.setAttribute(DRIVER_LIST_ATTRIBUTE, driverList);
+            }
         }
-        session.setAttribute(DRIVER_LIST_ATTRIBUTE, drivers);
         return APPOINT_DRIVER_PAGE;
     }
 }

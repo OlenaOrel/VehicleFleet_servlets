@@ -4,10 +4,8 @@ import ua.training.dao.UserDao;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +17,11 @@ public class JDBSUserDao implements UserDao {
     private static final String FIND_USER_BY_BUS_ID_QUERY = "SELECT * FROM user " +
             "LEFT JOIN bus_driver bd " +
             "ON user.id = bd.driver_id " +
-            " WHERE bd.bus_id = ?";
+            "WHERE bd.bus_id = ?";
+    private static final String FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY = "SELECT * FROM user " +
+            "LEFT JOIN bus_driver bd " +
+            "ON user.id = bd.driver_id " +
+            "WHERE driver_id NOT IN (SELECT driver_id FROM appointment WHERE date = ?) AND bd.bus_id = ?";
 
     private Connection connection;
     UserMapper mapper = new UserMapper();
@@ -104,5 +106,24 @@ public class JDBSUserDao implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<User> findNotAppointDriverForBus(int busId) {
+        LocalDate date = LocalDate.now();
+        List<User> result = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY)) {
+            preparedStatement.setDate(1, Date.valueOf(date));
+            preparedStatement.setInt(2, busId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result.add(mapper.extractFromResultSet(resultSet));
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

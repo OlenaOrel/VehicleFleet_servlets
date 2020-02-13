@@ -22,22 +22,41 @@ public class ConfirmAppointCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String routeId = (String) session.getAttribute(ROUTE_ID_ATTRIBUTE);
-        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
-        String driverId = (String) session.getAttribute(DRIVER_ID_ATTRIBUTE);
         String confirm = request.getParameter(CONFIRM_ATTRIBUTE);
         LOGGER.info("Confirmed: {}", confirm);
-        int idRoute = Integer.parseInt(routeId);
-        int idBus = Integer.parseInt(busId);
-        int idDriver = Integer.parseInt(driverId);
-        Appointment appointment = appointmentService.createAppointment(idRoute, idBus, idDriver);
+        Appointment appointment = create(session);
         AppointDto appointDto = converter.convert(appointment);
         session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointDto);
-        if (confirm != null && Boolean.parseBoolean(confirm)) {
+        if (Boolean.parseBoolean(confirm)) {
             LOGGER.info("Appointment confirmed {}", appointment);
             appointmentService.save(appointment);
+            removeAttributeFromSession(session);
             return REDIRECT + ROOT_PATH + ADMIN_PATH;
         }
         return CONFIRM_APPOINT_PAGE;
+    }
+
+    private Appointment create(HttpSession session) {
+        String routeId = (String) session.getAttribute(ROUTE_ID_ATTRIBUTE);
+        String busId = (String) session.getAttribute(BUS_ID_ATTRIBUTE);
+        String driverId = (String) session.getAttribute(DRIVER_ID_ATTRIBUTE);
+        int idRoute = Integer.parseInt(routeId);
+        int idBus = Integer.parseInt(busId);
+        int idDriver = Integer.parseInt(driverId);
+        return appointmentService.createAppointment(idRoute, idBus, idDriver);
+    }
+
+    private void removeAttributeFromSession(HttpSession session) {
+        session.removeAttribute(ROUTE_ID_ATTRIBUTE);
+        session.removeAttribute(BUS_ID_ATTRIBUTE);
+        session.removeAttribute(DRIVER_ID_ATTRIBUTE);
+        session.removeAttribute(APPOINT_DTO_ATTRIBUTE);
+        session.removeAttribute(CONFIRM_ATTRIBUTE);
+        session.removeAttribute(ROUTE_LIST_ATTRIBUTE);
+        session.removeAttribute(BUS_LIST_ATTRIBUTE);
+        session.removeAttribute(DRIVER_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_BUS_LIST_ATTRIBUTE);
+        session.removeAttribute(EMPTY_DRIVER_LIST_ATTRIBUTE);
     }
 }
