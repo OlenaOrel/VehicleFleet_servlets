@@ -20,14 +20,17 @@ public class AddRouteCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String routeId = request.getParameter(ROUTE_ID_ATTRIBUTE);
+        Object routes = session.getAttribute(ROUTE_LIST_ATTRIBUTE);
         if (routeId != null) {
             LOGGER.info("RouteId: {}", routeId);
             session.setAttribute(ROUTE_ID_ATTRIBUTE, routeId);
             return REDIRECT + ROOT_PATH + APPOINT_BUS_PATH;
         }
-        List<Route> routeList = routeService.getAllRouts();
-        LOGGER.info("Count of route: {}", routeList.size());
-        session.setAttribute(ROUTE_LIST_ATTRIBUTE, routeList);
+        if (routes == null) {
+            List<Route> routeList = routeService.getNetAppointRoute();
+            LOGGER.info("Count of route: {}", routeList.size());
+            session.setAttribute(ROUTE_LIST_ATTRIBUTE, routeList);
+        }
         return APPOINT_ROUTE_PAGE;
     }
 }
