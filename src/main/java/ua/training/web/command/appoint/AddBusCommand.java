@@ -20,14 +20,17 @@ public class AddBusCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String busId = request.getParameter(BUS_ID_ATTRIBUTE);
+        Object buses = session.getAttribute(BUS_LIST_ATTRIBUTE);
         if (busId != null) {
             LOGGER.info("BusId: {}", busId);
             session.setAttribute(BUS_ID_ATTRIBUTE, busId);
             return REDIRECT + ROOT_PATH + APPOINT_DRIVER_PATH;
         }
-        List<Bus> busList = busService.getAllBuses();
-        LOGGER.info("Count of buses: {}", busList.size());
-        session.setAttribute(BUS_LIST_ATTRIBUTE, busList);
+        if (buses == null) {
+            List<Bus> busList = busService.getNotAppointBus();
+            LOGGER.info("Count of buses: {}", busList.size());
+            session.setAttribute(BUS_LIST_ATTRIBUTE, busList);
+        }
         return APPOINT_BUS_PAGE;
     }
 }

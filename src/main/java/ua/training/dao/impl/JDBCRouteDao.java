@@ -14,7 +14,7 @@ public class JDBCRouteDao implements RouteDao {
 
     private static final String FIND_ROUTE_BY_ID_QUERY = "SELECT * FROM route WHERE id = ?";
     private static final String FIND_ALL_ROUTES_QUERY = "SELECT * FROM route";
-    private static final String FIND_NOT_APPOINT_ROUTE = "SELECT * FROM route WHERE id " +
+    private static final String FIND_NOT_APPOINT_ROUTE_QUERY = "SELECT * FROM route WHERE id " +
             "NOT IN (SELECT route_id FROM appointment WHERE date = ?)";
 
     private Connection connection;
@@ -82,7 +82,7 @@ public class JDBCRouteDao implements RouteDao {
     public List<Route> findNotAppointRoutes() {
         LocalDate date = LocalDate.now();
         List<Route> result = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_ROUTE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_ROUTE_QUERY)) {
             preparedStatement.setDate(1, Date.valueOf(date));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
