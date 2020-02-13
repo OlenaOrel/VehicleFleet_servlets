@@ -23,20 +23,23 @@ public class JDBCAppointmentDao implements AppointmentDao {
     }
 
     @Override
-    public void save(Appointment entity) {
+    public boolean save(Appointment entity) {
+        boolean result = false;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_APPOINTMENT_QUERY)) {
             preparedStatement.setInt(1, entity.getRouteId());
             preparedStatement.setInt(2, entity.getBusId());
             preparedStatement.setInt(3, entity.getDriverId());
             preparedStatement.setDate(4, Date.valueOf(entity.getDate()));
             preparedStatement.setString(5, entity.getStatus().name());
-            preparedStatement.execute();
+            result = preparedStatement.execute();
             close();
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     @Override

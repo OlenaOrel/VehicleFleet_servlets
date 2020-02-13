@@ -49,8 +49,8 @@ public class JDBSUserDao implements UserDao {
     }
 
     @Override
-    public void save(User entity) {
-
+    public boolean save(User entity) {
+        return false;
     }
 
     @Override

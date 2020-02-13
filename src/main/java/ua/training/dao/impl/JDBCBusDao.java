@@ -25,8 +25,8 @@ public class JDBCBusDao implements BusDao {
     }
 
     @Override
-    public void save(Bus entity) {
-
+    public boolean save(Bus entity) {
+        return false;
     }
 
     @Override

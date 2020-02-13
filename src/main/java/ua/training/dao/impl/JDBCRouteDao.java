@@ -25,8 +25,8 @@ public class JDBCRouteDao implements RouteDao {
     }
 
     @Override
-    public void save(Route entity) {
-
+    public boolean save(Route entity) {
+        return false;
     }
 
     @Override
