@@ -32,12 +32,15 @@ public class JDBCAppointmentDao implements AppointmentDao {
             preparedStatement.setDate(4, Date.valueOf(entity.getDate()));
             preparedStatement.setString(5, entity.getStatus().name());
             result = preparedStatement.execute();
-            close();
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
