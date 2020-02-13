@@ -1,8 +1,11 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.UserDao;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.entity.User;
+import ua.training.exception.UserExistException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,7 +15,12 @@ import java.util.Optional;
 
 public class JDBSUserDao implements UserDao {
 
+    private static final Logger LOGGER = LogManager.getLogger(JDBSUserDao.class);
+
     private static final String FIND_USER_BY_EMAIL_QUERY = "SELECT * FROM user WHERE email = ?";
+    private static final String SAVE_USER_QUERY = "INSERT INTO user " +
+            "(first_name, last_name, origin_first_name, origin_last_name, email, password, role)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM user WHERE id = ?";
     private static final String FIND_USER_BY_BUS_ID_QUERY = "SELECT * FROM user " +
             "LEFT JOIN bus_driver bd " +
@@ -49,6 +57,31 @@ public class JDBSUserDao implements UserDao {
     }
 
     @Override
+    public void saveUser(User entity) throws UserExistException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_QUERY)) {
+            preparedStatement.setString(1, entity.getFirstName());
+            preparedStatement.setString(2, entity.getLastName());
+            preparedStatement.setString(3, entity.getOriginFirstName());
+            preparedStatement.setString(4, entity.getOriginLastName());
+            preparedStatement.setString(5, entity.getEmail());
+            preparedStatement.setString(6, entity.getPassword());
+            preparedStatement.setString(7, entity.getRole().name());
+            preparedStatement.execute();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            LOGGER.info("User with email = {} exists", entity.getEmail());
+            throw new UserExistException("User with email = " + entity.getEmail() + "exists");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public boolean save(User entity) {
         return false;
     }
@@ -63,7 +96,6 @@ public class JDBSUserDao implements UserDao {
                 result = Optional.of(mapper.extractFromResultSet(resultSet));
             }
             close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

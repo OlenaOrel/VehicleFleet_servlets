@@ -48,7 +48,8 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if (path.contains(LOGIN_PATH) && isUserGuest(role)) {
+        if ((path.contains(LOGIN_PATH) || path.contains(REGISTRATION_PATH))
+                && isUserGuest(role)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

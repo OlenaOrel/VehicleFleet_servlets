@@ -1,6 +1,7 @@
 package ua.training.dao;
 
 import ua.training.entity.User;
+import ua.training.exception.UserExistException;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,5 +11,7 @@ public interface UserDao extends GenericDao<User> {
 
     List<User> findByBuses_id(int busId);
 
-    public List<User> findNotAppointDriverForBus(int busId);
+    List<User> findNotAppointDriverForBus(int busId);
+
+    void saveUser(User entity) throws UserExistException;
 }
