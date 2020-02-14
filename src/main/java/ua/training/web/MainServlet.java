@@ -36,6 +36,7 @@ public class MainServlet extends HttpServlet {
         commands.put(APPOINT_BUS_PATH, new AddBusCommand());
         commands.put(APPOINT_DRIVER_PATH, new AddDriverCommand());
         commands.put(CONFIRM_APPOINT_PATH, new ConfirmAppointCommand());
+        commands.put(REGISTRATION_PATH, new RegisterCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

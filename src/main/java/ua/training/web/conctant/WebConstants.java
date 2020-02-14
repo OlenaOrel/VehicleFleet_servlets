@@ -19,6 +19,9 @@ public interface WebConstants {
     String EMPTY_DRIVER_LIST_ATTRIBUTE = "isDriverListEmpty";
     String APPOINT_DTO_ATTRIBUTE = "appointDto";
     String CONFIRM_ATTRIBUTE = "confirm";
+    String PASS_NOT_CONFIRM_ATTRIBUTE = "passNotConfirm";
+    String INVALID_INPUT_ATTRIBUTE = "invalidInput";
+    String ERROR_ATTRIBUTE = "error";
 
 
     String REDIRECT = "redirect:";
@@ -40,6 +43,7 @@ public interface WebConstants {
     String LOGIN_PAGE = "/login.jsp";
     String ERROR_PAGE = "/WEB-INF/error.jsp";
     String DENIED_PAGE = "/access_denied.jsp";
+    String REGISTER_PAGE = "/register.jsp";
 
     String DRIVER_PAGE = "/WEB-INF/driver/driver_menu.jsp";
     String MAIN_ADMIN_PAGE = "/WEB-INF/admin/admin_menu.jsp";
