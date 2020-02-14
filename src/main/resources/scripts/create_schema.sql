@@ -56,5 +56,6 @@ create table appointment
     primary key (id),
     foreign key (route_id) references route (id),
     foreign key (bus_id) references bus (id),
-    foreign key (driver_id) references user (id)
+    foreign key (driver_id) references user (id),
+    unique key `appointment1` (driver_id, date)
 );

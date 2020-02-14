@@ -1,22 +1,33 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.AppointmentDao;
+import ua.training.dao.mapper.AppointmentMapper;
 import ua.training.entity.Appointment;
+import ua.training.entity.AppointmentStatus;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCAppointmentDao implements AppointmentDao {
 
+    private static final Logger LOGGER = LogManager.getLogger(JDBCAppointmentDao.class);
+
     private static final String SAVE_APPOINTMENT_QUERY = "INSERT INTO vehicle_fleet.appointment " +
             "(`route_id`, `bus_id`, `driver_id`, `date`, `status`) " +
             "VALUES (?, ?, ?, ?, ?)";
+    private static final String FIND_APPOINTMENT_FOR_DRIVER = "SELECT appointment.id, route_id, bus_id, driver_id, date, status " +
+            "FROM appointment " +
+            "LEFT JOIN user " +
+            "ON appointment.driver_id = user.id " +
+            "WHERE email = ? AND date = ? AND status = 'NEW'";
+    private static final String UPDATE_APPOINTMENT_STATUS_QUERY = "UPDATE appointment SET status = ? WHERE id = ?";
 
     private Connection connection;
+    private AppointmentMapper mapper = new AppointmentMapper();
 
     public JDBCAppointmentDao(Connection connection) {
         this.connection = connection;
@@ -62,6 +73,46 @@ public class JDBCAppointmentDao implements AppointmentDao {
 
     @Override
     public void close() throws Exception {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    @Override
+    public Optional<Appointment> findAppointmentForDriver(String email) {
+        LocalDate date = LocalDate.now();
+        Optional<Appointment> result = Optional.empty();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_APPOINTMENT_FOR_DRIVER)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setDate(2, Date.valueOf(date));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = Optional.of(mapper.extractFromResultSet(resultSet));
+            }
+            LOGGER.info("Appoint for driver: {}", result);
+            return result;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void updateStatusByAppointmentId(AppointmentStatus status, int id) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS_QUERY)) {
+            preparedStatement.setString(1, status.name());
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+        }
     }
 }

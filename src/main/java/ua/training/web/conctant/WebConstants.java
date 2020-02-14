@@ -22,6 +22,7 @@ public interface WebConstants {
     String PASS_NOT_CONFIRM_ATTRIBUTE = "passNotConfirm";
     String INVALID_INPUT_ATTRIBUTE = "invalidInput";
     String ERROR_ATTRIBUTE = "error";
+    String APPOINT_PRESENT_ATTRIBUTE = "appointPresent";
 
 
     String REDIRECT = "redirect:";
