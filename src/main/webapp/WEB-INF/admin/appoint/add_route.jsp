@@ -51,7 +51,7 @@
                             <fmt:message key="message.route.arrival"/>
                         </th>
                         <th>
-                            <fmt:message key="message.route.appoint"/>
+                            <fmt:message key="message.route.add"/>
                         </th>
                     </tr>
                     <c:forEach items="${routeList}" var="route">

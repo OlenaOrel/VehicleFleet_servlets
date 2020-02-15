@@ -8,6 +8,7 @@ import ua.training.entity.Appointment;
 import ua.training.entity.AppointmentStatus;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class AppointmentService {
@@ -46,5 +47,31 @@ public class AppointmentService {
     public void setStatusConfirm(Appointment appointment) {
         AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointment.getId());
+    }
+
+    public List<Appointment> getAllAppointments() {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        return appointmentDao.findAll();
+    }
+
+    public List<Appointment> getNotFinishedAppointment() {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        return appointmentDao.findNotFinishedAppointment();
+    }
+
+    public void doFinish(int routeNumber, AppointmentStatus status) {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        appointmentDao.updateStatusByAppointmentId(
+                AppointmentStatus.FINISHED,
+                getAppointmentIdByStatusAndRouteNumber(status, routeNumber)
+        );
+
+    }
+
+    private int getAppointmentIdByStatusAndRouteNumber(AppointmentStatus status, int routeNumber) {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        return appointmentDao
+                .findAppointmentIdByStatusAndRouteNumber(
+                        status, routeNumber);
     }
 }
