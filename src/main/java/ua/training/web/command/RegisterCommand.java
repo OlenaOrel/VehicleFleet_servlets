@@ -11,6 +11,7 @@ import ua.training.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static ua.training.web.conctant.RegexConstants.*;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class RegisterCommand implements Command {
@@ -25,7 +26,7 @@ public class RegisterCommand implements Command {
         session.setAttribute(PASS_NOT_CONFIRM_ATTRIBUTE, false);
         session.setAttribute(INVALID_INPUT_ATTRIBUTE, false);
         UserRegisterDto userDto = regService.createUserRegisterDto(request);
-        if (regService.isInputNotPresent(userDto)) {
+        if (isInputNotPresent(userDto)) {
             LOGGER.info("empty parameters");
             return REGISTER_PAGE;
         }
@@ -34,7 +35,7 @@ public class RegisterCommand implements Command {
             LOGGER.info("Password is not confirm");
             return REGISTER_PAGE;
         }
-        if (!regService.isInputValid(userDto)) {
+        if (isInputInvalid(userDto)) {
             session.setAttribute(INVALID_INPUT_ATTRIBUTE, true);
             LOGGER.info("Invalid input");
             return REGISTER_PAGE;
@@ -50,4 +51,23 @@ public class RegisterCommand implements Command {
         }
         return REDIRECT + ROOT_PATH + LOGIN_PATH;
     }
+
+    public boolean isInputNotPresent(UserRegisterDto userDto) {
+        return userDto.getFirstName() == null || userDto.getFirstName().equals("")
+                || userDto.getLastName() == null || userDto.getLastName().equals("")
+                || userDto.getOriginFirstName() == null || userDto.getOriginFirstName().equals("")
+                || userDto.getOriginLastName() == null || userDto.getOriginLastName().equals("")
+                || userDto.getEmail() == null || userDto.getEmail().equals("")
+                || userDto.getPassword() == null || userDto.getPassword().equals("")
+                || userDto.getConfirmPassword() == null || userDto.getConfirmPassword().equals("");
+    }
+
+    public boolean isInputInvalid(UserRegisterDto userDto) {
+        return !(userDto.getFirstName().matches(NAME_EN)
+                && userDto.getLastName().matches(NAME_EN)
+                && userDto.getOriginFirstName().matches(NAME_UK)
+                && userDto.getOriginLastName().matches(NAME_UK)
+                && userDto.getEmail().matches(EMAIL));
+    }
+
 }

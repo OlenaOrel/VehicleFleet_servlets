@@ -7,8 +7,6 @@ import ua.training.entity.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.training.web.conctant.RegexConstants.*;
-
 public class RegistrationService {
 
     public UserRegisterDto createUserRegisterDto(HttpServletRequest request) {
@@ -23,26 +21,8 @@ public class RegistrationService {
                 originFirstName, originLastName, email, pass, confirmPass);
     }
 
-    public boolean isInputNotPresent(UserRegisterDto userDto) {
-        return userDto.getFirstName() == null || userDto.getFirstName().equals("")
-                || userDto.getLastName() == null || userDto.getLastName().equals("")
-                || userDto.getOriginFirstName() == null || userDto.getOriginFirstName().equals("")
-                || userDto.getOriginLastName() == null || userDto.getOriginLastName().equals("")
-                || userDto.getEmail() == null || userDto.getEmail().equals("")
-                || userDto.getPassword() == null || userDto.getPassword().equals("")
-                || userDto.getConfirmPassword() == null || userDto.getConfirmPassword().equals("");
-    }
-
     public boolean isPassNotConfirm(String pass, String confirmPass) {
         return !pass.equals(confirmPass);
-    }
-
-    public boolean isInputValid(UserRegisterDto userDto) {
-        return userDto.getFirstName().matches(NAME_EN)
-                && userDto.getLastName().matches(NAME_EN)
-                && userDto.getOriginFirstName().matches(NAME_UK)
-                && userDto.getOriginLastName().matches(NAME_UK)
-                && userDto.getEmail().matches(EMAIL);
     }
 
     public User getUserFromUserRegisterDto(UserRegisterDto userDto) {

@@ -29,7 +29,9 @@ public class JDBSUserDao implements UserDao {
     private static final String FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY = "SELECT * FROM user " +
             "LEFT JOIN bus_driver bd " +
             "ON user.id = bd.driver_id " +
-            "WHERE driver_id NOT IN (SELECT driver_id FROM appointment WHERE date = ?) AND bd.bus_id = ?";
+            "WHERE driver_id " +
+            "NOT IN (SELECT driver_id FROM appointment WHERE date = ?)" +
+            " AND bd.bus_id = ?";
 
     private Connection connection;
     UserMapper mapper = new UserMapper();

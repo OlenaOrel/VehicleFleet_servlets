@@ -28,7 +28,7 @@ public class AddRouteCommand implements Command {
             return REDIRECT + ROOT_PATH + APPOINT_BUS_PATH;
         }
         if (isRouteListEmpty) {
-            List<Route> routeList = routeService.getNetAppointRoute();
+            List<Route> routeList = routeService.getNotAppointRoute();
             LOGGER.info("Count of route: {}", routeList.size());
             if (!routeList.isEmpty()) {
                 session.setAttribute(EMPTY_ROUTE_LIST_ATTRIBUTE, false);
