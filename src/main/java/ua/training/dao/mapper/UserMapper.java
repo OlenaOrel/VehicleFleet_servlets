@@ -5,7 +5,6 @@ import ua.training.entity.UserRole;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class UserMapper implements ObjectMapper<User> {
 
@@ -32,9 +31,4 @@ public class UserMapper implements ObjectMapper<User> {
                 .build();
     }
 
-    @Override
-    public User makeUnique(Map<Integer, User> cache, User user) {
-        cache.putIfAbsent(user.getId(), user);
-        return cache.get(user.getId());
-    }
 }

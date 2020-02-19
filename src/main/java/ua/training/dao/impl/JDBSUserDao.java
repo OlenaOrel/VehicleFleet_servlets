@@ -47,11 +47,14 @@ public class JDBSUserDao implements UserDao {
             if (resultSet.next()) {
                 result = Optional.of(mapper.extractFromResultSet(resultSet));
             }
-            close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
@@ -95,11 +98,14 @@ public class JDBSUserDao implements UserDao {
             if (resultSet.next()) {
                 result = Optional.of(mapper.extractFromResultSet(resultSet));
             }
-            close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
@@ -122,11 +128,14 @@ public class JDBSUserDao implements UserDao {
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
-            close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
@@ -150,11 +159,14 @@ public class JDBSUserDao implements UserDao {
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
-            close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }

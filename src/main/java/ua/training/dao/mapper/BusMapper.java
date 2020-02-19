@@ -4,7 +4,6 @@ import ua.training.entity.Bus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class BusMapper implements ObjectMapper<Bus> {
     private static final String BUS_ID = "bus.id";
@@ -20,9 +19,4 @@ public class BusMapper implements ObjectMapper<Bus> {
                 .build();
     }
 
-    @Override
-    public Bus makeUnique(Map<Integer, Bus> cache, Bus bus) {
-        cache.putIfAbsent(bus.getId(), bus);
-        return cache.get(bus.getId());
-    }
 }

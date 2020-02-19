@@ -8,6 +8,7 @@ import ua.training.entity.Appointment;
 import ua.training.entity.AppointmentStatus;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class AppointmentService {
 
@@ -35,5 +36,15 @@ public class AppointmentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Optional<Appointment> getAppointmentForDriver(String email) {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        return appointmentDao.findAppointmentForDriver(email);
+    }
+
+    public void setStatusConfirm(Appointment appointment) {
+        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
+        appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointment.getId());
     }
 }
