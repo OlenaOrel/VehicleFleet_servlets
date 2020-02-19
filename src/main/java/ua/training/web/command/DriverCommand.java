@@ -2,8 +2,8 @@ package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.dto.AppointDto;
-import ua.training.dto.AppointDtoConverter;
+import ua.training.dto.AppointmentDto;
+import ua.training.dto.AppointmentDtoConverter;
 import ua.training.entity.Appointment;
 import ua.training.service.AppointmentService;
 import ua.training.web.conctant.WebConstants;
@@ -17,7 +17,7 @@ import static ua.training.web.conctant.WebConstants.*;
 public class DriverCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(DriverCommand.class);
     private AppointmentService appointmentService = new AppointmentService();
-    private AppointDtoConverter converter = new AppointDtoConverter();
+    private AppointmentDtoConverter converter = new AppointmentDtoConverter();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -34,8 +34,8 @@ public class DriverCommand implements Command {
                 return WebConstants.DRIVER_PAGE;
             }
             session.setAttribute(APPOINT_PRESENT_ATTRIBUTE, true);
-            AppointDto appointDto = converter.convert(optionalAppointment.get());
-            session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointDto);
+            AppointmentDto appointmentDto = converter.convertToDto(optionalAppointment.get());
+            session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointmentDto);
         }
         return WebConstants.DRIVER_PAGE;
     }

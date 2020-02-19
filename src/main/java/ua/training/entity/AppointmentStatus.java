@@ -1,5 +1,5 @@
 package ua.training.entity;
 
 public enum AppointmentStatus {
-    NEW, CONFIRMED, REJECTED, REGARDED
+    NEW, CONFIRMED, FINISHED
 }

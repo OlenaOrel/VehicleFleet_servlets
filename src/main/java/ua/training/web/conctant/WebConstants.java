@@ -10,6 +10,7 @@ public interface WebConstants {
 
     String ROUTE_ID_ATTRIBUTE = "routeId";
     String ROUTE_LIST_ATTRIBUTE = "routeList";
+    String ROUTE_NUMBER_ATTRIBUTE = "routeNumber";
     String EMPTY_ROUTE_LIST_ATTRIBUTE = "isRouteListEmpty";
     String BUS_ID_ATTRIBUTE = "busId";
     String BUS_LIST_ATTRIBUTE = "busList";
@@ -23,7 +24,8 @@ public interface WebConstants {
     String INVALID_INPUT_ATTRIBUTE = "invalidInput";
     String ERROR_ATTRIBUTE = "error";
     String APPOINT_PRESENT_ATTRIBUTE = "appointPresent";
-
+    String APPOINTMENT_DTO_LIST_ATTRIBUTE = "appointmentDtoList";
+    String APPOINTMENT_STATUS_ATTRIBUTE = "status";
 
     String REDIRECT = "redirect:";
     String ROOT_PATH = "/VF";

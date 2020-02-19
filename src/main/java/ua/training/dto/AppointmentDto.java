@@ -1,6 +1,10 @@
 package ua.training.dto;
 
-public class AppointDto {
+import ua.training.entity.AppointmentStatus;
+
+import java.time.LocalDate;
+
+public class AppointmentDto {
 
     private int routeNumber;
     private String routeDeparture;
@@ -10,16 +14,19 @@ public class AppointDto {
     private String busLicensePlate;
     private String busMark;
     private String driverFullName;
-    private String DriverFullNameUk;
+    private String driverFullNameUk;
+    private LocalDate date;
+    private AppointmentStatus status;
 
-    public AppointDto() {
+    public AppointmentDto() {
     }
 
-    public AppointDto(int routeNumber, String routeDeparture,
-                      String routeDepartureUk, String routeArrival,
-                      String routeArrivalUk, String busLicensePlate,
-                      String busMark, String driverFullName,
-                      String driverFullNameUk) {
+    public AppointmentDto(int routeNumber, String routeDeparture,
+                          String routeDepartureUk, String routeArrival,
+                          String routeArrivalUk, String busLicensePlate,
+                          String busMark, String driverFullName,
+                          String driverFullNameUk, LocalDate date,
+                          AppointmentStatus status) {
         this.routeNumber = routeNumber;
         this.routeDeparture = routeDeparture;
         this.routeDepartureUk = routeDepartureUk;
@@ -28,7 +35,9 @@ public class AppointDto {
         this.busLicensePlate = busLicensePlate;
         this.busMark = busMark;
         this.driverFullName = driverFullName;
-        DriverFullNameUk = driverFullNameUk;
+        this.driverFullNameUk = driverFullNameUk;
+        this.date = date;
+        this.status = status;
     }
 
     public int getRouteNumber() {
@@ -96,10 +105,43 @@ public class AppointDto {
     }
 
     public String getDriverFullNameUk() {
-        return DriverFullNameUk;
+        return driverFullNameUk;
     }
 
     public void setDriverFullNameUk(String driverFullNameUk) {
-        DriverFullNameUk = driverFullNameUk;
+        driverFullNameUk = driverFullNameUk;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AppointmentStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentDto{" +
+                "routeNumber=" + routeNumber +
+                ", routeDeparture='" + routeDeparture + '\'' +
+                ", routeDepartureUk='" + routeDepartureUk + '\'' +
+                ", routeArrival='" + routeArrival + '\'' +
+                ", routeArrivalUk='" + routeArrivalUk + '\'' +
+                ", busLicensePlate='" + busLicensePlate + '\'' +
+                ", busMark='" + busMark + '\'' +
+                ", driverFullName='" + driverFullName + '\'' +
+                ", driverFullNameUk='" + driverFullNameUk + '\'' +
+                ", date=" + date +
+                ", status=" + status +
+                '}';
     }
 }
