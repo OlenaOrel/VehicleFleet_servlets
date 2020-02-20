@@ -109,7 +109,7 @@ public class AppointmentDto {
     }
 
     public void setDriverFullNameUk(String driverFullNameUk) {
-        driverFullNameUk = driverFullNameUk;
+        this.driverFullNameUk = driverFullNameUk;
     }
 
     public LocalDate getDate() {

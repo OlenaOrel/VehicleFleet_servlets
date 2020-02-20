@@ -12,10 +12,10 @@ values ('Mikola', 'Ivanov', 'Микола', 'Іванов', 'ivanov@gmail.com',
         '$2a$10$iUCLJMX3j5fJ68t41hIzUu6lF.eRoAHYoRLOgPBFrfsmhDJvxUTam', 'ROLE_DRIVER');
 
 insert into vehicle_fleet.bus (`mark`, `license_plate`)
-values ('AA 1234 PP', 'Toyota'),
-       ('AA 6789 PP', 'Mercedes-Benz'),
-       ('AA 0147 PP', 'Volkswagen'),
-       ('AA 6438 PP', 'Fiat');
+values ('Toyota', 'AA 1234 PP'),
+       ('Mercedes-Benz', 'AA 6789 PP'),
+       ('Volkswagen', 'AA 0147 PP'),
+       ('Fiat', 'AA 6438 PP');
 
 insert into vehicle_fleet.route (`number`, `departure_from_city`, `departure_from_city_uk`,
                                  `arrival_to_city`, `arrival_to_city_uk`)

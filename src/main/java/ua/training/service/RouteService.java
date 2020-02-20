@@ -35,7 +35,7 @@ public class RouteService {
         return result;
     }
 
-    public List<Route> getNetAppointRoute() {
+    public List<Route> getNotAppointRoute() {
         List<Route> result = new ArrayList<>();
         try (RouteDao routeDao = daoFactory.createRouteDao()) {
             result = routeDao.findNotAppointRoutes();
