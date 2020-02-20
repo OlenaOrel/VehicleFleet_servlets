@@ -27,6 +27,14 @@
 <div class="container" style="margin-top: 50px">
     <div class="row">
         <div class="col-md-12 col-md-offset-2">
+            <form action="${pageContext.request.contextPath}/admin">
+                <input type="submit" value='<fmt:message key="message.main.page"/>'
+                       class="btn btn-default" style="margin-top:10px">
+            </form>
+            <form action="${pageContext.request.contextPath}/admin/appoint/driver">
+                <input type="submit" value='<fmt:message key="message.back"/>'
+                       class="btn btn-default" style="margin-top:10px">
+            </form>
             <table class="table">
                 <tr>
                     <th>

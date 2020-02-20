@@ -10,7 +10,6 @@ public interface WebConstants {
 
     String ROUTE_ID_ATTRIBUTE = "routeId";
     String ROUTE_LIST_ATTRIBUTE = "routeList";
-    String ROUTE_NUMBER_ATTRIBUTE = "routeNumber";
     String EMPTY_ROUTE_LIST_ATTRIBUTE = "isRouteListEmpty";
     String BUS_ID_ATTRIBUTE = "busId";
     String BUS_LIST_ATTRIBUTE = "busList";
@@ -25,7 +24,8 @@ public interface WebConstants {
     String ERROR_ATTRIBUTE = "error";
     String APPOINT_PRESENT_ATTRIBUTE = "appointPresent";
     String APPOINTMENT_DTO_LIST_ATTRIBUTE = "appointmentDtoList";
-    String APPOINTMENT_STATUS_ATTRIBUTE = "status";
+    String APPOINTMENT_ID_ATTRIBUTE = "appointmentId";
+    String PAGE_ATTRIBUTE = "page";
 
     String REDIRECT = "redirect:";
     String ROOT_PATH = "/VF";
@@ -54,5 +54,6 @@ public interface WebConstants {
     String APPOINT_BUS_PAGE = "/WEB-INF/page/admin/appoint/add_bus.jsp";
     String APPOINT_DRIVER_PAGE = "/WEB-INF/page/admin/appoint/add_driver.jsp";
     String CONFIRM_APPOINT_PAGE = "/WEB-INF/page/admin/appoint/confirm.jsp";
+    String APPOINTMENT_HISTORY = "/WEB-INF/page/admin/appoint/history.jsp";
 
 }

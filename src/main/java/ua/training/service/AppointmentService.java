@@ -49,29 +49,13 @@ public class AppointmentService {
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointment.getId());
     }
 
-    public List<Appointment> getAllAppointments() {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
-        return appointmentDao.findAll();
-    }
-
     public List<Appointment> getNotFinishedAppointment() {
         AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         return appointmentDao.findNotFinishedAppointment();
     }
 
-    public void doFinish(int routeNumber, AppointmentStatus status) {
+    public void doFinish(int appointmentId) {
         AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
-        appointmentDao.updateStatusByAppointmentId(
-                AppointmentStatus.FINISHED,
-                getAppointmentIdByStatusAndRouteNumber(status, routeNumber)
-        );
-
-    }
-
-    private int getAppointmentIdByStatusAndRouteNumber(AppointmentStatus status, int routeNumber) {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
-        return appointmentDao
-                .findAppointmentIdByStatusAndRouteNumber(
-                        status, routeNumber);
+        appointmentDao.updateStatusByAppointmentId(AppointmentStatus.FINISHED, appointmentId);
     }
 }

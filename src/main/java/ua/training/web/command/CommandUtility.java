@@ -26,10 +26,7 @@ public class CommandUtility {
 
     static boolean checkUserIsLogged(HttpServletRequest request, String email) {
         Set<String> loggedUsers = getLoggedUsersFromContext(request);
-        if (loggedUsers.stream().anyMatch(email::equals)) {
-            return true;
-        }
-        return false;
+        return loggedUsers.stream().anyMatch(email::equals);
     }
 
     static void addUserToLoggedUsers(HttpServletRequest request, String email) {
@@ -40,10 +37,11 @@ public class CommandUtility {
 
     static void logOutUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String email = (String) request.getSession().getServletContext().getAttribute(EMAIL_ATTRIBUTE);
+        ServletContext context = request.getServletContext();
+        String email = (String) context.getAttribute(EMAIL_ATTRIBUTE);
         Set<String> loggedUsers = getLoggedUsersFromContext(request);
         loggedUsers.remove(email);
-        request.getServletContext().removeAttribute(EMAIL_ATTRIBUTE);
+        context.removeAttribute(EMAIL_ATTRIBUTE);
         setLoggedUsersToContext(request, loggedUsers);
         session.removeAttribute(ROLE_ATTRIBUTE);
         session.invalidate();
@@ -51,13 +49,13 @@ public class CommandUtility {
     }
 
     static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {
-        return (HashSet<String>) request.getSession()
-                .getServletContext().getAttribute(LOGGED_USERS_ATTRIBUTE);
+        return (HashSet<String>) request.getServletContext()
+                .getAttribute(LOGGED_USERS_ATTRIBUTE);
     }
 
     private static void setLoggedUsersToContext(HttpServletRequest request,
                                                 Set<String> loggedUsers) {
-        request.getSession().getServletContext()
+        request.getServletContext()
                 .setAttribute(LOGGED_USERS_ATTRIBUTE, loggedUsers);
     }
 }

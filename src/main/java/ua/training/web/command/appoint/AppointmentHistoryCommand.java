@@ -10,6 +10,9 @@ import ua.training.web.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static ua.training.web.conctant.WebConstants.APPOINTMENT_HISTORY;
+import static ua.training.web.conctant.WebConstants.PAGE_ATTRIBUTE;
+
 public class AppointmentHistoryCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(AppointmentHistoryCommand.class);
@@ -19,14 +22,14 @@ public class AppointmentHistoryCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String current = request.getParameter("page");
+        String current = request.getParameter(PAGE_ATTRIBUTE);
         int currentPage = 1;
         if (current != null) {
-            currentPage = Integer.parseInt(request.getParameter("page"));
+            currentPage = Integer.parseInt(request.getParameter(PAGE_ATTRIBUTE));
         }
         Page<AppointmentDto> page = pageService.getAppointmentPage(currentPage, PAGE_SIZE);
         LOGGER.info(page);
-        session.setAttribute("page", page);
-        return "/WEB-INF/page/admin/appoint/history.jsp";
+        session.setAttribute(PAGE_ATTRIBUTE, page);
+        return APPOINTMENT_HISTORY;
     }
 }

@@ -15,16 +15,6 @@ public class RouteService {
     private static final Logger LOGGER = LogManager.getLogger(RouteService.class);
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public List<Route> getAllRouts() {
-        List<Route> result = new ArrayList<>();
-        try (RouteDao routeDao = daoFactory.createRouteDao()) {
-            result = routeDao.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public Optional<Route> getRouteById(int routeId) {
         Optional<Route> result = Optional.empty();
         try (RouteDao routeDao = daoFactory.createRouteDao()) {

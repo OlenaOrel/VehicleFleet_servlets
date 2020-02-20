@@ -22,7 +22,7 @@ public class UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.findByEmail(email);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
         return result;
     }
@@ -31,22 +31,12 @@ public class UserService {
         return BCrypt.checkpw(inputPass, userPass);
     }
 
-    public List<User> getAllByBusId(int id) {
-        List<User> result = new ArrayList<>();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.findByBuses_id(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public Optional<User> getUserById(int driverId) {
         Optional<User> result = Optional.empty();
         try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.findById(driverId);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
         return result;
     }
@@ -56,7 +46,7 @@ public class UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.findNotAppointDriverForBus(busId);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
         return result;
     }
