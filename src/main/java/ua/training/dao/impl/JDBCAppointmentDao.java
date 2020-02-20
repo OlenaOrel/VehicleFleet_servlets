@@ -17,7 +17,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
 
     private static final Logger LOGGER = LogManager.getLogger(JDBCAppointmentDao.class);
 
-    private static final String SAVE_APPOINTMENT_QUERY = "INSERT INTO vehicle_fleet.appointment " +
+    private static final String SAVE_APPOINTMENT = "INSERT INTO vehicle_fleet.appointment " +
             "(`route_id`, `bus_id`, `driver_id`, `date`, `status`) " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String FIND_ALL_APPOINTMENT = "SELECT * FROM appointment";
@@ -27,10 +27,14 @@ public class JDBCAppointmentDao implements AppointmentDao {
             "LEFT JOIN user " +
             "ON appointment.driver_id = user.id " +
             "WHERE email = ? AND date = ? AND status = 'NEW'";
-    private static final String UPDATE_APPOINTMENT_STATUS_BY_ID_QUERY = "UPDATE appointment SET status = ? WHERE id = ?";
-    private static final String FIND_ID_BY_STATUS_AND_ROUTE_NUMBER_QUERY = "SELECT appointment.id FROM appointment " +
+    private static final String UPDATE_APPOINTMENT_STATUS_BY_ID = "UPDATE appointment SET status = ? WHERE id = ?";
+    private static final String FIND_ID_BY_STATUS_AND_ROUTE_NUMBER = "SELECT appointment.id FROM appointment " +
             "LEFT JOIN route ON appointment.route_id = route.id " +
             "WHERE status = ? AND number = ?";
+    private static final String COUNT_ALL_APPOINTMENT = "SELECT COUNT(*) AS total FROM appointment";
+    public static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +
+            " ORDER BY date DESC" +
+            " LIMIT ?, ?";
 
     private Connection connection;
     private AppointmentMapper mapper = new AppointmentMapper();
@@ -42,7 +46,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
     @Override
     public boolean save(Appointment entity) {
         boolean result = false;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_APPOINTMENT_QUERY)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_APPOINTMENT)) {
             preparedStatement.setInt(1, entity.getRouteId());
             preparedStatement.setInt(2, entity.getBusId());
             preparedStatement.setInt(3, entity.getDriverId());
@@ -96,6 +100,40 @@ public class JDBCAppointmentDao implements AppointmentDao {
     }
 
     @Override
+    public int countAppointments() {
+        int result = 0;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(COUNT_ALL_APPOINTMENT);
+            if (resultSet.next()) {
+                result = resultSet.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return result;
+    }
+
+    @Override
+    public List<Appointment> findAllAppointments(int offset, int pageSize) {
+        List<Appointment> result = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPOINTMENTS_FOR_PAGE)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, pageSize);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(mapper.extractFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return result;
+    }
+
+    @Override
     public void update(Appointment entity) {
 
     }
@@ -132,7 +170,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
 
     @Override
     public void updateStatusByAppointmentId(AppointmentStatus status, int id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS_BY_ID_QUERY)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS_BY_ID)) {
             preparedStatement.setString(1, status.name());
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
@@ -147,7 +185,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
     @Override
     public int findAppointmentIdByStatusAndRouteNumber(AppointmentStatus status, int routeNumber) {
         int result = -1;
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ID_BY_STATUS_AND_ROUTE_NUMBER_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(FIND_ID_BY_STATUS_AND_ROUTE_NUMBER)) {
             statement.setString(1, status.name());
             statement.setInt(2, routeNumber);
             ResultSet resultSet = statement.executeQuery();

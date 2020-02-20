@@ -30,6 +30,7 @@ public class AppointmentDtoConverter {
     public AppointmentDto convertToDto(Appointment appointment) {
         AppointmentDto result = new AppointmentDto();
         try {
+            result.setId(appointment.getId());
             User user = getDriver(appointment);
             setUserParameters(result, user);
             Route route = getRoute(appointment);

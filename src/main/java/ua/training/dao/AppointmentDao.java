@@ -16,4 +16,8 @@ public interface AppointmentDao extends GenericDao<Appointment> {
 
     List<Appointment> findNotFinishedAppointment();
 
+    int countAppointments();
+
+    List<Appointment> findAllAppointments(int offset, int pageSize);
+
 }

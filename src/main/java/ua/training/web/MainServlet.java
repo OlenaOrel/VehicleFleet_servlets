@@ -3,10 +3,7 @@ package ua.training.web;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.web.command.*;
-import ua.training.web.command.appoint.AddBusCommand;
-import ua.training.web.command.appoint.AddDriverCommand;
-import ua.training.web.command.appoint.AddRouteCommand;
-import ua.training.web.command.appoint.ConfirmAppointCommand;
+import ua.training.web.command.appoint.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -37,6 +34,7 @@ public class MainServlet extends HttpServlet {
         commands.put(APPOINT_DRIVER_PATH, new AddDriverCommand());
         commands.put(CONFIRM_APPOINT_PATH, new ConfirmAppointCommand());
         commands.put(REGISTRATION_PATH, new RegisterCommand());
+        commands.put("/admin/history", new AppointmentHistoryCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
