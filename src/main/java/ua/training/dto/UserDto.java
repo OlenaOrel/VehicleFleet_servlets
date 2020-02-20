@@ -3,16 +3,17 @@ package ua.training.dto;
 import ua.training.entity.UserRole;
 
 public class UserDto {
+
+    private int id;
     private String email;
-    private String password;
     private UserRole role;
 
     public UserDto() {
     }
 
-    public UserDto(String email, String password, UserRole role) {
+    public UserDto(int id, String email, UserRole role) {
+        this.id = id;
         this.email = email;
-        this.password = password;
         this.role = role;
     }
 
@@ -22,14 +23,6 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public UserRole getRole() {
@@ -43,8 +36,7 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                "email='" + email +
                 ", role=" + role +
                 '}';
     }

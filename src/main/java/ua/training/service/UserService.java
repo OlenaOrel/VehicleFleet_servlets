@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.training.dao.DaoFactory;
 import ua.training.dao.UserDao;
+import ua.training.dto.UserDto;
 import ua.training.entity.User;
 import ua.training.exception.UserExistException;
 
@@ -39,6 +40,10 @@ public class UserService {
             LOGGER.warn(e.getMessage());
         }
         return result;
+    }
+
+    public UserDto convertUserToDto(User user) {
+        return new UserDto(user.getId(), user.getEmail(), user.getRole());
     }
 
     public List<User> getNotAppointDriverForBus(int busId) {

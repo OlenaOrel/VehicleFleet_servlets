@@ -1,7 +1,6 @@
 package ua.training.web.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ua.training.dto.UserDto;
 import ua.training.entity.UserRole;
 
 import javax.servlet.ServletContext;
@@ -13,15 +12,14 @@ import java.util.Set;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class CommandUtility {
-    private static Logger LOGGER = LogManager.getLogger(CommandUtility.class);
-    private static String GUEST = "guest";
+    private static final String GUEST = "guest";
+    private static final int GUEST_ID = 0;
 
-    static void setUserRole(HttpServletRequest request,
-                            UserRole role, String email) {
+    static void setUserRole(HttpServletRequest request, UserDto userDto) {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
-        context.setAttribute(EMAIL_ATTRIBUTE, email);
-        session.setAttribute(ROLE_ATTRIBUTE, role);
+        context.setAttribute(EMAIL_ATTRIBUTE, userDto.getEmail());
+        session.setAttribute(USER_DTO_ATTRIBUTE, userDto);
     }
 
     static boolean checkUserIsLogged(HttpServletRequest request, String email) {
@@ -43,9 +41,9 @@ public class CommandUtility {
         loggedUsers.remove(email);
         context.removeAttribute(EMAIL_ATTRIBUTE);
         setLoggedUsersToContext(request, loggedUsers);
-        session.removeAttribute(ROLE_ATTRIBUTE);
+        session.removeAttribute(USER_DTO_ATTRIBUTE);
         session.invalidate();
-        CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, GUEST);
+        CommandUtility.setUserRole(request, new UserDto(GUEST_ID, GUEST, UserRole.ROLE_GUEST));
     }
 
     static Set<String> getLoggedUsersFromContext(HttpServletRequest request) {

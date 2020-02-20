@@ -5,7 +5,7 @@ public interface WebConstants {
     String LANG_ATTRIBUTE = "lang";
     String EMAIL_ATTRIBUTE = "email";
     String PASS_ATTRIBUTE = "pass";
-    String ROLE_ATTRIBUTE = "role";
+    String USER_DTO_ATTRIBUTE = "userDto";
     String LOGGED_USERS_ATTRIBUTE = "loggedUsers";
 
     String ROUTE_ID_ATTRIBUTE = "routeId";
