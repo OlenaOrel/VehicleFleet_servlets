@@ -12,9 +12,10 @@
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <div class="row">
-        <div class="container" style="margin-top: 60px">
-            <div class="col-md-12 col-md-offset-4">
+
+    <div class="container" style="margin-top: 60px">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-2">
                 <h1 style="color: cornflowerblue">
                     <fmt:message key="message.app.name"/>
                 </h1>
@@ -40,7 +41,7 @@
                        class="btn btn-default" style="margin-top:10px">
             </form>
             <br>
-            <div class="appointment history">
+            <div id="appointment history">
                 <table class="table">
                     <tr>
                         <th>

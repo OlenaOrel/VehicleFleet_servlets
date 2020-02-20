@@ -42,17 +42,17 @@ public interface WebConstants {
 
     String DRIVER_PATH = "/driver";
 
-    String MAIN_PAGE = "/index.jsp";
-    String LOGIN_PAGE = "/login.jsp";
-    String ERROR_PAGE = "/WEB-INF/error.jsp";
-    String DENIED_PAGE = "/access_denied.jsp";
-    String REGISTER_PAGE = "/register.jsp";
+    String MAIN_PAGE = "/WEB-INF/page/index.jsp";
+    String LOGIN_PAGE = "/WEB-INF/page/login.jsp";
+    String ERROR_PAGE = "/WEB-INF/page/error.jsp";
+    String DENIED_PAGE = "/WEB-INF/page/access_denied.jsp";
+    String REGISTER_PAGE = "/WEB-INF/page/register.jsp";
 
-    String DRIVER_PAGE = "/WEB-INF/driver/driver_menu.jsp";
-    String MAIN_ADMIN_PAGE = "/WEB-INF/admin/admin_menu.jsp";
-    String APPOINT_ROUTE_PAGE = "/WEB-INF/admin/appoint/add_route.jsp";
-    String APPOINT_BUS_PAGE = "/WEB-INF/admin/appoint/add_bus.jsp";
-    String APPOINT_DRIVER_PAGE = "/WEB-INF/admin/appoint/add_driver.jsp";
-    String CONFIRM_APPOINT_PAGE = "/WEB-INF/admin/appoint/confirm.jsp";
+    String DRIVER_PAGE = "/WEB-INF/page/driver/driver_menu.jsp";
+    String MAIN_ADMIN_PAGE = "/WEB-INF/page/admin/admin_menu.jsp";
+    String APPOINT_ROUTE_PAGE = "/WEB-INF/page/admin/appoint/add_route.jsp";
+    String APPOINT_BUS_PAGE = "/WEB-INF/page/admin/appoint/add_bus.jsp";
+    String APPOINT_DRIVER_PAGE = "/WEB-INF/page/admin/appoint/add_driver.jsp";
+    String CONFIRM_APPOINT_PAGE = "/WEB-INF/page/admin/appoint/confirm.jsp";
 
 }
