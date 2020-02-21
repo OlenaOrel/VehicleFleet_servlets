@@ -28,25 +28,18 @@ public class JDBCAppointmentDao implements AppointmentDao {
             "ON appointment.driver_id = user.id " +
             "WHERE email = ? AND date = ? AND status = 'NEW'";
     private static final String UPDATE_APPOINTMENT_STATUS_BY_ID = "UPDATE appointment SET status = ? WHERE id = ?";
-    private static final String FIND_ID_BY_STATUS_AND_ROUTE_NUMBER = "SELECT appointment.id FROM appointment " +
-            "LEFT JOIN route ON appointment.route_id = route.id " +
-            "WHERE status = ? AND number = ?";
     private static final String COUNT_ALL_APPOINTMENT = "SELECT COUNT(*) AS total FROM appointment";
-    public static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +
+    private static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +
             " ORDER BY date DESC" +
             " LIMIT ?, ?";
 
-    private Connection connection;
     private AppointmentMapper mapper = new AppointmentMapper();
-
-    public JDBCAppointmentDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public boolean save(Appointment entity) {
         boolean result = false;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_APPOINTMENT)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_APPOINTMENT)) {
             preparedStatement.setInt(1, entity.getRouteId());
             preparedStatement.setInt(2, entity.getBusId());
             preparedStatement.setInt(3, entity.getDriverId());
@@ -55,30 +48,27 @@ public class JDBCAppointmentDao implements AppointmentDao {
             result = preparedStatement.execute();
             return result;
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
 
     @Override
     public Optional<Appointment> findById(int id) {
-        return Optional.empty();
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public List<Appointment> findAll() {
         List<Appointment> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL_APPOINTMENT);
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
@@ -86,15 +76,14 @@ public class JDBCAppointmentDao implements AppointmentDao {
     @Override
     public List<Appointment> findNotFinishedAppointment() {
         List<Appointment> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_NOT_FINISHED_APPOINTMENT);
             while (resultSet.next()) {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
@@ -102,15 +91,14 @@ public class JDBCAppointmentDao implements AppointmentDao {
     @Override
     public int countAppointments() {
         int result = 0;
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(COUNT_ALL_APPOINTMENT);
             if (resultSet.next()) {
                 result = resultSet.getInt("total");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
@@ -118,7 +106,8 @@ public class JDBCAppointmentDao implements AppointmentDao {
     @Override
     public List<Appointment> findAllAppointments(int offset, int pageSize) {
         List<Appointment> result = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPOINTMENTS_FOR_PAGE)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPOINTMENTS_FOR_PAGE)) {
             statement.setInt(1, offset);
             statement.setInt(2, pageSize);
             ResultSet resultSet = statement.executeQuery();
@@ -126,32 +115,21 @@ public class JDBCAppointmentDao implements AppointmentDao {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
 
     @Override
     public void update(Appointment entity) {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public Optional<Appointment> findAppointmentForDriver(String email) {
-        LocalDate date = LocalDate.now();
+    public Optional<Appointment> findAppointmentForDriver(LocalDate date, String email) {
         Optional<Appointment> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_APPOINTMENT_FOR_DRIVER)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_APPOINTMENT_FOR_DRIVER)) {
             preparedStatement.setString(1, email);
             preparedStatement.setDate(2, Date.valueOf(date));
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -161,42 +139,22 @@ public class JDBCAppointmentDao implements AppointmentDao {
             LOGGER.info("Appoint for driver: {}", result);
             return result;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
 
     @Override
     public void updateStatusByAppointmentId(AppointmentStatus status, int id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS_BY_ID)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS_BY_ID)) {
             preparedStatement.setString(1, status.name());
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             LOGGER.info("Update appointment status");
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
-        } finally {
-            close();
+            LOGGER.error(e.getMessage());
         }
     }
 
-    @Override
-    public int findAppointmentIdByStatusAndRouteNumber(AppointmentStatus status, int routeNumber) {
-        int result = -1;
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ID_BY_STATUS_AND_ROUTE_NUMBER)) {
-            statement.setString(1, status.name());
-            statement.setInt(2, routeNumber);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                result = resultSet.getInt("appointment.id");
-            }
-        } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
-        } finally {
-            close();
-        }
-        return result;
-    }
 }

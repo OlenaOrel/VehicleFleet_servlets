@@ -1,6 +1,7 @@
 package ua.training.dao.mapper;
 
 import ua.training.entity.Bus;
+import ua.training.entity.builder.BusBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public class BusMapper implements ObjectMapper<Bus> {
 
     @Override
     public Bus extractFromResultSet(ResultSet rs) throws SQLException {
-        return new Bus.Builder()
+        return new BusBuilder()
                 .id(rs.getInt(BUS_ID))
                 .mark(rs.getString(BUS_MARK))
                 .licensePlate(rs.getString(BUS_LICENCE_PLATE))

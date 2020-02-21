@@ -1,6 +1,7 @@
 package ua.training.dao.mapper;
 
 import ua.training.entity.Route;
+import ua.training.entity.builder.RouteBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class RouteMapper implements ObjectMapper<Route> {
 
     @Override
     public Route extractFromResultSet(ResultSet rs) throws SQLException {
-        return new Route.Builder()
+        return new RouteBuilder()
                 .id(rs.getInt(ROUTE_ID))
                 .numberOfRoute(rs.getInt(ROUTE_NUMBER))
                 .departureFromCityEn(rs.getString(ROUTE_DEPARTURE_FROM_CITY))

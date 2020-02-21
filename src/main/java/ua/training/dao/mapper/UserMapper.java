@@ -2,6 +2,7 @@ package ua.training.dao.mapper;
 
 import ua.training.entity.User;
 import ua.training.entity.UserRole;
+import ua.training.entity.builder.UserBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class UserMapper implements ObjectMapper<User> {
 
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
-        return new User.Builder()
+        return new UserBuilder()
                 .id(rs.getInt(USER_ID))
                 .firstName(rs.getString(USER_FIRST_NAME))
                 .lastName(rs.getString(USER_LAST_NAME))

@@ -3,6 +3,8 @@ package ua.training.dao.impl;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectionPoolHolder {
@@ -13,8 +15,11 @@ public class ConnectionPoolHolder {
 
     private static volatile DataSource dataSource;
 
+    public static Connection getConnection() throws SQLException {
+        return getDataSource().getConnection();
+    }
 
-    public static DataSource getDataSource() {
+    private static DataSource getDataSource() {
 
         if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {

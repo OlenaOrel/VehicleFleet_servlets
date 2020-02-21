@@ -2,6 +2,7 @@ package ua.training.dao.mapper;
 
 import ua.training.entity.Appointment;
 import ua.training.entity.AppointmentStatus;
+import ua.training.entity.builder.AppointmentBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +19,13 @@ public class AppointmentMapper implements ObjectMapper<Appointment> {
 
     @Override
     public Appointment extractFromResultSet(ResultSet rs) throws SQLException {
-        Appointment result = new Appointment();
-        result.setId(rs.getInt(APPOINTMENT_ID));
-        result.setRouteId(rs.getInt(APPOINTMENT_ROUTE_ID));
-        result.setBusId(rs.getInt(APPOINTMENT_BUS_ID));
-        result.setDriverId(rs.getInt(APPOINTMENT_DRIVER_ID));
-        result.setDate(rs.getDate(APPOINTMENT_DATE).toLocalDate());
-        result.setStatus(AppointmentStatus.valueOf(rs.getString(APPOINTMENT_STATUS)));
-        return result;
+        return new AppointmentBuilder()
+                .id(rs.getInt(APPOINTMENT_ID))
+                .routeId(rs.getInt(APPOINTMENT_ROUTE_ID))
+                .busId(rs.getInt(APPOINTMENT_BUS_ID))
+                .driverId(rs.getInt(APPOINTMENT_DRIVER_ID))
+                .date(rs.getDate(APPOINTMENT_DATE).toLocalDate())
+                .status(AppointmentStatus.valueOf(rs.getString(APPOINTMENT_STATUS)))
+                .build();
     }
 }
