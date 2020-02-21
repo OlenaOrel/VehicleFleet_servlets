@@ -40,6 +40,10 @@
                 <input type="submit" value='<fmt:message key="message.route.appoint"/>'
                        class="btn btn-default" style="margin-top:10px">
             </form>
+            <form action="${pageContext.request.contextPath}/admin/history">
+                <input type="submit" value='<fmt:message key="message.appoint.history"/>'
+                       class="btn btn-default" style="margin-top:10px">
+            </form>
             <br>
             <div id="appointment history">
                 <table class="table">

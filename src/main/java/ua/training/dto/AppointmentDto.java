@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class AppointmentDto {
 
+    private int id;
     private int routeNumber;
     private String routeDeparture;
     private String routeDepartureUk;
@@ -21,12 +22,13 @@ public class AppointmentDto {
     public AppointmentDto() {
     }
 
-    public AppointmentDto(int routeNumber, String routeDeparture,
+    public AppointmentDto(int id, int routeNumber, String routeDeparture,
                           String routeDepartureUk, String routeArrival,
                           String routeArrivalUk, String busLicensePlate,
                           String busMark, String driverFullName,
                           String driverFullNameUk, LocalDate date,
                           AppointmentStatus status) {
+        this.id = id;
         this.routeNumber = routeNumber;
         this.routeDeparture = routeDeparture;
         this.routeDepartureUk = routeDepartureUk;
@@ -38,6 +40,14 @@ public class AppointmentDto {
         this.driverFullNameUk = driverFullNameUk;
         this.date = date;
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getRouteNumber() {
@@ -131,6 +141,7 @@ public class AppointmentDto {
     @Override
     public String toString() {
         return "AppointmentDto{" +
+                "id=" + id +
                 "routeNumber=" + routeNumber +
                 ", routeDeparture='" + routeDeparture + '\'' +
                 ", routeDepartureUk='" + routeDepartureUk + '\'' +
