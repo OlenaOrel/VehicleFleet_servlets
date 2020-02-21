@@ -22,10 +22,6 @@ public class JDBSUserDao implements UserDao {
             "(first_name, last_name, origin_first_name, origin_last_name, email, password, role)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM user WHERE id = ?";
-    private static final String FIND_USER_BY_BUS_ID_QUERY = "SELECT * FROM user " +
-            "LEFT JOIN bus_driver bd " +
-            "ON user.id = bd.driver_id " +
-            "WHERE bd.bus_id = ?";
     private static final String FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY = "SELECT * FROM user " +
             "LEFT JOIN bus_driver bd " +
             "ON user.id = bd.driver_id " +
@@ -33,37 +29,28 @@ public class JDBSUserDao implements UserDao {
             "NOT IN (SELECT driver_id FROM appointment WHERE date = ?)" +
             " AND bd.bus_id = ?";
 
-    private Connection connection;
     UserMapper mapper = new UserMapper();
-
-    public JDBSUserDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Optional<User> findByEmail(String email) {
         Optional<User> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_QUERY)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_QUERY)) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 result = Optional.of(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
 
     @Override
     public void saveUser(User entity) throws UserExistException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_QUERY)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_QUERY)) {
             preparedStatement.setString(1, entity.getFirstName());
             preparedStatement.setString(2, entity.getLastName());
             preparedStatement.setString(3, entity.getOriginFirstName());
@@ -73,88 +60,49 @@ public class JDBSUserDao implements UserDao {
             preparedStatement.setString(7, entity.getRole().name());
             preparedStatement.execute();
         } catch (SQLIntegrityConstraintViolationException e) {
-            LOGGER.info("User with email = {} exists", entity.getEmail());
+            LOGGER.error("User with email = {} exists", entity.getEmail());
             throw new UserExistException("User with email = " + entity.getEmail() + "exists");
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LOGGER.error(e.getMessage());
         }
     }
 
     @Override
     public boolean save(User entity) {
-        return false;
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public Optional<User> findById(int id) {
         Optional<User> result = Optional.empty();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_QUERY)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_QUERY)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 result = Optional.of(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LOGGER.error(e.getMessage());
         }
         return result;
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public void update(User entity) {
-
-    }
-
-    public List<User> findByBuses_id(int busId) {
-        List<User> result = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_BUS_ID_QUERY)) {
-            preparedStatement.setInt(1, busId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                result.add(mapper.extractFromResultSet(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     public List<User> findNotAppointDriverForBus(int busId) {
         LocalDate date = LocalDate.now();
         List<User> result = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY)) {
             preparedStatement.setDate(1, Date.valueOf(date));
             preparedStatement.setInt(2, busId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -162,13 +110,7 @@ public class JDBSUserDao implements UserDao {
                 result.add(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LOGGER.error(e.getMessage());
         }
         return result;
     }

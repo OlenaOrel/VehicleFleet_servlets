@@ -12,8 +12,6 @@ public interface AppointmentDao extends GenericDao<Appointment> {
 
     void updateStatusByAppointmentId(AppointmentStatus status, int id);
 
-    int findAppointmentIdByStatusAndRouteNumber(AppointmentStatus status, int routeNumber);
-
     List<Appointment> findNotFinishedAppointment();
 
     int countAppointments();

@@ -2,40 +2,26 @@ package ua.training.dao.impl;
 
 import ua.training.dao.*;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 public class JDBCDaoFactory extends DaoFactory {
-
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
     public UserDao createUserDao() {
-        return new JDBSUserDao(getConnection());
+        return new JDBSUserDao();
     }
 
     @Override
     public RouteDao createRouteDao() {
-        return new JDBCRouteDao(getConnection());
+        return new JDBCRouteDao();
     }
 
     @Override
     public BusDao createBusDao() {
-        return new JDBCBusDao(getConnection());
+        return new JDBCBusDao();
     }
 
     @Override
     public AppointmentDao createAppointmentDao() {
-        return new JDBCAppointmentDao(getConnection());
+        return new JDBCAppointmentDao();
     }
 
-
-    private Connection getConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import ua.training.dto.UserRegisterDto;
 import ua.training.entity.User;
 import ua.training.exception.UserExistException;
-import ua.training.service.RegistrationService;
 import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import static ua.training.web.conctant.WebConstants.*;
 public class RegisterCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
 
-    private RegistrationService regService = new RegistrationService();
     private UserService userService = new UserService();
 
     @Override
@@ -30,7 +28,7 @@ public class RegisterCommand implements Command {
             LOGGER.info("empty parameters");
             return REGISTER_PAGE;
         }
-        if (regService.isPassNotConfirm(userDto.getPassword(), userDto.getConfirmPassword())) {
+        if (userService.isPassNotConfirm(userDto.getPassword(), userDto.getConfirmPassword())) {
             session.setAttribute(PASS_NOT_CONFIRM_ATTRIBUTE, true);
             LOGGER.info("Password is not confirm");
             return REGISTER_PAGE;
@@ -41,7 +39,7 @@ public class RegisterCommand implements Command {
             return REGISTER_PAGE;
         }
 
-        User user = regService.getUserFromUserRegisterDto(userDto);
+        User user = userService.getUserFromUserRegisterDto(userDto);
         try {
             userService.saveUser(user);
         } catch (UserExistException e) {

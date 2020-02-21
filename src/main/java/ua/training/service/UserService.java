@@ -6,26 +6,23 @@ import org.mindrot.jbcrypt.BCrypt;
 import ua.training.dao.DaoFactory;
 import ua.training.dao.UserDao;
 import ua.training.dto.UserDto;
+import ua.training.dto.UserRegisterDto;
 import ua.training.entity.User;
+import ua.training.entity.UserRole;
+import ua.training.entity.builder.UserBuilder;
 import ua.training.exception.UserExistException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserService {
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    UserDao userDao = DaoFactory.getInstance().createUserDao();
 
     public Optional<User> getUserByEmail(String email) {
-        Optional<User> result = Optional.empty();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.findByEmail(email);
-        } catch (Exception e) {
-            LOGGER.warn(e.getMessage());
-        }
-        return result;
+        return userDao.findByEmail(email);
+
     }
 
     public boolean isPassCorrect(String inputPass, String userPass) {
@@ -33,31 +30,38 @@ public class UserService {
     }
 
     public Optional<User> getUserById(int driverId) {
-        Optional<User> result = Optional.empty();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.findById(driverId);
-        } catch (Exception e) {
-            LOGGER.warn(e.getMessage());
-        }
-        return result;
+        return userDao.findById(driverId);
     }
 
     public UserDto convertUserToDto(User user) {
         return new UserDto(user.getId(), user.getEmail(), user.getRole());
     }
 
+    public boolean isPassNotConfirm(String pass, String confirmPass) {
+        return !pass.equals(confirmPass);
+    }
+
+    public User getUserFromUserRegisterDto(UserRegisterDto userDto) {
+        return new UserBuilder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .originFirstName(userDto.getOriginFirstName())
+                .originLastName(userDto.getOriginLastName())
+                .email(userDto.getEmail())
+                .password(getSecurePass(userDto.getPassword()))
+                .role(UserRole.ROLE_DRIVER)
+                .build();
+    }
+
+    private String getSecurePass(String pass) {
+        return BCrypt.hashpw(pass, BCrypt.gensalt());
+    }
+
     public List<User> getNotAppointDriverForBus(int busId) {
-        List<User> result = new ArrayList<>();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.findNotAppointDriverForBus(busId);
-        } catch (Exception e) {
-            LOGGER.warn(e.getMessage());
-        }
-        return result;
+        return userDao.findNotAppointDriverForBus(busId);
     }
 
     public void saveUser(User user) throws UserExistException {
-        UserDao userDao = daoFactory.createUserDao();
         userDao.saveUser(user);
     }
 }

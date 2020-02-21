@@ -15,7 +15,7 @@ public class AppointmentService {
 
     private static final Logger LOGGER = LogManager.getLogger(AppointmentService.class);
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    AppointmentDao appointmentDao = DaoFactory.getInstance().createAppointmentDao();
 
     public Appointment createAppointment(int routeId, int busId, int driverId) {
         LOGGER.info("Create appointment");
@@ -32,30 +32,23 @@ public class AppointmentService {
 
     public void save(Appointment appointment) {
         LOGGER.info("Save appointment");
-        try (AppointmentDao appointmentDao = daoFactory.createAppointmentDao()) {
             appointmentDao.save(appointment);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public Optional<Appointment> getAppointmentForDriver(String email) {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         return appointmentDao.findAppointmentForDriver(email);
     }
 
     public void setStatusConfirm(Appointment appointment) {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointment.getId());
     }
 
     public List<Appointment> getNotFinishedAppointment() {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         return appointmentDao.findNotFinishedAppointment();
     }
 
     public void doFinish(int appointmentId) {
-        AppointmentDao appointmentDao = daoFactory.createAppointmentDao();
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.FINISHED, appointmentId);
     }
 }

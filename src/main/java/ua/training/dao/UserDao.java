@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface UserDao extends GenericDao<User> {
     Optional<User> findByEmail(String email);
 
-    List<User> findByBuses_id(int busId);
-
     List<User> findNotAppointDriverForBus(int busId);
 
     void saveUser(User entity) throws UserExistException;
