@@ -45,7 +45,7 @@ public interface WebConstants {
     String MAIN_PAGE = "/WEB-INF/page/index.jsp";
     String LOGIN_PAGE = "/WEB-INF/page/login.jsp";
     String ERROR_PAGE = "/WEB-INF/page/error.jsp";
-    String DENIED_PAGE = "/WEB-INF/page/access_denied.jsp";
+    String DENIED_PAGE = "/WEB-INF/page/error/access_denied.jsp";
     String REGISTER_PAGE = "/WEB-INF/page/register.jsp";
 
     String DRIVER_PAGE = "/WEB-INF/page/driver/driver_menu.jsp";
