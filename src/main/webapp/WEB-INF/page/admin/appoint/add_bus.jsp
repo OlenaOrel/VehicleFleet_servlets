@@ -10,10 +10,11 @@
 <head>
     <%@ include file="/WEB-INF/page/fragments/header.jsp" %>
 
-    <div class="container" style="margin-top: 60px">
+    <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-2">
                 <div align="right">
+                    <h5>${sessionScope.userDto.email}</h5>
                     <form action="${pageContext.request.contextPath}/logout" method="Post">
                         <input type="submit" value='<fmt:message key="message.logout"/>'
                                class="btn btn-default" style="margin-top:10px">
@@ -24,7 +25,7 @@
     </div>
 </head>
 <body>
-<div class="container" style="margin-top: 60px">
+<div class="container" style="margin-top:20px">
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <form action="${pageContext.request.contextPath}/admin">

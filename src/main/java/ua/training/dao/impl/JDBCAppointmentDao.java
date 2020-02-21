@@ -26,7 +26,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
             "FROM appointment " +
             "LEFT JOIN user " +
             "ON appointment.driver_id = user.id " +
-            "WHERE email = ? AND date = ? AND status = 'NEW'";
+            "WHERE email = ? AND date = ? AND NOT (status = 'FINISHED')";
     private static final String UPDATE_APPOINTMENT_STATUS_BY_ID = "UPDATE appointment SET status = ? WHERE id = ?";
     private static final String COUNT_ALL_APPOINTMENT = "SELECT COUNT(*) AS total FROM appointment";
     private static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +

@@ -3,7 +3,7 @@ insert into vehicle_fleet.user (`first_name`, `last_name`, `origin_first_name`,
 values ('Mikola', 'Ivanov', 'Микола', 'Іванов', 'ivanov@gmail.com',
         '$2a$10$pQOGfl0lFp34yH.LVHa5KuIG2Ch8QPFcZSoiJDUKP8dx2qURr2C3u', 'ROLE_ADMIN'), #password: 12345
        ('Oleksandr', 'Ptushkin', 'Олександр', 'Птушкін', 'ptushkin@gmail.com',
-        '$10$iUCLJMX3j5fJ68t41hIzUu6lF.eRoAHYoRLOgPBFrfsmhDJvxUTam', 'ROLE_DRIVER'),
+        '$2a$10$pQOGfl0lFp34yH.LVHa5KuIG2Ch8QPFcZSoiJDUKP8dx2qURr2C3u', 'ROLE_DRIVER'),
        ('Ivan', 'Tkach', 'Іван', 'Ткач', 'tkach@gmail.com',
         '$2a$10$iUCLJMX3j5fJ68t41hIzUu6lF.eRoAHYoRLOgPBFrfsmhDJvxUTam', 'ROLE_DRIVER'),
        ('Maksim', 'Smilenko', 'Максим', 'Сміленко', 'smilenko@gmail.com',
