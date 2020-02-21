@@ -11,6 +11,7 @@
     <%@ include file="/WEB-INF/page/fragments/header.jsp" %>
     <div class="container" style="margin-top: 60px">
         <div class="col-md-12 col-md-offset-2" align="right">
+            <h5>${sessionScope.userDto.email}</h5>
             <form action="${pageContext.request.contextPath}/logout" method="GET">
                 <input type="submit" value='<fmt:message key="message.logout"/>'
                        class="btn btn-default" style="margin-top:10px">
@@ -25,10 +26,7 @@
             <c:if test="${appointPresent == false}">
                 <h3><fmt:message key="message.appoint.not.present"/></h3>
             </c:if>
-            <c:if test="${confirm == true}">
-                <h3><fmt:message key="message.appoint.confirmed"/></h3>
-            </c:if>
-            <c:if test="${appointPresent == true && sessionScope.appointDto.status.name() != 'FINISHED'}">
+            <c:if test="${appointPresent == true}">
                 <h3><fmt:message key="message.driver.appointed"/></h3>
                 <table class="table" style="margin-top: 20px">
                     <tr>
@@ -60,18 +58,16 @@
                         </c:if>
                         <td>${sessionScope.appointDto.busLicensePlate}</td>
                         <td>${sessionScope.appointDto.busMark}</td>
-                        <td>
-                            <c:if test="${appointDto.status.name() == 'NEW'}">
-                                <form action="${pageContext.request.contextPath}/driver"
-                                      method="post">
-                                    <input type="hidden" name="appointId" value="${sessionScope.appointDto.id}">
-                                    <input type="submit" value='<fmt:message key="message.route.confirm"/>'
-                                           class="btn btn-default">
-                                </form>
-                            </c:if>
-                        </td>
                     </tr>
                 </table>
+                <c:if test="${sessionScope.appointDto.status.name() == 'NEW'}">
+                    <form action="${pageContext.request.contextPath}/driver"
+                          method="post">
+                        <input type="hidden" name="appointmentId" value="${sessionScope.appointDto.id}">
+                        <input type="submit" value='<fmt:message key="message.route.confirm"/>'
+                               class="btn btn-default">
+                    </form>
+                </c:if>
             </c:if>
         </div>
     </div>

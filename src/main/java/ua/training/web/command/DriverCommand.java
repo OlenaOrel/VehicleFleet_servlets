@@ -22,19 +22,17 @@ public class DriverCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        boolean isAppointConfirm = Boolean.parseBoolean(request.getParameter(CONFIRM_ATTRIBUTE));
+        String appointmentId = request.getParameter(APPOINTMENT_ID_ATTRIBUTE);
         session.setAttribute(APPOINT_PRESENT_ATTRIBUTE, false);
         String email = (String) session.getServletContext().getAttribute(EMAIL_ATTRIBUTE);
         Optional<Appointment> optionalAppointment = appointmentService.getAppointmentForDriver(email);
         if (optionalAppointment.isPresent()) {
-            LOGGER.info("Appointment {}", optionalAppointment.get());
-            if (isAppointConfirm) {
-                appointmentService.setStatusConfirm(optionalAppointment.get());
-                session.setAttribute(CONFIRM_ATTRIBUTE, true);
-                return WebConstants.DRIVER_PAGE;
+            LOGGER.info(optionalAppointment.get());
+            if (appointmentId != null) {
+                appointmentService.setStatusConfirm(Integer.parseInt(appointmentId));
             }
-            session.setAttribute(APPOINT_PRESENT_ATTRIBUTE, true);
             AppointmentDto appointmentDto = converter.convertToDto(optionalAppointment.get());
+            session.setAttribute(APPOINT_PRESENT_ATTRIBUTE, true);
             session.setAttribute(APPOINT_DTO_ATTRIBUTE, appointmentDto);
         }
         return WebConstants.DRIVER_PAGE;

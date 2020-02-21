@@ -32,7 +32,7 @@ public class AppointmentService {
 
     public void save(Appointment appointment) {
         LOGGER.info("Save appointment");
-            appointmentDao.save(appointment);
+        appointmentDao.save(appointment);
 
     }
 
@@ -40,8 +40,8 @@ public class AppointmentService {
         return appointmentDao.findAppointmentForDriver(LocalDate.now(), email);
     }
 
-    public void setStatusConfirm(Appointment appointment) {
-        appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointment.getId());
+    public void setStatusConfirm(int appointmentId) {
+        appointmentDao.updateStatusByAppointmentId(AppointmentStatus.CONFIRMED, appointmentId);
     }
 
     public List<Appointment> getNotFinishedAppointment() {
