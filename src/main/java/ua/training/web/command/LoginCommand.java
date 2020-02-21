@@ -2,6 +2,7 @@ package ua.training.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.dto.UserDto;
 import ua.training.entity.User;
 import ua.training.entity.UserRole;
 import ua.training.service.UserService;
@@ -38,22 +39,24 @@ public class LoginCommand implements Command {
 
         User user = loginUser.get();
         if (userService.isPassCorrect(pass, user.getPassword())) {
-            CommandUtility.addUserToLoggedUsers(request, user.getEmail());
+            UserDto userDto = userService.convertUserToDto(user);
+            CommandUtility.addUserToLoggedUsers(request, userDto.getEmail());
             UserRole role = user.getRole();
             LOGGER.info("User role: '" + role + "'");
             LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
 
             if (role.equals(UserRole.ROLE_ADMIN)) {
-                CommandUtility.setUserRole(request, role, email);
+                CommandUtility.setUserRole(request, userDto);
                 return REDIRECT + ROOT_PATH + ADMIN_PATH;
             }
             if (role.equals(UserRole.ROLE_DRIVER)) {
-                CommandUtility.setUserRole(request, role, email);
+                CommandUtility.setUserRole(request, userDto);
                 return REDIRECT + ROOT_PATH + DRIVER_PATH;
             }
 
         } else {
-            CommandUtility.setUserRole(request, UserRole.ROLE_GUEST, GUEST);
+            int guestId = 0;
+            CommandUtility.setUserRole(request, new UserDto(guestId, GUEST, UserRole.ROLE_GUEST));
             return LOGIN_PAGE;
         }
         LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));

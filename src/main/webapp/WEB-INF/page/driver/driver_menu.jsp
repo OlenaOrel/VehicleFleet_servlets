@@ -28,8 +28,9 @@
             <c:if test="${confirm == true}">
                 <h3><fmt:message key="message.appoint.confirmed"/></h3>
             </c:if>
-            <c:if test="${appointPresent == true}">
-                <table class="table">
+            <c:if test="${appointPresent == true && sessionScope.appointDto.status.name() != 'FINISHED'}">
+                <h3><fmt:message key="message.driver.appointed"/></h3>
+                <table class="table" style="margin-top: 20px">
                     <tr>
                         <th>
                             <fmt:message key="message.route.number"/>
@@ -60,12 +61,14 @@
                         <td>${sessionScope.appointDto.busLicensePlate}</td>
                         <td>${sessionScope.appointDto.busMark}</td>
                         <td>
-                            <form action="${pageContext.request.contextPath}/driver"
-                                  method="post">
-                                <input type="hidden" name="confirm" value="${true}">
-                                <input type="submit" value='<fmt:message key="message.route.confirm"/>'
-                                       class="btn btn-default">
-                            </form>
+                            <c:if test="${appointDto.status.name() == 'NEW'}">
+                                <form action="${pageContext.request.contextPath}/driver"
+                                      method="post">
+                                    <input type="hidden" name="appointId" value="${sessionScope.appointDto.id}">
+                                    <input type="submit" value='<fmt:message key="message.route.confirm"/>'
+                                           class="btn btn-default">
+                                </form>
+                            </c:if>
                         </td>
                     </tr>
                 </table>

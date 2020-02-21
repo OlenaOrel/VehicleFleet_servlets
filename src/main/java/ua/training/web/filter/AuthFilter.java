@@ -2,6 +2,7 @@ package ua.training.web.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.dto.UserDto;
 import ua.training.entity.UserRole;
 
 import javax.servlet.*;
@@ -14,6 +15,8 @@ import static ua.training.web.conctant.WebConstants.*;
 
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(AuthFilter.class);
+    private static final String GUEST = "guest";
+    private static final int GUEST_ID = 0;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,7 +34,13 @@ public class AuthFilter implements Filter {
         String path = request.getRequestURI();
         String contextPath = request.getContextPath();
         String mainPath = contextPath + "/";
-        UserRole role = (UserRole) session.getAttribute(ROLE_ATTRIBUTE);
+        UserDto userDto = (UserDto) session.getAttribute(USER_DTO_ATTRIBUTE);
+
+        if (userDto == null) {
+            userDto = new UserDto(GUEST_ID, GUEST, UserRole.ROLE_GUEST);
+        }
+
+        UserRole role = userDto.getRole();
 
         LOGGER.info("Path: {}", path);
         LOGGER.info("Role: {}", role);
@@ -39,7 +48,7 @@ public class AuthFilter implements Filter {
         boolean isGuestPath = path.equals(mainPath) || path.contains(LOGIN_PATH)
                 || path.contains(REGISTRATION_PATH);
 
-        if (isInputParameterNotPresent(email, pass) && isUserGuest(role)) {
+        if (isInputParameterNotPresent(email, pass) && isUserGuest(userDto.getRole())) {
             if (isGuestPath || path.contains(DENIED_PATH)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;

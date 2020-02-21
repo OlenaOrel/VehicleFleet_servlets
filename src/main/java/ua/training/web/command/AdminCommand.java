@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import ua.training.dto.AppointmentDto;
 import ua.training.dto.AppointmentDtoConverter;
 import ua.training.entity.Appointment;
-import ua.training.entity.AppointmentStatus;
 import ua.training.service.AppointmentService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +22,10 @@ public class AdminCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String routeNumber = request.getParameter(ROUTE_NUMBER_ATTRIBUTE);
-        String status = request.getParameter(APPOINTMENT_STATUS_ATTRIBUTE);
-        if (routeNumber != null && status != null) {
-            LOGGER.info("number = {}, status = {}", routeNumber, status);
-            service.doFinish(Integer.parseInt(routeNumber), AppointmentStatus.valueOf(status));
-            LOGGER.info("Appointment with route number {} finished", routeNumber);
+        String appointmentId = request.getParameter(APPOINTMENT_ID_ATTRIBUTE);
+        if (appointmentId != null) {
+            service.doFinish(Integer.parseInt(appointmentId));
+            LOGGER.info("Appointment with id = {} finished", appointmentId);
             return REDIRECT + ROOT_PATH + ADMIN_PATH;
         }
         List<Appointment> notFinishedAppointments = service.getNotFinishedAppointment();

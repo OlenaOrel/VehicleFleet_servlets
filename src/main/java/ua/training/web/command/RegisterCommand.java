@@ -25,7 +25,7 @@ public class RegisterCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute(PASS_NOT_CONFIRM_ATTRIBUTE, false);
         session.setAttribute(INVALID_INPUT_ATTRIBUTE, false);
-        UserRegisterDto userDto = regService.createUserRegisterDto(request);
+        UserRegisterDto userDto = createUserRegisterDto(request);
         if (isInputNotPresent(userDto)) {
             LOGGER.info("empty parameters");
             return REGISTER_PAGE;
@@ -68,6 +68,18 @@ public class RegisterCommand implements Command {
                 && userDto.getOriginFirstName().matches(NAME_UK)
                 && userDto.getOriginLastName().matches(NAME_UK)
                 && userDto.getEmail().matches(EMAIL));
+    }
+
+    public UserRegisterDto createUserRegisterDto(HttpServletRequest request) {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String originFirstName = request.getParameter("originFirstName");
+        String originLastName = request.getParameter("originLastName");
+        String email = request.getParameter("email");
+        String pass = request.getParameter("pass");
+        String confirmPass = request.getParameter("confirmPass");
+        return new UserRegisterDto(firstName, lastName,
+                originFirstName, originLastName, email, pass, confirmPass);
     }
 
 }

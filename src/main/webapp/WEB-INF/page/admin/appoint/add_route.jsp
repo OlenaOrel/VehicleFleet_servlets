@@ -27,6 +27,10 @@
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
+            <form action="${pageContext.request.contextPath}/admin">
+                <input type="submit" value='<fmt:message key="message.back"/>'
+                       class="btn btn-default" style="margin-top:10px">
+            </form>
             <c:if test="${isRouteListEmpty == true}">
                 <h3><fmt:message key="message.empty.route.list"/></h3>
             </c:if>

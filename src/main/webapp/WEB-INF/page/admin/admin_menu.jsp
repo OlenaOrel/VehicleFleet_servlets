@@ -36,66 +36,67 @@
             </form>
             <br>
             <div id="appointment history">
-                <table class="table">
-                    <tr>
-                        <th>
-                            <fmt:message key="message.route.number"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.route.departure"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.route.arrival"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.bus.license.plate"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.bus.mark"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.driver"/>
-                        </th>
-                        <th>
-                            <fmt:message key="message.appoint.finish"/>
-                        </th>
-                    </tr>
-                    <c:forEach items="${appointmentDtoList}" var="appointmentDto">
+                <c:if test="${! appointmentDtoList.isEmpty()}">
+                    <table class="table">
                         <tr>
-                            <td>${appointmentDto.routeNumber}</td>
-
-                            <c:if test="${lang.equals('en')}">
-                                <td>${appointmentDto.routeDeparture}</td>
-                                <td>${appointmentDto.routeArrival}</td>
-                            </c:if>
-
-                            <c:if test="${lang.equals('uk')}">
-                                <td>${appointmentDto.routeDepartureUk}</td>
-                                <td>${appointmentDto.routeArrivalUk}</td>
-                            </c:if>
-
-                            <td>${appointmentDto.busLicensePlate}</td>
-                            <td>${appointmentDto.busMark}</td>
-
-                            <c:if test="${lang.equals('en')}">
-                                <td>${appointmentDto.driverFullName}</td>
-                            </c:if>
-
-                            <c:if test="${lang.equals('uk')}">
-                                <td>${appointmentDto.driverFullNameUk}</td>
-                            </c:if>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/admin"
-                                      method="post">
-                                    <input type="hidden" name="routeNumber" value="${appointmentDto.routeNumber}">
-                                    <input type="hidden" name="status" value="${appointmentDto.status}">
-                                    <input type="submit" value='<fmt:message key="message.appoint.finish"/>'
-                                           class="btn btn-default">
-                                </form>
-                            </td>
+                            <th>
+                                <fmt:message key="message.route.number"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.route.departure"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.route.arrival"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.bus.license.plate"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.bus.mark"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.driver"/>
+                            </th>
+                            <th>
+                                <fmt:message key="message.appoint.finish"/>
+                            </th>
                         </tr>
-                    </c:forEach>
-                </table>
+                        <c:forEach items="${appointmentDtoList}" var="appointmentDto">
+                            <tr>
+                                <td>${appointmentDto.routeNumber}</td>
+
+                                <c:if test="${lang.equals('en')}">
+                                    <td>${appointmentDto.routeDeparture}</td>
+                                    <td>${appointmentDto.routeArrival}</td>
+                                </c:if>
+
+                                <c:if test="${lang.equals('uk')}">
+                                    <td>${appointmentDto.routeDepartureUk}</td>
+                                    <td>${appointmentDto.routeArrivalUk}</td>
+                                </c:if>
+
+                                <td>${appointmentDto.busLicensePlate}</td>
+                                <td>${appointmentDto.busMark}</td>
+
+                                <c:if test="${lang.equals('en')}">
+                                    <td>${appointmentDto.driverFullName}</td>
+                                </c:if>
+
+                                <c:if test="${lang.equals('uk')}">
+                                    <td>${appointmentDto.driverFullNameUk}</td>
+                                </c:if>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/admin"
+                                          method="post">
+                                        <input type="hidden" name="appointmentId" value="${appointmentDto.id}">
+                                        <input type="submit" value='<fmt:message key="message.appoint.finish"/>'
+                                               class="btn btn-default">
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
             </div>
         </div>
     </div>

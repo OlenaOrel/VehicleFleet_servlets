@@ -13,7 +13,6 @@ public class LogOutCommand implements Command {
     public String execute(HttpServletRequest request) {
         CommandUtility.logOutUser(request);
         LOGGER.info("Logged users: {}", CommandUtility.getLoggedUsersFromContext(request));
-        LOGGER.info("Role: {}", request.getSession().getAttribute(WebConstants.ROLE_ATTRIBUTE));
         return WebConstants.MAIN_PAGE;
     }
 }
