@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class Appointment {
 
-    int id;
-    int routeId;
-    int busId;
-    int driverId;
-    LocalDate date;
-    AppointmentStatus status;
+    private int id;
+    private int routeId;
+    private int busId;
+    private int driverId;
+    private LocalDate date;
+    private AppointmentStatus status;
 
     public Appointment() {
     }

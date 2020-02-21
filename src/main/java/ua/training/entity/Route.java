@@ -107,46 +107,4 @@ public class Route {
                 departureFromCityUk, arrivalToCityUk);
     }
 
-    public static class Builder {
-        private Route routeBuilder;
-
-        public Builder() {
-            routeBuilder = new Route();
-        }
-
-        public Builder id(int id) {
-            routeBuilder.id = id;
-            return this;
-        }
-
-        public Builder numberOfRoute(Integer numberOfRoute) {
-            routeBuilder.number = numberOfRoute;
-            return this;
-        }
-
-        public Builder departureFromCityEn(String departureFromCityEn) {
-            routeBuilder.departureFromCityEn = departureFromCityEn;
-            return this;
-        }
-
-        public Builder arrivalToCityEn(String arrivalToCityEn) {
-            routeBuilder.arrivalToCityEn = arrivalToCityEn;
-            return this;
-        }
-
-        public Builder departureFromCityUk(String departureFromCityUk) {
-            routeBuilder.departureFromCityUk = departureFromCityUk;
-            return this;
-        }
-
-        public Builder arrivalToCityUk(String arrivalToCityUk) {
-            routeBuilder.arrivalToCityUk = arrivalToCityUk;
-            return this;
-        }
-
-        public Route build() {
-            return routeBuilder;
-        }
-    }
-
 }

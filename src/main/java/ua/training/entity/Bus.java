@@ -71,46 +71,4 @@ public class Bus {
         return Objects.hash(id, mark, licensePlate);
     }
 
-    public static class Builder {
-        private Bus busBuilder;
-
-        public Builder() {
-            busBuilder = new Bus();
-        }
-
-        private Long id;
-        private String mark;
-        private String licensePlate;
-
-        private List<User> drivers;
-
-        public Builder id(int id) {
-            busBuilder.id = id;
-            return this;
-        }
-
-        public Builder mark(String mark) {
-            busBuilder.mark = mark;
-            return this;
-        }
-
-        public Builder licensePlate(String licensePlate) {
-            busBuilder.licensePlate = licensePlate;
-            return this;
-        }
-
-        public Builder drivers(List<User> drivers) {
-            busBuilder.drivers = drivers;
-            return this;
-        }
-
-        public Builder driver(User driver) {
-            busBuilder.drivers.add(driver);
-            return this;
-        }
-
-        public Bus build() {
-            return busBuilder;
-        }
-    }
 }
