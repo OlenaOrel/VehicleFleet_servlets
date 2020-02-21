@@ -64,8 +64,7 @@ public class JDBCBusDao implements BusDao {
         throw new UnsupportedOperationException("not implemented yet");
     }
 
-    public List<Bus> findNotAppointBus() {
-        LocalDate date = LocalDate.now();
+    public List<Bus> findNotAppointBus(LocalDate date) {
         List<Bus> result = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_BUS_QUERY)) {

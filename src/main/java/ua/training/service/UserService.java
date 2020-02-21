@@ -12,6 +12,7 @@ import ua.training.entity.UserRole;
 import ua.training.entity.builder.UserBuilder;
 import ua.training.exception.UserExistException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +59,8 @@ public class UserService {
     }
 
     public List<User> getNotAppointDriverForBus(int busId) {
-        return userDao.findNotAppointDriverForBus(busId);
+        LocalDate date = LocalDate.now();
+        return userDao.findNotAppointDriverForBusByDate(date, busId);
     }
 
     public void saveUser(User user) throws UserExistException {

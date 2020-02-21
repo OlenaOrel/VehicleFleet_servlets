@@ -4,6 +4,7 @@ import ua.training.dao.BusDao;
 import ua.training.dao.DaoFactory;
 import ua.training.entity.Bus;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,6 @@ public class BusService {
     }
 
     public List<Bus> getNotAppointBus() {
-        return busDao.findNotAppointBus();
-
+        return busDao.findNotAppointBus(LocalDate.now());
     }
 }

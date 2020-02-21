@@ -65,8 +65,7 @@ public class JDBCRouteDao implements RouteDao {
     }
 
     @Override
-    public List<Route> findNotAppointRoutes() {
-        LocalDate date = LocalDate.now();
+    public List<Route> findNotAppointRoutes(LocalDate date) {
         List<Route> result = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_ROUTE_QUERY)) {

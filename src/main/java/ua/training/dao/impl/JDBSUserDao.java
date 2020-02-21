@@ -98,8 +98,7 @@ public class JDBSUserDao implements UserDao {
         throw new UnsupportedOperationException("not implemented yet");
     }
 
-    public List<User> findNotAppointDriverForBus(int busId) {
-        LocalDate date = LocalDate.now();
+    public List<User> findNotAppointDriverForBusByDate(LocalDate date, int busId) {
         List<User> result = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY)) {

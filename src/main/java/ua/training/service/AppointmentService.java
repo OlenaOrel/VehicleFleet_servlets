@@ -37,7 +37,7 @@ public class AppointmentService {
     }
 
     public Optional<Appointment> getAppointmentForDriver(String email) {
-        return appointmentDao.findAppointmentForDriver(email);
+        return appointmentDao.findAppointmentForDriver(LocalDate.now(), email);
     }
 
     public void setStatusConfirm(Appointment appointment) {

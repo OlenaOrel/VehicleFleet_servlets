@@ -4,6 +4,7 @@ import ua.training.dao.DaoFactory;
 import ua.training.dao.RouteDao;
 import ua.training.entity.Route;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,6 @@ public class RouteService {
     }
 
     public List<Route> getNotAppointRoute() {
-        return routeDao.findNotAppointRoutes();
+        return routeDao.findNotAppointRoutes(LocalDate.now());
     }
 }

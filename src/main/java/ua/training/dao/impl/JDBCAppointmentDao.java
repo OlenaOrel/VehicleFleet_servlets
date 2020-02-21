@@ -126,8 +126,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
     }
 
     @Override
-    public Optional<Appointment> findAppointmentForDriver(String email) {
-        LocalDate date = LocalDate.now();
+    public Optional<Appointment> findAppointmentForDriver(LocalDate date, String email) {
         Optional<Appointment> result = Optional.empty();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_APPOINTMENT_FOR_DRIVER)) {
