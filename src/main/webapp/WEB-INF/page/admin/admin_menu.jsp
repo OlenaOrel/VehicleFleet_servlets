@@ -9,10 +9,11 @@
 <head>
     <%@ include file="/WEB-INF/page/fragments/header.jsp" %>
 
-    <div class="container" style="margin-top: 60px">
+    <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-2">
                 <div align="right">
+                    <h5>${sessionScope.userDto.email}</h5>
                     <form action="${pageContext.request.contextPath}/logout" method="Post">
                         <input type="submit" value='<fmt:message key="message.logout"/>'
                                class="btn btn-default" style="margin-top:10px">
@@ -37,6 +38,7 @@
             <br>
             <div id="appointment history">
                 <c:if test="${! appointmentDtoList.isEmpty()}">
+                    <h4 align="center"><fmt:message key="message.appointment.active"/></h4>
                     <table class="table">
                         <tr>
                             <th>
