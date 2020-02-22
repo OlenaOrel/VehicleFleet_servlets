@@ -7,6 +7,7 @@ import ua.training.entity.UserRole;
 import java.util.List;
 
 public class UserBuilder {
+
     private User userBuilder;
 
     public UserBuilder() {

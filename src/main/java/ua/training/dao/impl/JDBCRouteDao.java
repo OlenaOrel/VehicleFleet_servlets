@@ -16,12 +16,19 @@ public class JDBCRouteDao implements RouteDao {
 
     private static final Logger LOGGER = LogManager.getLogger(JDBCRouteDao.class);
 
-    private static final String FIND_ROUTE_BY_ID_QUERY = "SELECT * FROM route WHERE id = ?";
-    private static final String FIND_ALL_ROUTES_QUERY = "SELECT * FROM route";
-    private static final String FIND_NOT_APPOINT_ROUTE_QUERY = "SELECT * FROM route WHERE id " +
-            "NOT IN (SELECT route_id FROM appointment WHERE date = ?)";
+    private static final String FIND_ROUTE_BY_ID_QUERY =
+            "SELECT * FROM route WHERE id = ?";
+    private static final String FIND_ALL_ROUTES_QUERY =
+            "SELECT * FROM route";
+    private static final String FIND_NOT_APPOINT_ROUTE_QUERY =
+            "SELECT * FROM route WHERE id " +
+                    "NOT IN (SELECT route_id FROM appointment WHERE date = ?)";
 
-    private RouteMapper mapper = new RouteMapper();
+    private RouteMapper mapper;
+
+    public JDBCRouteDao() {
+        mapper = new RouteMapper();
+    }
 
     @Override
     public boolean save(Route entity) {

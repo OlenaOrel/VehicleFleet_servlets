@@ -17,19 +17,27 @@ public class JDBSUserDao implements UserDao {
 
     private static final Logger LOGGER = LogManager.getLogger(JDBSUserDao.class);
 
-    private static final String FIND_USER_BY_EMAIL_QUERY = "SELECT * FROM user WHERE email = ?";
-    private static final String SAVE_USER_QUERY = "INSERT INTO user " +
-            "(first_name, last_name, origin_first_name, origin_last_name, email, password, role)" +
-            " VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM user WHERE id = ?";
-    private static final String FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY = "SELECT * FROM user " +
-            "LEFT JOIN bus_driver bd " +
-            "ON user.id = bd.driver_id " +
-            "WHERE driver_id " +
-            "NOT IN (SELECT driver_id FROM appointment WHERE date = ?)" +
-            " AND bd.bus_id = ?";
+    private static final String FIND_USER_BY_EMAIL_QUERY =
+            "SELECT * FROM user WHERE email = ?";
+    private static final String SAVE_USER_QUERY =
+            "INSERT INTO user " +
+                    "(first_name, last_name, origin_first_name, origin_last_name, email, password, role)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String FIND_USER_BY_ID_QUERY =
+            "SELECT * FROM user WHERE id = ?";
+    private static final String FIND_NOT_APPOINT_DRIVER_FOR_BUS_QUERY =
+            "SELECT * FROM user " +
+                    "LEFT JOIN bus_driver bd " +
+                    "ON user.id = bd.driver_id " +
+                    "WHERE driver_id " +
+                    "NOT IN (SELECT driver_id FROM appointment WHERE date = ?)" +
+                    " AND bd.bus_id = ?";
 
-    UserMapper mapper = new UserMapper();
+    private UserMapper mapper;
+
+    public JDBSUserDao() {
+        mapper = new UserMapper();
+    }
 
     @Override
     public Optional<User> findByEmail(String email) {

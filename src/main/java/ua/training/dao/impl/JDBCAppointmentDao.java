@@ -17,21 +17,33 @@ public class JDBCAppointmentDao implements AppointmentDao {
 
     private static final Logger LOGGER = LogManager.getLogger(JDBCAppointmentDao.class);
 
-    private static final String SAVE_APPOINTMENT = "INSERT INTO vehicle_fleet.appointment " +
-            "(`route_id`, `bus_id`, `driver_id`, `date`, `status`) " +
-            "VALUES (?, ?, ?, ?, ?)";
-    private static final String FIND_ALL_APPOINTMENT = "SELECT * FROM appointment";
-    private static final String FIND_NOT_FINISHED_APPOINTMENT = "SELECT * FROM appointment WHERE status NOT IN ('" + AppointmentStatus.FINISHED.name() + "')";
-    private static final String FIND_APPOINTMENT_FOR_DRIVER = "SELECT appointment.id, route_id, bus_id, driver_id, date, status " +
-            "FROM appointment " +
-            "WHERE driver_id = ? AND date = ? AND NOT (status = 'FINISHED')";
-    private static final String UPDATE_APPOINTMENT_STATUS_BY_ID = "UPDATE appointment SET status = ? WHERE id = ?";
-    private static final String COUNT_ALL_APPOINTMENT = "SELECT COUNT(*) AS total FROM appointment";
-    private static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +
-            " ORDER BY date DESC" +
-            " LIMIT ?, ?";
+    private static final String SAVE_APPOINTMENT =
+            "INSERT INTO vehicle_fleet.appointment " +
+                    "(`route_id`, `bus_id`, `driver_id`, `date`, `status`) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+    private static final String FIND_ALL_APPOINTMENT =
+            "SELECT * FROM appointment";
+    private static final String FIND_NOT_FINISHED_APPOINTMENT =
+            "SELECT * FROM appointment " +
+                    "WHERE status NOT IN ('" + AppointmentStatus.FINISHED.name() + "')";
+    private static final String FIND_APPOINTMENT_FOR_DRIVER =
+            "SELECT appointment.id, route_id, bus_id, driver_id, date, status " +
+                    "FROM appointment " +
+                    "WHERE driver_id = ? AND date = ? AND status NOT ('" + AppointmentStatus.FINISHED.name() + "')";
+    private static final String UPDATE_APPOINTMENT_STATUS_BY_ID =
+            "UPDATE appointment SET status = ? WHERE id = ?";
+    private static final String COUNT_ALL_APPOINTMENT =
+            "SELECT COUNT(*) AS total FROM appointment";
+    private static final String FIND_ALL_APPOINTMENTS_FOR_PAGE =
+            "SELECT * FROM appointment " +
+                    "ORDER BY date DESC " +
+                    "LIMIT ?, ?";
 
-    private AppointmentMapper mapper = new AppointmentMapper();
+    private AppointmentMapper mapper;
+
+    public JDBCAppointmentDao() {
+        mapper = new AppointmentMapper();
+    }
 
     @Override
     public boolean save(Appointment entity) {
