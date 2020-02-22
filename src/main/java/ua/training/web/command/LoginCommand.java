@@ -13,9 +13,15 @@ import java.util.Optional;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class LoginCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private static final String GUEST = "guest";
-    private UserService userService = new UserService();
+
+    private UserService userService;
+
+    public LoginCommand() {
+        userService = new UserService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

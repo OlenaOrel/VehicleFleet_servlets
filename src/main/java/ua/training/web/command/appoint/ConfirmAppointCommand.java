@@ -16,8 +16,14 @@ import static ua.training.web.conctant.WebConstants.*;
 public class ConfirmAppointCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(ConfirmAppointCommand.class);
-    private AppointmentService appointmentService = new AppointmentService();
-    private AppointmentDtoConverter converter = new AppointmentDtoConverter();
+
+    private AppointmentService appointmentService;
+    private AppointmentDtoConverter converter;
+
+    public ConfirmAppointCommand() {
+        appointmentService = new AppointmentService();
+        converter = new AppointmentDtoConverter();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

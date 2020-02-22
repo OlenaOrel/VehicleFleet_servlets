@@ -13,8 +13,14 @@ import java.util.List;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class AddRouteCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(AddRouteCommand.class);
-    RouteService routeService = new RouteService();
+
+    private RouteService routeService;
+
+    public AddRouteCommand() {
+        routeService = new RouteService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -16,9 +16,16 @@ import java.util.Optional;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class DriverCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(DriverCommand.class);
-    private AppointmentService appointmentService = new AppointmentService();
-    private AppointmentDtoConverter converter = new AppointmentDtoConverter();
+
+    private AppointmentService appointmentService;
+    private AppointmentDtoConverter converter;
+
+    public DriverCommand() {
+        appointmentService = new AppointmentService();
+        converter = new AppointmentDtoConverter();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

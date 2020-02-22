@@ -12,6 +12,7 @@ import java.util.Set;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class CommandUtility {
+
     private static final String GUEST = "guest";
     private static final int GUEST_ID = 0;
 

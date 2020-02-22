@@ -13,8 +13,14 @@ import java.util.List;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class AddBusCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(AddBusCommand.class);
-    BusService busService = new BusService();
+
+    private BusService busService;
+
+    public AddBusCommand() {
+        busService = new BusService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

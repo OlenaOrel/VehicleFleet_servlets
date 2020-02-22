@@ -17,7 +17,12 @@ public class AppointmentHistoryCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(AppointmentHistoryCommand.class);
     private static final int PAGE_SIZE = 5;
-    private PageService pageService = new PageService();
+
+    private PageService pageService;
+
+    public AppointmentHistoryCommand() {
+        pageService = new PageService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {
