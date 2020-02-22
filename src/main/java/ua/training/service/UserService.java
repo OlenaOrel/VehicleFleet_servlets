@@ -42,7 +42,7 @@ public class UserService {
         return !pass.equals(confirmPass);
     }
 
-    public User getUserFromUserRegisterDto(UserRegisterDto userDto) {
+    public User createUserFromUserRegisterDto(UserRegisterDto userDto) {
         return new UserBuilder()
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())

@@ -39,7 +39,7 @@ public class RegisterCommand implements Command {
             return REGISTER_PAGE;
         }
 
-        User user = userService.getUserFromUserRegisterDto(userDto);
+        User user = userService.createUserFromUserRegisterDto(userDto);
         try {
             userService.saveUser(user);
         } catch (UserExistException e) {

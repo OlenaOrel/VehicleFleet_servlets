@@ -17,6 +17,14 @@ public class UserDto {
         this.role = role;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -36,7 +44,8 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-                "email='" + email +
+                "id=" + id +
+                ", email='" + email + '\'' +
                 ", role=" + role +
                 '}';
     }
