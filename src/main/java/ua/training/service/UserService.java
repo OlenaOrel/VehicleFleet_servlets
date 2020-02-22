@@ -19,7 +19,11 @@ import java.util.Optional;
 public class UserService {
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
 
-    UserDao userDao = DaoFactory.getInstance().createUserDao();
+    private UserDao userDao;
+
+    public UserService() {
+        userDao = DaoFactory.getInstance().createUserDao();
+    }
 
     public Optional<User> getUserByEmail(String email) {
         return userDao.findByEmail(email);

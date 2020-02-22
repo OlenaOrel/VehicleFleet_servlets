@@ -10,7 +10,11 @@ import java.util.Optional;
 
 public class RouteService {
 
-    RouteDao routeDao = DaoFactory.getInstance().createRouteDao();
+    private RouteDao routeDao;
+
+    public RouteService() {
+        routeDao = DaoFactory.getInstance().createRouteDao();
+    }
 
     public Optional<Route> getRouteById(int routeId) {
         return routeDao.findById(routeId);
