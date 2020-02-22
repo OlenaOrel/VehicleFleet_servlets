@@ -24,7 +24,7 @@ public class AdminCommand implements Command {
         HttpSession session = request.getSession();
         String appointmentId = request.getParameter(APPOINTMENT_ID_ATTRIBUTE);
         if (appointmentId != null) {
-            service.doFinish(Integer.parseInt(appointmentId));
+            service.setStatusFinished(Integer.parseInt(appointmentId));
             LOGGER.info("Appointment with id = {} finished", appointmentId);
             return REDIRECT + ROOT_PATH + ADMIN_PATH;
         }

@@ -48,7 +48,7 @@ public class AppointmentService {
         return appointmentDao.findNotFinishedAppointment();
     }
 
-    public void doFinish(int appointmentId) {
+    public void setStatusFinished(int appointmentId) {
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.FINISHED, appointmentId);
     }
 }
