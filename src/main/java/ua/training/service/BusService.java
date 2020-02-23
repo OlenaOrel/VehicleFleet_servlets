@@ -10,7 +10,11 @@ import java.util.Optional;
 
 public class BusService {
 
-    BusDao busDao = DaoFactory.getInstance().createBusDao();
+    private BusDao busDao;
+
+    public BusService() {
+        busDao = DaoFactory.getInstance().createBusDao();
+    }
 
     public Optional<Bus> getBusById(int busId) {
         return busDao.findById(busId);

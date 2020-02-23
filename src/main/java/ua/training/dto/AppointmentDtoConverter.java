@@ -17,9 +17,16 @@ import java.util.stream.Collectors;
 public class AppointmentDtoConverter {
 
     private static final Logger LOGGER = LogManager.getLogger(AppointmentDtoConverter.class);
-    UserService userService = new UserService();
-    BusService busService = new BusService();
-    RouteService routeService = new RouteService();
+
+    private UserService userService;
+    private BusService busService;
+    private RouteService routeService;
+
+    public AppointmentDtoConverter() {
+        userService = new UserService();
+        busService = new BusService();
+        routeService = new RouteService();
+    }
 
     public List<AppointmentDto> covertAllToDto(List<Appointment> appointments) {
         return appointments.stream()

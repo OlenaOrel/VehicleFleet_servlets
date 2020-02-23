@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Bus {
+
     private int id;
     private String mark;
     private String licensePlate;

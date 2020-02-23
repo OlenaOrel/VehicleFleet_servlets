@@ -14,7 +14,11 @@ public class PageService {
 
     private final Logger LOGGER = LogManager.getLogger(PageService.class);
 
-    private AppointmentDtoConverter converter = new AppointmentDtoConverter();
+    private AppointmentDtoConverter converter;
+
+    public PageService() {
+        converter = new AppointmentDtoConverter();
+    }
 
     public Page<AppointmentDto> getAppointmentPage(int currentPage, int pageSize) {
         AppointmentDao dao = DaoFactory.getInstance().createAppointmentDao();

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends GenericDao<User> {
+
     Optional<User> findByEmail(String email);
 
     List<User> findNotAppointDriverForBusByDate(LocalDate date, int busId);

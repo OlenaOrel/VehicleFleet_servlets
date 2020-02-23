@@ -5,18 +5,25 @@ import org.apache.logging.log4j.Logger;
 import ua.training.dto.UserRegisterDto;
 import ua.training.entity.User;
 import ua.training.exception.UserExistException;
+import ua.training.service.UserRegisterValidationService;
 import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static ua.training.web.conctant.RegexConstants.*;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class RegisterCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
 
-    private UserService userService = new UserService();
+    private UserService userService;
+    private UserRegisterValidationService userRegisterValidationService;
+
+    public RegisterCommand() {
+        userService = new UserService();
+        userRegisterValidationService = new UserRegisterValidationService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -24,7 +31,7 @@ public class RegisterCommand implements Command {
         session.setAttribute(PASS_NOT_CONFIRM_ATTRIBUTE, false);
         session.setAttribute(INVALID_INPUT_ATTRIBUTE, false);
         UserRegisterDto userDto = createUserRegisterDto(request);
-        if (isInputNotPresent(userDto)) {
+        if (userRegisterValidationService.isInputNotPresent(userDto)) {
             LOGGER.info("empty parameters");
             return REGISTER_PAGE;
         }
@@ -33,7 +40,7 @@ public class RegisterCommand implements Command {
             LOGGER.info("Password is not confirm");
             return REGISTER_PAGE;
         }
-        if (isInputInvalid(userDto)) {
+        if (userRegisterValidationService.isInputInvalid(userDto)) {
             session.setAttribute(INVALID_INPUT_ATTRIBUTE, true);
             LOGGER.info("Invalid input");
             return REGISTER_PAGE;
@@ -50,32 +57,14 @@ public class RegisterCommand implements Command {
         return REDIRECT + ROOT_PATH + LOGIN_PATH;
     }
 
-    public boolean isInputNotPresent(UserRegisterDto userDto) {
-        return userDto.getFirstName() == null || userDto.getFirstName().equals("")
-                || userDto.getLastName() == null || userDto.getLastName().equals("")
-                || userDto.getOriginFirstName() == null || userDto.getOriginFirstName().equals("")
-                || userDto.getOriginLastName() == null || userDto.getOriginLastName().equals("")
-                || userDto.getEmail() == null || userDto.getEmail().equals("")
-                || userDto.getPassword() == null || userDto.getPassword().equals("")
-                || userDto.getConfirmPassword() == null || userDto.getConfirmPassword().equals("");
-    }
-
-    public boolean isInputInvalid(UserRegisterDto userDto) {
-        return !(userDto.getFirstName().matches(NAME_EN)
-                && userDto.getLastName().matches(NAME_EN)
-                && userDto.getOriginFirstName().matches(NAME_UK)
-                && userDto.getOriginLastName().matches(NAME_UK)
-                && userDto.getEmail().matches(EMAIL));
-    }
-
-    public UserRegisterDto createUserRegisterDto(HttpServletRequest request) {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String originFirstName = request.getParameter("originFirstName");
-        String originLastName = request.getParameter("originLastName");
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        String confirmPass = request.getParameter("confirmPass");
+    private UserRegisterDto createUserRegisterDto(HttpServletRequest request) {
+        String firstName = request.getParameter(FIRST_NAME_ATTRIBUTE);
+        String lastName = request.getParameter(LAST_NAME_ATTRIBUTE);
+        String originFirstName = request.getParameter(ORIGIN_FIRST_NAME_ATTRIBUTE);
+        String originLastName = request.getParameter(ORIGIN_LAST_NAME_ATTRIBUTE);
+        String email = request.getParameter(EMAIL_ATTRIBUTE);
+        String pass = request.getParameter(PASS_ATTRIBUTE);
+        String confirmPass = request.getParameter(PASS_CONFIRM_ATTRIBUTE);
         return new UserRegisterDto(firstName, lastName,
                 originFirstName, originLastName, email, pass, confirmPass);
     }

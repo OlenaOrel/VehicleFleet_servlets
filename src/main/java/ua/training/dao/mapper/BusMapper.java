@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BusMapper implements ObjectMapper<Bus> {
+
     private static final String BUS_ID = "bus.id";
     private static final String BUS_LICENCE_PLATE = "license_plate";
     private static final String BUS_MARK = "mark";

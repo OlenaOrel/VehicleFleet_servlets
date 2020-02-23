@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectionPoolHolder {
+
     private static ResourceBundle bundle = ResourceBundle.getBundle("database");
     private static final String URL = bundle.getString("db.url");
     private static final String USERNAME = bundle.getString("db.username");

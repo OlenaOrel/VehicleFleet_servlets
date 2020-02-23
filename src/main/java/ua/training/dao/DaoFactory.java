@@ -3,6 +3,7 @@ package ua.training.dao;
 import ua.training.dao.impl.JDBCDaoFactory;
 
 public abstract class DaoFactory {
+
     private static DaoFactory daoFactory;
 
     public abstract UserDao createUserDao();

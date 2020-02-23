@@ -7,6 +7,7 @@ import ua.training.web.conctant.WebConstants;
 import javax.servlet.http.HttpServletRequest;
 
 public class AccessDeniedCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(AccessDeniedCommand.class);
 
     @Override

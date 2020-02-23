@@ -16,12 +16,19 @@ public class JDBCBusDao implements BusDao {
 
     private static final Logger LOGGER = LogManager.getLogger(JDBCBusDao.class);
 
-    private static final String FIND_BUS_BY_ID_QUERY = "SELECT * FROM bus WHERE id =?";
-    private static final String FIND_ALL_BUSES_QUERY = "SELECT * FROM bus";
-    private static final String FIND_NOT_APPOINT_BUS_QUERY = "SELECT * FROM bus WHERE id " +
-            "NOT IN (SELECT bus_id FROM appointment WHERE date = ?)";
+    private static final String FIND_BUS_BY_ID_QUERY =
+            "SELECT * FROM bus WHERE id =?";
+    private static final String FIND_ALL_BUSES_QUERY =
+            "SELECT * FROM bus";
+    private static final String FIND_NOT_APPOINT_BUS_QUERY =
+            "SELECT * FROM bus WHERE id " +
+                    "NOT IN (SELECT bus_id FROM appointment WHERE date = ?)";
 
-    private BusMapper mapper = new BusMapper();
+    private BusMapper mapper;
+
+    public JDBCBusDao() {
+        mapper = new BusMapper();
+    }
 
     @Override
     public boolean save(Bus entity) {

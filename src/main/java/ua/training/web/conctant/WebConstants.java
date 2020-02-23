@@ -5,6 +5,11 @@ public interface WebConstants {
     String LANG_ATTRIBUTE = "lang";
     String EMAIL_ATTRIBUTE = "email";
     String PASS_ATTRIBUTE = "pass";
+    String FIRST_NAME_ATTRIBUTE = "firstName";
+    String LAST_NAME_ATTRIBUTE = "lastName";
+    String ORIGIN_FIRST_NAME_ATTRIBUTE = "originFirstName";
+    String ORIGIN_LAST_NAME_ATTRIBUTE = "originLastName";
+    String PASS_CONFIRM_ATTRIBUTE = "confirmPass";
     String USER_DTO_ATTRIBUTE = "userDto";
     String LOGGED_USERS_ATTRIBUTE = "loggedUsers";
 

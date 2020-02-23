@@ -15,7 +15,12 @@ import static ua.training.web.conctant.WebConstants.*;
 public class AddDriverCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(AddDriverCommand.class);
-    UserService userService = new UserService();
+
+    private UserService userService;
+
+    public AddDriverCommand() {
+        userService = new UserService();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

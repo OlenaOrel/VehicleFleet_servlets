@@ -3,6 +3,7 @@ package ua.training.entity;
 import java.util.Objects;
 
 public class Route {
+
     private int id;
     private Integer number;
     private String departureFromCityEn;

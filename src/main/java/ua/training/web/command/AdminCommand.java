@@ -14,10 +14,16 @@ import java.util.List;
 import static ua.training.web.conctant.WebConstants.*;
 
 public class AdminCommand implements Command {
+
     private static final Logger LOGGER = LogManager.getLogger(AdminCommand.class);
 
-    private AppointmentService service = new AppointmentService();
-    private AppointmentDtoConverter converter = new AppointmentDtoConverter();
+    private AppointmentService service;
+    private AppointmentDtoConverter converter;
+
+    public AdminCommand() {
+        service = new AppointmentService();
+        converter = new AppointmentDtoConverter();
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -15,7 +15,11 @@ public class AppointmentService {
 
     private static final Logger LOGGER = LogManager.getLogger(AppointmentService.class);
 
-    AppointmentDao appointmentDao = DaoFactory.getInstance().createAppointmentDao();
+    private AppointmentDao appointmentDao;
+
+    public AppointmentService() {
+        appointmentDao = DaoFactory.getInstance().createAppointmentDao();
+    }
 
     public Appointment createAppointment(int routeId, int busId, int driverId) {
         LOGGER.info("Create appointment");
