@@ -36,8 +36,8 @@ public class AppointmentService {
 
     }
 
-    public Optional<Appointment> getAppointmentForDriver(String email) {
-        return appointmentDao.findAppointmentForDriver(LocalDate.now(), email);
+    public Optional<Appointment> getAppointmentForDriver(int driverId) {
+        return appointmentDao.findAppointmentForDriver(LocalDate.now(), driverId);
     }
 
     public void setStatusConfirm(int appointmentId) {
@@ -48,7 +48,7 @@ public class AppointmentService {
         return appointmentDao.findNotFinishedAppointment();
     }
 
-    public void doFinish(int appointmentId) {
+    public void setStatusFinished(int appointmentId) {
         appointmentDao.updateStatusByAppointmentId(AppointmentStatus.FINISHED, appointmentId);
     }
 }

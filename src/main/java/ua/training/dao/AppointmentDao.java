@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AppointmentDao extends GenericDao<Appointment> {
 
-    Optional<Appointment> findAppointmentForDriver(LocalDate date, String email);
+    Optional<Appointment> findAppointmentForDriver(LocalDate date, int driverId);
 
     void updateStatusByAppointmentId(AppointmentStatus status, int id);
 

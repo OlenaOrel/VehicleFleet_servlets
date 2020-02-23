@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dto.AppointmentDto;
 import ua.training.dto.AppointmentDtoConverter;
+import ua.training.dto.UserDto;
 import ua.training.entity.Appointment;
 import ua.training.service.AppointmentService;
 import ua.training.web.conctant.WebConstants;
@@ -24,8 +25,8 @@ public class DriverCommand implements Command {
         HttpSession session = request.getSession();
         String appointmentId = request.getParameter(APPOINTMENT_ID_ATTRIBUTE);
         session.setAttribute(APPOINT_PRESENT_ATTRIBUTE, false);
-        String email = (String) session.getServletContext().getAttribute(EMAIL_ATTRIBUTE);
-        Optional<Appointment> optionalAppointment = appointmentService.getAppointmentForDriver(email);
+        UserDto userDto = (UserDto) session.getAttribute(USER_DTO_ATTRIBUTE);
+        Optional<Appointment> optionalAppointment = appointmentService.getAppointmentForDriver(userDto.getId());
         if (optionalAppointment.isPresent()) {
             LOGGER.info(optionalAppointment.get());
             if (appointmentId != null) {

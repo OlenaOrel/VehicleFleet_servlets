@@ -24,9 +24,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
     private static final String FIND_NOT_FINISHED_APPOINTMENT = "SELECT * FROM appointment WHERE status NOT IN ('" + AppointmentStatus.FINISHED.name() + "')";
     private static final String FIND_APPOINTMENT_FOR_DRIVER = "SELECT appointment.id, route_id, bus_id, driver_id, date, status " +
             "FROM appointment " +
-            "LEFT JOIN user " +
-            "ON appointment.driver_id = user.id " +
-            "WHERE email = ? AND date = ? AND NOT (status = 'FINISHED')";
+            "WHERE driver_id = ? AND date = ? AND NOT (status = 'FINISHED')";
     private static final String UPDATE_APPOINTMENT_STATUS_BY_ID = "UPDATE appointment SET status = ? WHERE id = ?";
     private static final String COUNT_ALL_APPOINTMENT = "SELECT COUNT(*) AS total FROM appointment";
     private static final String FIND_ALL_APPOINTMENTS_FOR_PAGE = "SELECT * FROM appointment" +
@@ -126,11 +124,11 @@ public class JDBCAppointmentDao implements AppointmentDao {
     }
 
     @Override
-    public Optional<Appointment> findAppointmentForDriver(LocalDate date, String email) {
+    public Optional<Appointment> findAppointmentForDriver(LocalDate date, int driverId) {
         Optional<Appointment> result = Optional.empty();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_APPOINTMENT_FOR_DRIVER)) {
-            preparedStatement.setString(1, email);
+            preparedStatement.setInt(1, driverId);
             preparedStatement.setDate(2, Date.valueOf(date));
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
