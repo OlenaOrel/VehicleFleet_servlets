@@ -8,6 +8,7 @@ import ua.training.entity.UserRole;
 import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static ua.training.web.conctant.WebConstants.*;
@@ -25,6 +26,8 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute(INVALID_EMAIL_OR_PASS, false);
         String email = request.getParameter(EMAIL_ATTRIBUTE);
         String pass = request.getParameter(PASS_ATTRIBUTE);
 
@@ -61,11 +64,12 @@ public class LoginCommand implements Command {
             }
 
         } else {
+            session.setAttribute(INVALID_EMAIL_OR_PASS, true);
             int guestId = 0;
             CommandUtility.setUserRole(request, new UserDto(guestId, GUEST, UserRole.ROLE_GUEST));
+            LOGGER.info("incorrect password or email");
             return LOGIN_PAGE;
         }
-        LOGGER.info(CommandUtility.getLoggedUsersFromContext(request));
         return LOGIN_PAGE;
     }
 }

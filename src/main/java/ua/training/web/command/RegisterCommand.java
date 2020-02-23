@@ -30,6 +30,7 @@ public class RegisterCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute(PASS_NOT_CONFIRM_ATTRIBUTE, false);
         session.setAttribute(INVALID_INPUT_ATTRIBUTE, false);
+        session.setAttribute(ERROR_ATTRIBUTE, false);
         UserRegisterDto userDto = createUserRegisterDto(request);
         if (userRegisterValidationService.isInputNotPresent(userDto)) {
             LOGGER.info("empty parameters");

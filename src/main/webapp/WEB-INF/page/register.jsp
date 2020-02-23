@@ -14,18 +14,27 @@
 <body>
 <div class="container" style="margin-top: 50px">
     <div class="row">
+        <div class="col-md-12 col-md-offset-2" align="right">
+            <form action="${pageContext.request.contextPath}/login">
+                <input type="submit" value='<fmt:message key="message.login"/>'
+                       class="btn btn-default">
+            </form>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4 col-md-offset-2">
+
             <h2 class="page-header" style="color: forestgreen">
                 <fmt:message key="message.login.page.header"/>
             </h2>
             <div class="error" style="margin-top:20px" bgcolor="red">
-                <c:if test="${error == true}">
+                <c:if test="${error}">
                     <fmt:message key="message.register.error"/>
                 </c:if>
-                <c:if test="${passNotConfirm == true}">
+                <c:if test="${passNotConfirm}">
                     <fmt:message key="message.register.pass.not.confirm"/>
                 </c:if>
-                <c:if test="${invalidInput == true}">
+                <c:if test="${invalidInput}">
                     <fmt:message key="message.register.invalid.input"/>
                 </c:if>
             </div>

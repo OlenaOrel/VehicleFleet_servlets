@@ -14,6 +14,14 @@
 <body>
 <div class="container" style="margin-top: 50px">
     <div class="row">
+        <div class="col-md-12 col-md-offset-2" align="right">
+            <form action="${pageContext.request.contextPath}/register">
+                <input type="submit" value='<fmt:message key="message.sign.up"/>'
+                       class="btn btn-default">
+            </form>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4 col-md-offset-2">
             <h2 class="page-header" style="color: forestgreen">
                 <fmt:message key="message.login.page.header"/>
@@ -21,6 +29,11 @@
             <div>
                 <form action="${pageContext.request.contextPath}/login" method="post">
                     <fieldset>
+                        <div class="alert alert-error" style="margin-top:20px">
+                            <c:if test="${invalidEmailOrPass}">
+                                <fmt:message key="message.invalid.email.password"/>
+                            </c:if>
+                        </div>
                         <label for="email" style="margin-top:20px">
                             <fmt:message key="message.user.email"/>
                         </label>
@@ -32,8 +45,7 @@
                         </label>
                         <input type="password" id="password" name="pass"
                                placeholder='<fmt:message key="message.user.password"/>'
-                               class="form-control"
-                               placeholder="Password"/>
+                               class="form-control"/>
                         <div class="form-actions">
                             <input type="submit" value='<fmt:message key="message.login"/>'
                                    class="btn btn-default" style="margin-top:20px">
