@@ -1,7 +1,14 @@
 version: "3.8"
 
 services:
-  
+
+  application:
+    container_name: vehicle-maven-app
+    image: olenaorel/vfs-application:0.0.1
+    ports:
+    - "8088:8088"
+    command: mvn clean tomcat7:run
+
   mysql:
     container_name: vehicle-mysql
     image: olenaorel/vfs-mysql:0.0.1
